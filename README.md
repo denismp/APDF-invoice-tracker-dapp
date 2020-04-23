@@ -25,3 +25,40 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Truffle set up.
+0. Make sure you run these two commands: (https://github.com/trufflesuite/truffle/issues/2070) otherwise you will get failures for test in truffle console.
+    npm un -g truffle
+    npm i -g truffle@nodeLTS
+
+    The version should look like:
+      /Users/username>truffle version
+      Truffle v5.1.17 (core: 5.1.17)
+      Solidity v0.5.16 (solc-js)
+      Node v10.20.1
+      Web3.js v1.2.1
+
+1. Run truffle init in the home directory.  This will create the truffle-config.js file and the contracts/ and 
+migrations/ directories and their contents.  This is too set up local truffle testing for the solidity contract.
+2. Edit the truffle-config.js file and make sure these entries are uncommented:
+    development: {
+        host: "127.0.0.1",     // Localhost (default: none)
+    //  port: 8545,            // Standard Ethereum port (default: none)
+        port: 7545,            // Standard Ethereum port (default: none)
+        network_id: "*",       // Any network (default: none)
+    }
+
+      compilers: {
+    solc: {
+      version: "0.6.6",    // Fetch exact version from solc-bin (default: truffle's version)
+      // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
+      // // settings: {          // See the solidity docs for advice about optimization and evmVersion
+      //  optimizer: {
+      //    enabled: false,
+      //    runs: 200
+      //  },
+      //  evmVersion: "byzantium"
+      // }
+    }
+3. Open a terminal window and run "truffle development" to get access to the truffle console.    
+

@@ -1,0 +1,104 @@
+{
+  "contractName": "InvoiceTracker",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.1+commit.e6f7d5a4\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/denisputnam/git/APDF-invoice-tracker-dapp/contracts/InvoiceTracker.sol\":\"InvoiceTracker\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/denisputnam/git/APDF-invoice-tracker-dapp/contracts/InvoiceTracker.sol\":{\"keccak256\":\"0xf8b28fda605bfeb9f21d6ee4897eaac9175cf73d436d9fbda5ee52eb69fdf370\",\"urls\":[\"bzz-raw://432c194dc28b27d1f31ea92a47e991add4d7ea8c8c5b8a09b33ee4e3e0b084f0\",\"dweb:/ipfs/Qma17NbRs4FpFZwk9byiEGBd3hz5j164dyotLhbjegwNCt\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220009690629cac7d4a7ccf7856cd482806a45b580b9c15ca86bdd600da6d5abd6d64736f6c63430006010033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220009690629cac7d4a7ccf7856cd482806a45b580b9c15ca86bdd600da6d5abd6d64736f6c63430006010033",
+  "sourceMap": "24:28:0:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;24:28:0;;;;;;;",
+  "deployedSourceMap": "24:28:0:-:0;;;;;",
+  "source": "pragma solidity 0.6.1;\n\ncontract InvoiceTracker {\n\n}\n",
+  "sourcePath": "/Users/denisputnam/git/APDF-invoice-tracker-dapp/contracts/InvoiceTracker.sol",
+  "ast": {
+    "absolutePath": "/Users/denisputnam/git/APDF-invoice-tracker-dapp/contracts/InvoiceTracker.sol",
+    "exportedSymbols": {
+      "InvoiceTracker": [
+        2
+      ]
+    },
+    "id": 3,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "0.6",
+          ".1"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2,
+        "linearizedBaseContracts": [
+          2
+        ],
+        "name": "InvoiceTracker",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 3,
+        "src": "24:28:0"
+      }
+    ],
+    "src": "0:53:0"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/denisputnam/git/APDF-invoice-tracker-dapp/contracts/InvoiceTracker.sol",
+    "exportedSymbols": {
+      "InvoiceTracker": [
+        2
+      ]
+    },
+    "id": 3,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "0.6",
+          ".1"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2,
+        "linearizedBaseContracts": [
+          2
+        ],
+        "name": "InvoiceTracker",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 3,
+        "src": "24:28:0"
+      }
+    ],
+    "src": "0:53:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.1+commit.e6f7d5a4.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.1.0",
+  "updatedAt": "2020-04-23T23:20:07.079Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
