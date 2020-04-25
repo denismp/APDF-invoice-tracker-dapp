@@ -62,3 +62,100 @@ migrations/ directories and their contents.  This is too set up local truffle te
     }
 3. Open a terminal window and run "truffle development" to get access to the truffle console.    
 
+## Generate documentation
+1. run "solc --userdoc --devdoc contracts/InvoiceTracker.sol" as an example.
+
+======= contracts/InvoiceTracker.sol:InvoiceTracker =======
+Developer Documentation
+{
+  "author": "Denis M. Putnam",
+  "details": "Use at your own risk.",
+  "methods":
+  {
+    "changeOwner(address)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "params":
+      {
+        "newOwner": "new address payable owner."
+      }
+    },
+    "getCurrentOwner()":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "returns":
+      {
+        "_0": "address current owner."
+      }
+    }
+  },
+  "title": "Invoice Tracking contract"
+}
+User Documentation
+{
+  "methods":
+  {
+    "changeOwner(address)":
+    {
+      "notice": "Change the current owner to the new owner."
+    },
+    "getCurrentOwner()":
+    {
+      "notice": "Get the current owner."
+    }
+  },
+  "notice": "This contract tracks invoices for payment"
+}
+
+======= contracts/Owned.sol:Owned =======
+Developer Documentation
+{
+  "author": "Denis M. Putnam",
+  "details": "Use at your own risk.",
+  "methods":
+  {
+    "changeOwner(address)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "params":
+      {
+        "newOwner": "new address payable owner."
+      }
+    },
+    "constructor":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Sets the initial owner of the the contract."
+    },
+    "getCurrentOwner()":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "returns":
+      {
+        "_0": "address current owner."
+      }
+    }
+  },
+  "title": "Owned contract"
+}
+User Documentation
+{
+  "methods":
+  {
+    "changeOwner(address)":
+    {
+      "notice": "Change the current owner to the new owner."
+    },
+    "constructor": "Constructor called when the contract is deployed.",
+    "getCurrentOwner()":
+    {
+      "notice": "Get the current owner."
+    }
+  },
+  "notice": "This contract establishes the owner and allows for an owner change."
+}
+
