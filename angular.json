@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "APDF-invoice-tracker-dapp"
+    }
+  },
+  "defaultProject": "APDF-invoice-tracker-dapp",
+  "cli": {
+    "analytics": false
+  }
 }

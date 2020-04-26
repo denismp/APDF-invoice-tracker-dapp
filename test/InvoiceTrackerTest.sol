@@ -6,7 +6,7 @@ import "../contracts/InvoiceTracker.sol";
 contract InvoiceTrackerTest {
   function testSettingOwnerAnOwnerDuringCreations() public {
     InvoiceTracker invoiceTracker = new InvoiceTracker();
-    Assert.equal(invoiceTracker.getCurrnetOwner(), address(this), "The owner is different from the deployer");
+    Assert.equal(invoiceTracker.getCurrentOwner(), address(this), "The owner is different from the deployer");
   }
 
 }
