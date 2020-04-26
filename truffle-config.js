@@ -48,6 +48,13 @@ module.exports = {
      port: 7545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
     },
+    coverage: {
+      host: "127.0.0.1",
+      network_id: "*",
+      port: 8555,
+      gas: 0xffffffffff,
+      gasPrice: 0x01
+    },
 
     // Another network with more advanced options...
     // advanced: {
@@ -83,6 +90,7 @@ module.exports = {
     // timeout: 100000
   },
 
+  plugins: [solidity-coverage],
   // Configure your compilers
   compilers: {
     solc: {
