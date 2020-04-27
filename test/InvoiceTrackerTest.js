@@ -8,7 +8,9 @@ contract("InvoiceTracker", async accounts => {
     invoiceTracker = await InvoiceTracker.new();
   });
 
-  it('javascript test', async () => {
+  it('javascript test add a client', async () => {
+    let clientID = "0x874390a3787ef36bcd255de00f47f2dc34f70d95";
+    await invoiceTracker.addClient(clientID,"test");
     assert.isTrue(true);
   });
 });

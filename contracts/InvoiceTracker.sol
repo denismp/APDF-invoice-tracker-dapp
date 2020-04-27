@@ -43,6 +43,8 @@ contract InvoiceTracker is Owned {
   constructor() Owned() payable public {
   }
 
+  event addClientEvent(address _clientID, string _name);
+
   /// @author Denis M. Putnam
   /// @notice Add a client to this contract.
   /// @param clientID address of the wallet of the client.
@@ -53,5 +55,6 @@ contract InvoiceTracker is Owned {
     clientMap[name].name = name;
     clientMap[name].flag = true;
     clientNameAddressMap[name] = clientID;
+    emit addClientEvent(clientID, name);
   }
 }
