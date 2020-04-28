@@ -40,12 +40,17 @@ contract("InvoiceTracker", async accounts => {
       now
     );
     truffleAssert.prettyPrintEmittedEvents(result);
-    // truffleAssert.eventEmitted(result, 'addClientEvent', (event) => {
-    //   console.log("event._clientID=" + event._clientID.toUpperCase());
-    //   console.log("       clientID=" + clientID.toUpperCase());
-    //   const myequal = event._clientID.toUpperCase() === clientID.toUpperCase();
-    //   console.log("DEBUG:" + myequal);
-    //   return event._clientID.toUpperCase() == clientID.toUpperCase() && event._name === "test";
-    // });
+    truffleAssert.eventEmitted(result, 'addInvoiceEvent', (event) => {
+      console.log("event._invoiceNumber=" + event._invoiceNumber);
+      // console.log("       clientID=" + clientID.toUpperCase());
+      const myequal = parseInt(event._invoiceNumber) === 1;
+      console.log("DEBUG:" + myequal);
+      return event._clientName ===  "test" &&
+              parseInt(event._invoiceNumber) === 1 &&
+              parseInt(event._netTerms) === 30 &&
+              parseInt(event._numberHours) === 80 &&
+              event._amount === "2000.50"
+              ;
+    });
   });
 });
