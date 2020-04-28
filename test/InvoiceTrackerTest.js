@@ -11,7 +11,7 @@ contract("InvoiceTracker", async accounts => {
 
   it('javascript test add a client', async () => {
     let clientID = "0x874390a3787ef36bcd255de00f47f2dc34f70d95";
-    const result = await invoiceTracker.addClient(clientID,"test");
+    const result = await invoiceTracker.addClient(clientID, "test");
     truffleAssert.prettyPrintEmittedEvents(result);
     truffleAssert.eventEmitted(result, 'addClientEvent', (event) => {
       console.log("event._clientID=" + event._clientID.toUpperCase());
