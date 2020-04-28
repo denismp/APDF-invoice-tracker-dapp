@@ -16,7 +16,7 @@ contract InvoiceTracker is Owned {
         uint256 invoiceNumber;
         uint256 netTerms; // 30, 60 90, 120 days net
         uint256 numberHours;
-        uint256 amount;
+        string amount;
         uint256 timesheetEndDate;
         uint256 invoiceSentDate;
         uint256 due30DaysDate;
@@ -114,7 +114,7 @@ contract InvoiceTracker is Owned {
         uint256 _invoiceNumber,
         uint256 _netTerms,
         uint256 _numberHours,
-        uint256 _amount,
+        string _amount,
         uint256 _timesheetEndDate,
         uint256 _invoiceSentDate,
         uint256 _due30DaysDate,
@@ -144,7 +144,7 @@ contract InvoiceTracker is Owned {
         uint256 _invoiceNumber,
         uint256 _netTerms,
         uint256 _numberHours,
-        uint256 _amount,
+        string memory _amount,
         uint256 _timesheetEndDate,
         uint256 _invoiceSentDate,
         uint256 _due30DaysDate,
