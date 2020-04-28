@@ -61,6 +61,7 @@ migrations/ directories and their contents.  This is too set up local truffle te
       // }
     }
 3. Open a terminal window and run "truffle development" to get access to the truffle console.    
+4. run "npm install truffle-assertions" for the truffleAssert calls in testing.
 
 ## Generate documentation
 1. run "solc --userdoc --devdoc contracts/InvoiceTracker.sol" as an example.
