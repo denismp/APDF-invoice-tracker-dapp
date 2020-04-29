@@ -8,8 +8,8 @@ import "./Owned.sol";
 /// @notice This contract tracks invoices for payment
 /// @dev Use at your own risk.
 contract InvoiceTracker is Owned {
-    uint256 clientIndex = 0;
-    uint256 clientNameIndex = 0;
+    // uint256 clientIndex = 0;
+    // uint256 clientNameIndex = 0;
 
     /// @notice Invoice struct
     struct Invoice {
@@ -37,10 +37,10 @@ contract InvoiceTracker is Owned {
     mapping(string => Client) private clientMap;
     /// @notice map the name of the client to the client address
     mapping(string => address) private clientNameAddressMap;
-    /// @notice map the name of the client to an invoice number
-    mapping(string => uint256) private clientInvoiceMap;
-    /// @notice map the name of the client to an invoice
-    mapping(string => Invoice) private clientNameInvoiceMap;
+    /// @notice map the name of the client to invoice numbers
+    mapping(string => uint256[]) private clientInvoiceMap;
+    /// @notice map the name of the client to invoices
+    mapping(string => Invoice[]) private clientNameInvoiceMap;
     /// @notice map the name of the client to an invoice count
     mapping(string => uint256) private clientNameInvoiceCountMap;
 
@@ -98,8 +98,10 @@ contract InvoiceTracker is Owned {
         string memory _clientName,
         uint256 _invoiceNumber
     ) private view returns (bool) {
-        if (clientInvoiceMap[_clientName] == _invoiceNumber) {
-            return false;
+        for (uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
+            if (_invoiceNumber == clientInvoiceMap[_clientName][i]) {
+                return false;
+            }
         }
         return true;
     }
@@ -156,21 +158,23 @@ contract InvoiceTracker is Owned {
         uint256 _due120DaysDate,
         uint256 _datePmtReceived
     ) public noDupInvoice(_clientName, _invoiceSentDate) {
-        clientNameInvoiceMap[_clientName].invoiceNumber = _invoiceNumber;
-        clientNameInvoiceMap[_clientName].netTerms = _netTerms;
-        clientNameInvoiceMap[_clientName].numberHours = _numberHours;
-        clientNameInvoiceMap[_clientName].amount = _amount;
-        clientNameInvoiceMap[_clientName].timesheetEndDate = _timesheetEndDate;
-        clientNameInvoiceMap[_clientName].invoiceSentDate = _invoiceSentDate;
-        clientNameInvoiceMap[_clientName].due30DaysDate = _due30DaysDate;
-        clientNameInvoiceMap[_clientName].due60DaysDate = _due60DaysDate;
-        clientNameInvoiceMap[_clientName].due90DaysDate = _due90DaysDate;
-        clientNameInvoiceMap[_clientName].due120DaysDate = _due120DaysDate;
-        clientNameInvoiceMap[_clientName].datePmtReceived = _datePmtReceived;
+        Invoice memory newInvoice;
+        newInvoice.invoiceNumber = _invoiceNumber;
+        newInvoice.netTerms = _netTerms;
+        newInvoice.numberHours = _numberHours;
+        newInvoice.amount = _amount;
+        newInvoice.timesheetEndDate = _timesheetEndDate;
+        newInvoice.invoiceSentDate = _invoiceSentDate;
+        newInvoice.due30DaysDate = _due30DaysDate;
+        newInvoice.due60DaysDate = _due60DaysDate;
+        newInvoice.due90DaysDate = _due90DaysDate;
+        newInvoice.due120DaysDate = _due120DaysDate;
+        newInvoice.datePmtReceived = _datePmtReceived;
+        clientNameInvoiceMap[_clientName].push(newInvoice);
 
-        clientInvoiceMap[_clientName] = _invoiceNumber;
-
-        clientNameInvoiceCountMap[_clientName] += 1;
+        clientInvoiceMap[_clientName].push(_invoiceNumber);
+        incremmentInvoiceCount(_clientName);
+        //clientNameInvoiceCountMap[_clientName] += 1;
 
         emit addInvoiceEvent(
             _clientName,
@@ -188,11 +192,45 @@ contract InvoiceTracker is Owned {
         );
     }
 
+    function incremmentInvoiceCount(string memory _clientName) private {
+        clientNameInvoiceCountMap[_clientName] += 1;
+    }
+
     /// @author Denis M. Putnam
     /// @notice Get the count of invoices associated with the given client name
     /// @param _clientName name of the client
     /// @dev no other details.
-    function getInvoiceCount(string memory _clientName) view public returns (uint256 count) {
-      count = clientNameInvoiceCountMap[_clientName];
+    function getInvoiceCount(string memory _clientName)
+        public
+        view
+        returns (uint256 count)
+    {
+        count = clientNameInvoiceCountMap[_clientName];
+    }
+
+    function getInvoiceNumbers(string memory _clientName)
+        public
+        view
+        returns (string memory)
+    {
+        // /// @notice map the name of the client to an invoice number
+        // mapping(string => uint256) private clientInvoiceMap;
+        // /// @notice map the name of the client to an invoice
+        // mapping(string => Invoice) private clientNameInvoiceMap;
+        // /// @notice map the name of the client to an invoice count
+        // mapping(string => uint256) private clientNameInvoiceCountMap;
+        // string memory rVal = "";
+        // for(uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
+        // }
+    }
+
+    function append(
+        string memory a,
+        string memory b,
+        string memory c,
+        string memory d,
+        string memory e
+    ) internal pure returns (string memory) {
+        return string(abi.encodePacked(a, b, c, d, e));
     }
 }
