@@ -8,8 +8,6 @@ import "./Owned.sol";
 /// @notice This contract tracks invoices for payment
 /// @dev Use at your own risk.
 contract InvoiceTracker is Owned {
-    // uint256 clientIndex = 0;
-    // uint256 clientNameIndex = 0;
 
     /// @notice Invoice struct
     struct Invoice {
@@ -37,9 +35,7 @@ contract InvoiceTracker is Owned {
     mapping(string => Client) private clientMap;
     /// @notice map the name of the client to the client address
     mapping(string => address) private clientNameAddressMap;
-    /// @notice map the name of the client to invoice numbers
-    mapping(string => uint256[]) private clientInvoiceMap;
-    /// @notice map the name of the client to invoices
+    /// @notice map the name of the client to invoices. this isa one to many mapping.
     mapping(string => Invoice[]) private clientNameInvoiceMap;
     /// @notice map the name of the client to an invoice count
     mapping(string => uint256) private clientNameInvoiceCountMap;
@@ -99,7 +95,10 @@ contract InvoiceTracker is Owned {
         uint256 _invoiceNumber
     ) private view returns (bool) {
         for (uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
-            if (_invoiceNumber == clientInvoiceMap[_clientName][i]) {
+            // if (_invoiceNumber == clientInvoiceMap[_clientName][i]) {
+            //     return false;
+            // }
+            if (_invoiceNumber == clientNameInvoiceMap[_clientName][i].invoiceNumber) {
                 return false;
             }
         }
@@ -172,7 +171,6 @@ contract InvoiceTracker is Owned {
         newInvoice.datePmtReceived = _datePmtReceived;
         clientNameInvoiceMap[_clientName].push(newInvoice);
 
-        clientInvoiceMap[_clientName].push(_invoiceNumber);
         incremmentInvoiceCount(_clientName);
         //clientNameInvoiceCountMap[_clientName] += 1;
 
