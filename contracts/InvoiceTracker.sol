@@ -41,6 +41,8 @@ contract InvoiceTracker is Owned {
     mapping(string => uint256) private clientInvoiceMap;
     /// @notice map the name of the client to an invoice
     mapping(string => Invoice) private clientNameInvoiceMap;
+    /// @notice map the name of the client to an invoice count
+    mapping(string => uint256) private clientNameInvoiceCountMap;
 
     /// @author Denis M. Putnam
     /// @notice The constructor for this contract
@@ -83,6 +85,7 @@ contract InvoiceTracker is Owned {
         clientMap[_name].name = _name;
         clientMap[_name].flag = true;
         clientNameAddressMap[_name] = _clientID;
+        clientNameInvoiceCountMap[_name] = 0;
         emit addClientEvent(_clientID, _name);
     }
 
@@ -166,6 +169,9 @@ contract InvoiceTracker is Owned {
         clientNameInvoiceMap[_clientName].datePmtReceived = _datePmtReceived;
 
         clientInvoiceMap[_clientName] = _invoiceNumber;
+
+        clientNameInvoiceCountMap[_clientName] += 1;
+
         emit addInvoiceEvent(
             _clientName,
             _invoiceNumber,
@@ -180,5 +186,13 @@ contract InvoiceTracker is Owned {
             _due120DaysDate,
             _datePmtReceived
         );
+    }
+
+    /// @author Denis M. Putnam
+    /// @notice Get the count of invoices associated with the given client name
+    /// @param _clientName name of the client
+    /// @dev no other details.
+    function getInvoiceCount(string memory _clientName) view public returns (uint256 count) {
+      count = clientNameInvoiceCountMap[_clientName];
     }
 }

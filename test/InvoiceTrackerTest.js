@@ -52,5 +52,31 @@ contract("InvoiceTracker", async accounts => {
               event._amount === "2000.50"
               ;
     });
+    const count = await invoiceTracker.getInvoiceCount("test");
+    console.log("count=" + count);
+    assert.equal(count,1);
   });
+
+  // it('javascript test getInvoiceCount', async () => {
+  //   const now = Math.floor((new Date()).getTime() / 1000);
+  //   const result = await invoiceTracker.addInvoice(
+  //     "test",
+  //     1,
+  //     30,
+  //     80,
+  //     "2000.50",
+  //     now,
+  //     now,
+  //     now,
+  //     now,
+  //     now,
+  //     now,
+  //     now
+  //   );
+  //   truffleAssert.prettyPrintEmittedEvents(result);
+  //   const count = await invoiceTracker.getInvoiceCount("test");
+  //   console.log("count=" + count);
+  //   assert.equal(count,1);
+  //   //truffleAssert.prettyPrintEmittedEvents(result);
+  // });
 });
