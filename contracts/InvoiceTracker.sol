@@ -206,29 +206,29 @@ contract InvoiceTracker is Owned {
         count = clientNameInvoiceCountMap[_clientName];
     }
 
+    /// @author Denis M. Putnam
+    /// @notice Get the list of invoice numbers as a string for the given client name.
+    /// @param _clientName name of the client
+    /// @dev returned string is a comma separated string of invoice numbers.  The comma is also the end of the string if no other values appear.
     function getInvoiceNumbers(string memory _clientName)
         public
         view
         returns (string memory)
     {
-        // /// @notice map the name of the client to an invoice number
-        // mapping(string => uint256) private clientInvoiceMap;
-        // /// @notice map the name of the client to an invoice
-        // mapping(string => Invoice) private clientNameInvoiceMap;
-        // /// @notice map the name of the client to an invoice count
-        // mapping(string => uint256) private clientNameInvoiceCountMap;
-        // string memory rVal = "";
-        // for(uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
-        // }
+        string memory rVal = "";
+        for(uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
+          rVal = string(abi.encodePacked(rVal, clientNameInvoiceMap[_clientName][i].invoiceNumber));
+          rVal = string(abi.encodePacked(rVal, ",")); // comma serves as token separator and end of string.
+        }
     }
 
-    function append(
-        string memory a,
-        string memory b,
-        string memory c,
-        string memory d,
-        string memory e
-    ) internal pure returns (string memory) {
-        return string(abi.encodePacked(a, b, c, d, e));
-    }
+    // function append(
+    //     string memory a,
+    //     string memory b,
+    //     string memory c,
+    //     string memory d,
+    //     string memory e
+    // ) internal pure returns (string memory) {
+    //     return string(abi.encodePacked(a, b, c, d, e));
+    // }
 }
