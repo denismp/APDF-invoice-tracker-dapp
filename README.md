@@ -160,3 +160,6 @@ User Documentation
   "notice": "This contract establishes the owner and allows for an owner change."
 }
 
+## Solidity coverage
+1. Make sure you run "npm install --save-dev solidity-coverage"
+
