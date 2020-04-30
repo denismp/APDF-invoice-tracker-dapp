@@ -50,7 +50,7 @@ contract("InvoiceTracker", async accounts => {
   it('javascript test get invoice', async () => {
     let count = await addInvoice(1);
     assert.equal(count, 1);
-    const result = await debug(invoiceTracker.getInvoice("test", 0));
+    const result = await debug(invoiceTracker.getInvoice("test", 1));
     console.log("invoice number=" + result.invoiceNumber);
     console.log("invoice netTerms=" + result.netTerms);
     //truffleAssert.prettyPrintEmittedEvents(result);

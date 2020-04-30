@@ -229,6 +229,19 @@ contract InvoiceTracker is Owned {
         return rVal;
     }
 
+    function findInvoiceIndex(string memory _clientName, uint256 _invoiceNumber)
+        private
+        view
+        returns (int256 index)
+    {
+        for (int256 i = 0; i < int256(clientNameInvoiceCountMap[_clientName]); i++) {
+            if (_invoiceNumber == clientNameInvoiceCountMap[_clientName]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /// @author Denis M. Putnam
     /// @notice Get an invoice
     /// @param _clientName name of the client
@@ -251,33 +264,36 @@ contract InvoiceTracker is Owned {
             uint256 datePmtReceived
         )
     {
-
-            Invoice memory lInvoice
-         = clientNameInvoiceMap[_clientName][_invoiceNumber];
-        invoiceNumber = lInvoice.invoiceNumber;
-        netTerms = lInvoice.netTerms;
-        numberHours = lInvoice.numberHours;
-        amount = lInvoice.amount;
-        timesheetEndDate = lInvoice.timesheetEndDate;
-        invoiceSentDate = lInvoice.invoiceSentDate;
-        due30DaysDate = lInvoice.due30DaysDate;
-        due60DaysDate = lInvoice.due60DaysDate;
-        due90DaysDate = lInvoice.due90DaysDate;
-        due120DaysDate = lInvoice.due120DaysDate;
-        datePmtReceived = lInvoice.datePmtReceived;
-        return (
-            invoiceNumber,
-            netTerms,
-            numberHours,
-            amount,
-            timesheetEndDate,
-            invoiceSentDate,
-            due30DaysDate,
-            due60DaysDate,
-            due90DaysDate,
-            due120DaysDate,
-            datePmtReceived
-        );
+        int256 _index = findInvoiceIndex(_clientName, _invoiceNumber);
+        if (_index != -1) {
+            Invoice memory lInvoice = clientNameInvoiceMap[_clientName][uint256(
+                _index
+            )];
+            invoiceNumber = lInvoice.invoiceNumber;
+            netTerms = lInvoice.netTerms;
+            numberHours = lInvoice.numberHours;
+            amount = lInvoice.amount;
+            timesheetEndDate = lInvoice.timesheetEndDate;
+            invoiceSentDate = lInvoice.invoiceSentDate;
+            due30DaysDate = lInvoice.due30DaysDate;
+            due60DaysDate = lInvoice.due60DaysDate;
+            due90DaysDate = lInvoice.due90DaysDate;
+            due120DaysDate = lInvoice.due120DaysDate;
+            datePmtReceived = lInvoice.datePmtReceived;
+            return (
+                invoiceNumber,
+                netTerms,
+                numberHours,
+                amount,
+                timesheetEndDate,
+                invoiceSentDate,
+                due30DaysDate,
+                due60DaysDate,
+                due90DaysDate,
+                due120DaysDate,
+                datePmtReceived
+            );
+        }
     }
 
     /// @author Denis M. Putnam
