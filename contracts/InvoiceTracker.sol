@@ -223,21 +223,20 @@ contract InvoiceTracker is Owned {
             bytes32 lbytes32 = bytes32(
                 clientNameInvoiceMap[_clientName][i].invoiceNumber
             );
-            string memory tstring = uint2str(clientNameInvoiceMap[_clientName][i].invoiceNumber);
+            string memory tstring = uint2str(
+                clientNameInvoiceMap[_clientName][i].invoiceNumber
+            );
             // string tstring = string(lbytes32);
             //rVal = string(abi.encodePacked(rVal, tstring, ","));
-            rVal = string(
-                abi.encodePacked(
-                    rVal,
-                    tstring,
-                    ","
-                )
-            );
+            rVal = string(abi.encodePacked(rVal, tstring, ","));
         }
         return rVal;
     }
 
-
+    /// @author Denis M. Putnam
+    /// @notice Convert a uint256 to a string.
+    /// @param _i contains the uint256 value to be converted to a string.
+    /// @dev This code was taken from https://github.com/provable-things/ethereum-api/blob/master/oraclizeAPI_0.5.sol
     function uint2str(uint256 _i)
         internal
         pure
