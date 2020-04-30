@@ -8,7 +8,6 @@ import "./Owned.sol";
 /// @notice This contract tracks invoices for payment
 /// @dev Use at your own risk.
 contract InvoiceTracker is Owned {
-
     /// @notice Invoice struct
     struct Invoice {
         uint256 invoiceNumber;
@@ -23,6 +22,7 @@ contract InvoiceTracker is Owned {
         uint256 due120DaysDate;
         uint256 datePmtReceived;
     }
+    //Invoice newInvoice;
 
     /// @notice Client struct
     struct Client {
@@ -98,7 +98,10 @@ contract InvoiceTracker is Owned {
             // if (_invoiceNumber == clientInvoiceMap[_clientName][i]) {
             //     return false;
             // }
-            if (_invoiceNumber == clientNameInvoiceMap[_clientName][i].invoiceNumber) {
+            if (
+                _invoiceNumber ==
+                clientNameInvoiceMap[_clientName][i].invoiceNumber
+            ) {
                 return false;
             }
         }
@@ -216,19 +219,45 @@ contract InvoiceTracker is Owned {
         returns (string memory)
     {
         string memory rVal = "";
-        for(uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
-          rVal = string(abi.encodePacked(rVal, clientNameInvoiceMap[_clientName][i].invoiceNumber));
-          rVal = string(abi.encodePacked(rVal, ",")); // comma serves as token separator and end of string.
+        for (uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
+            bytes32 lbytes32 = bytes32(
+                clientNameInvoiceMap[_clientName][i].invoiceNumber
+            );
+            string memory tstring = uint2str(clientNameInvoiceMap[_clientName][i].invoiceNumber);
+            // string tstring = string(lbytes32);
+            //rVal = string(abi.encodePacked(rVal, tstring, ","));
+            rVal = string(
+                abi.encodePacked(
+                    rVal,
+                    tstring,
+                    ","
+                )
+            );
         }
+        return rVal;
     }
 
-    // function append(
-    //     string memory a,
-    //     string memory b,
-    //     string memory c,
-    //     string memory d,
-    //     string memory e
-    // ) internal pure returns (string memory) {
-    //     return string(abi.encodePacked(a, b, c, d, e));
-    // }
+
+    function uint2str(uint256 _i)
+        internal
+        pure
+        returns (string memory _uintAsString)
+    {
+        if (_i == 0) {
+            return "0";
+        }
+        uint256 j = _i;
+        uint256 len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint256 k = len - 1;
+        while (_i != 0) {
+            bstr[k--] = bytes1(uint8(48 + (_i % 10)));
+            _i /= 10;
+        }
+        return string(bstr);
+    }
 }
