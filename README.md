@@ -162,4 +162,5 @@ User Documentation
 
 ## Solidity coverage
 1. Make sure you run "npm install --save-dev solidity-coverage"
+2. Run "truffle run coverage"
 
