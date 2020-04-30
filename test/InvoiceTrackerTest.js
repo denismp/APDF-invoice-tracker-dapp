@@ -42,7 +42,8 @@ contract("InvoiceTracker", async accounts => {
     assert.equal(count, 1);
     count = await addInvoice(2);
     assert.equal(count, 2);
-    const result = await debug(invoiceTracker.getInvoiceNumbers("test"));
+    // const result = await debug(invoiceTracker.getInvoiceNumbers("test"));
+    const result = await invoiceTracker.getInvoiceNumbers("test");
     console.log("invoice numbers=" + result);
   });
 

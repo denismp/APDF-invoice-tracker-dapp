@@ -220,9 +220,6 @@ contract InvoiceTracker is Owned {
     {
         string memory rVal = "";
         for (uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
-            bytes32 lbytes32 = bytes32(
-                clientNameInvoiceMap[_clientName][i].invoiceNumber
-            );
             string memory tstring = uint2str(
                 clientNameInvoiceMap[_clientName][i].invoiceNumber
             );
