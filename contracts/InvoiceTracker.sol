@@ -229,7 +229,13 @@ contract InvoiceTracker is Owned {
         return rVal;
     }
 
+    modifier isInvoiceNumber(uint256 _invoiceNumber) {
+        require( _invoiceNumber > 0, "Invoice number must be greater than 0");
+        _;
+    }
+
     function findInvoiceIndex(string memory _clientName, uint256 _invoiceNumber)
+        isInvoiceNumber(_invoiceNumber)
         private
         view
         returns (int256 index)
