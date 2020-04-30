@@ -42,9 +42,18 @@ contract("InvoiceTracker", async accounts => {
     assert.equal(count, 1);
     count = await addInvoice(2);
     assert.equal(count, 2);
-    // const result = await debug(invoiceTracker.getInvoiceNumbers("test"));
+    //const result = await debug(invoiceTracker.getInvoiceNumbers("test"));
     const result = await invoiceTracker.getInvoiceNumbers("test");
     console.log("invoice numbers=" + result);
+  });
+
+  it('javascript test get invoice', async () => {
+    let count = await addInvoice(1);
+    assert.equal(count, 1);
+    const result = await debug(invoiceTracker.getInvoice("test", 0));
+    console.log("invoice number=" + result.invoiceNumber);
+    console.log("invoice netTerms=" + result.netTerms);
+    //truffleAssert.prettyPrintEmittedEvents(result);
   });
 
   async function addInvoice(_invoiceNumber) {

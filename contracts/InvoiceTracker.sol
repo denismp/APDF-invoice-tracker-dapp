@@ -22,7 +22,6 @@ contract InvoiceTracker is Owned {
         uint256 due120DaysDate;
         uint256 datePmtReceived;
     }
-    //Invoice newInvoice;
 
     /// @notice Client struct
     struct Client {
@@ -228,6 +227,57 @@ contract InvoiceTracker is Owned {
             rVal = string(abi.encodePacked(rVal, tstring, ","));
         }
         return rVal;
+    }
+
+    /// @author Denis M. Putnam
+    /// @notice Get an invoice
+    /// @param _clientName name of the client
+    /// @param _invoiceNumber invoice number being requested.
+    /// @dev no other details
+    function getInvoice(string memory _clientName, uint256 _invoiceNumber)
+        public
+        view
+        returns (
+            uint256 invoiceNumber,
+            uint256 netTerms,
+            uint256 numberHours,
+            string memory amount,
+            uint256 timesheetEndDate,
+            uint256 invoiceSentDate,
+            uint256 due30DaysDate,
+            uint256 due60DaysDate,
+            uint256 due90DaysDate,
+            uint256 due120DaysDate,
+            uint256 datePmtReceived
+        )
+    {
+
+            Invoice memory lInvoice
+         = clientNameInvoiceMap[_clientName][_invoiceNumber];
+        invoiceNumber = lInvoice.invoiceNumber;
+        netTerms = lInvoice.netTerms;
+        numberHours = lInvoice.numberHours;
+        amount = lInvoice.amount;
+        timesheetEndDate = lInvoice.timesheetEndDate;
+        invoiceSentDate = lInvoice.invoiceSentDate;
+        due30DaysDate = lInvoice.due30DaysDate;
+        due60DaysDate = lInvoice.due60DaysDate;
+        due90DaysDate = lInvoice.due90DaysDate;
+        due120DaysDate = lInvoice.due120DaysDate;
+        datePmtReceived = lInvoice.datePmtReceived;
+        return (
+            invoiceNumber,
+            netTerms,
+            numberHours,
+            amount,
+            timesheetEndDate,
+            invoiceSentDate,
+            due30DaysDate,
+            due60DaysDate,
+            due90DaysDate,
+            due120DaysDate,
+            datePmtReceived
+        );
     }
 
     /// @author Denis M. Putnam
