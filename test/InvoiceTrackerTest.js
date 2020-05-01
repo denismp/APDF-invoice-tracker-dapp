@@ -62,23 +62,19 @@ contract("InvoiceTracker", async accounts => {
       now,
       now
     );
-    // await setTimeout[Object.getOwnPropertySymbols(setTimeout)[0]](5000) // 5 sec
     truffleAssert.prettyPrintEmittedEvents(result);
-
-    if (_invoiceNumber < 2) { // I don't know why this check is needed.  The actual test shows it correctly, otherwise it fails.
-      truffleAssert.eventEmitted(result, 'addInvoiceEvent', (event) => {
-        console.log("event._invoiceNumber=" + event._invoiceNumber);
-        // console.log("       clientID=" + clientID.toUpperCase());
-        const myequal = parseInt(event._invoiceNumber) === 1;
-        console.log("DEBUG:" + myequal);
-        return event._clientName === "test" &&
-          parseInt(event._invoiceNumber) === 1 &&
-          parseInt(event._netTerms) === 30 &&
-          parseInt(event._numberHours) === 80 &&
-          event._amount === "2000.50"
-          ;
-      });
-    }
+    truffleAssert.eventEmitted(result, 'addInvoiceEvent', (event) => {
+      console.log("event._invoiceNumber=" + event._invoiceNumber);
+      // console.log("       clientID=" + clientID.toUpperCase());
+      const myequal = parseInt(event._invoiceNumber) === _invoiceNumber;
+      console.log("DEBUG:" + myequal);
+      return event._clientName === "test" &&
+        parseInt(event._invoiceNumber) === _invoiceNumber &&
+        parseInt(event._netTerms) === 30 &&
+        parseInt(event._numberHours) === 80 &&
+        event._amount === "2000.50"
+        ;
+    });
     const count = await invoiceTracker.getInvoiceCount("test");
     console.log("Invoice count=" + count);
     return count;
