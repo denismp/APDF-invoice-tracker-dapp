@@ -67,6 +67,11 @@ contract InvoiceTracker is Owned {
         _;
     }
 
+    modifier onlyOwner() {
+      require(msg.sender == getCurrentOwner());
+      _;
+    }
+
     /// @author Denis M. Putnam
     /// @notice Add a client to this contract.
     /// @param _clientID address of the wallet of the client.
@@ -74,6 +79,7 @@ contract InvoiceTracker is Owned {
     /// @dev Add's a client to the clientMap and the clientNameAddressMap
     function addClient(address _clientID, string memory _name)
         public
+        onlyOwner()
         noDupClient(_clientID, _name)
     {
         clientMap[_name].clientID = _clientID;
@@ -158,7 +164,7 @@ contract InvoiceTracker is Owned {
         uint256 _due90DaysDate,
         uint256 _due120DaysDate,
         uint256 _datePmtReceived
-    ) public noDupInvoice(_clientName, _invoiceSentDate) {
+    ) public onlyOwner() noDupInvoice(_clientName, _invoiceSentDate) {
         Invoice memory newInvoice;
         newInvoice.invoiceNumber = _invoiceNumber;
         newInvoice.netTerms = _netTerms;
