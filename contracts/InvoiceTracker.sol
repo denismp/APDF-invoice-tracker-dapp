@@ -243,6 +243,7 @@ contract InvoiceTracker is Owned {
     }
 
     function findInvoiceIndex(string memory _clientName, uint256 _invoiceNumber)
+        onlyOwner()
         isInvoiceNumber(_invoiceNumber)
         private
         view
