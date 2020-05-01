@@ -207,6 +207,7 @@ contract InvoiceTracker is Owned {
     /// @param _clientName name of the client
     /// @dev no other details.
     function getInvoiceCount(string memory _clientName)
+        onlyOwner()
         public
         view
         returns (uint256 count)
@@ -219,6 +220,7 @@ contract InvoiceTracker is Owned {
     /// @param _clientName name of the client
     /// @dev returned string is a comma separated string of invoice numbers.  The comma is also the end of the string if no other values appear.
     function getInvoiceNumbers(string memory _clientName)
+        onlyOwner()
         public
         view
         returns (string memory)
@@ -260,6 +262,7 @@ contract InvoiceTracker is Owned {
     /// @param _invoiceNumber invoice number being requested.
     /// @dev no other details
     function getInvoice(string memory _clientName, uint256 _invoiceNumber)
+        onlyOwner()
         public
         view
         returns (
