@@ -6,6 +6,7 @@ import { InvoiceListComponent } from './reports/invoice-list/invoice-list.compon
 
 
 const routes: Routes = [
+  //{ path: '', redirectTo: 'app-root', pathMatch: 'full'},
   { path: '', redirectTo: 'new-client', pathMatch: 'full'},
   { path: 'new-client', component: NewClientComponent },
   { path: 'new-invoice', component: NewInvoiceComponent },
