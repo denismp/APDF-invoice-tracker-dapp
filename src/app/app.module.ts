@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewClientComponent } from './client/new-client/new-client.component';
 import { NewInvoiceComponent } from './invoice/new-invoice/new-invoice.component';
 import { InvoiceListComponent } from './reports/invoice-list/invoice-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { InvoiceListComponent } from './reports/invoice-list/invoice-list.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
