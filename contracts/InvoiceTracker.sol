@@ -68,8 +68,8 @@ contract InvoiceTracker is Owned {
     }
 
     modifier onlyOwner() {
-      require(msg.sender == getCurrentOwner());
-      _;
+        require(msg.sender == getCurrentOwner());
+        _;
     }
 
     /// @author Denis M. Putnam
@@ -136,6 +136,12 @@ contract InvoiceTracker is Owned {
         uint256 _datePmtReceived
     );
 
+    event updateInvoiceEvent(
+        string _clientName,
+        uint256 _invoiceNumber,
+        uint256 _datePmtReceived
+    );
+
     /// @author Denis M. Putnam
     /// @notice Add an invoice to track
     /// @param _clientName name of the client
@@ -149,7 +155,7 @@ contract InvoiceTracker is Owned {
     /// @param _due60DaysDate 60 day invoice due date
     /// @param _due90DaysDate 90 day invoice due date
     /// @param _due120DaysDate 120 day invoice due date
-    /// @param _datePmtReceived date of actual payment
+    /// @param _datePmtReceived pmt date
     /// @dev Add's an invoice to be tracked.
     function addInvoice(
         string memory _clientName,
@@ -180,26 +186,40 @@ contract InvoiceTracker is Owned {
         clientNameInvoiceMap[_clientName].push(newInvoice);
 
         incremmentInvoiceCount(_clientName);
-        //clientNameInvoiceCountMap[_clientName] += 1;
 
         emit addInvoiceEvent(
             _clientName,
-            _invoiceNumber,
-            _netTerms,
-            _numberHours,
-            _amount,
-            _timesheetEndDate,
-            _invoiceSentDate,
-            _due30DaysDate,
-            _due60DaysDate,
-            _due90DaysDate,
-            _due120DaysDate,
-            _datePmtReceived
+            newInvoice.invoiceNumber,
+            newInvoice.netTerms,
+            newInvoice.numberHours,
+            newInvoice.amount,
+            newInvoice.timesheetEndDate,
+            newInvoice.invoiceSentDate,
+            newInvoice.due30DaysDate,
+            newInvoice.due60DaysDate,
+            newInvoice.due90DaysDate,
+            newInvoice.due120DaysDate,
+            newInvoice.datePmtReceived
         );
+
+        // emit addInvoiceEvent(
+        //     _clientName,
+        //     clientNameInvoiceMap[_clientName][0].invoiceNumber,
+        //     clientNameInvoiceMap[_clientName][0].netTerms,
+        //     clientNameInvoiceMap[_clientName][0].numberHours,
+        //     clientNameInvoiceMap[_clientName][0].amount,
+        //     clientNameInvoiceMap[_clientName][0].timesheetEndDate,
+        //     clientNameInvoiceMap[_clientName][0].invoiceSentDate,
+        //     clientNameInvoiceMap[_clientName][0].due30DaysDate,
+        //     clientNameInvoiceMap[_clientName][0].due60DaysDate,
+        //     clientNameInvoiceMap[_clientName][0].due90DaysDate,
+        //     clientNameInvoiceMap[_clientName][0].due120DaysDate,
+        //     clientNameInvoiceMap[_clientName][0].datePmtReceived
+        // );
     }
 
-    function incremmentInvoiceCount(string memory _clientName) private {
-        clientNameInvoiceCountMap[_clientName] += 1;
+    function incremmentInvoiceCount(string memory _clientName) private returns(uint256){
+        return clientNameInvoiceCountMap[_clientName] += 1;
     }
 
     /// @author Denis M. Putnam
@@ -207,9 +227,9 @@ contract InvoiceTracker is Owned {
     /// @param _clientName name of the client
     /// @dev no other details.
     function getInvoiceCount(string memory _clientName)
-        onlyOwner()
         public
         view
+        onlyOwner()
         returns (uint256 count)
     {
         count = clientNameInvoiceCountMap[_clientName];
@@ -220,9 +240,9 @@ contract InvoiceTracker is Owned {
     /// @param _clientName name of the client
     /// @dev returned string is a comma separated string of invoice numbers.  The comma is also the end of the string if no other values appear.
     function getInvoiceNumbers(string memory _clientName)
-        onlyOwner()
         public
         view
+        onlyOwner()
         returns (string memory)
     {
         string memory rVal = "";
@@ -238,18 +258,22 @@ contract InvoiceTracker is Owned {
     }
 
     modifier isInvoiceNumber(uint256 _invoiceNumber) {
-        require( _invoiceNumber > 0, "Invoice number must be greater than 0");
+        require(_invoiceNumber > 0, "Invoice number must be greater than 0");
         _;
     }
 
     function findInvoiceIndex(string memory _clientName, uint256 _invoiceNumber)
-        onlyOwner()
-        isInvoiceNumber(_invoiceNumber)
         private
         view
+        onlyOwner()
+        isInvoiceNumber(_invoiceNumber)
         returns (int256 index)
     {
-        for (int256 i = 0; i < int256(clientNameInvoiceCountMap[_clientName]); i++) {
+        for (
+            int256 i = 0;
+            i < int256(clientNameInvoiceCountMap[_clientName]);
+            i++
+        ) {
             if (_invoiceNumber == clientNameInvoiceCountMap[_clientName]) {
                 return i;
             }
@@ -258,14 +282,40 @@ contract InvoiceTracker is Owned {
     }
 
     /// @author Denis M. Putnam
+    /// @notice Update an invoice with the payment date
+    /// @param _clientName name of the client
+    /// @param _invoiceNumber invoice number being requested.
+    /// @param _invoicePmtDate payment date
+    /// @dev no other details
+    function updateInvoice(
+        string memory _clientName,
+        uint256 _invoiceNumber,
+        uint256 _invoicePmtDate
+    ) public onlyOwner() {
+        int256 _index = findInvoiceIndex(_clientName, _invoiceNumber);
+        if (_index != -1) {
+            Invoice memory lInvoice = clientNameInvoiceMap[_clientName][uint256(
+                _index
+            )];
+            lInvoice.datePmtReceived = _invoicePmtDate;
+            clientNameInvoiceMap[_clientName][uint256(_index)] = lInvoice;
+            emit updateInvoiceEvent(
+                _clientName,
+                _invoiceNumber,
+                _invoicePmtDate
+            );
+        }
+    }
+
+    /// @author Denis M. Putnam
     /// @notice Get an invoice
     /// @param _clientName name of the client
     /// @param _invoiceNumber invoice number being requested.
     /// @dev no other details
     function getInvoice(string memory _clientName, uint256 _invoiceNumber)
-        onlyOwner()
         public
         view
+        onlyOwner()
         returns (
             uint256 invoiceNumber,
             uint256 netTerms,
@@ -285,30 +335,43 @@ contract InvoiceTracker is Owned {
             Invoice memory lInvoice = clientNameInvoiceMap[_clientName][uint256(
                 _index
             )];
-            invoiceNumber = lInvoice.invoiceNumber;
-            netTerms = lInvoice.netTerms;
-            numberHours = lInvoice.numberHours;
-            amount = lInvoice.amount;
-            timesheetEndDate = lInvoice.timesheetEndDate;
-            invoiceSentDate = lInvoice.invoiceSentDate;
-            due30DaysDate = lInvoice.due30DaysDate;
-            due60DaysDate = lInvoice.due60DaysDate;
-            due90DaysDate = lInvoice.due90DaysDate;
-            due120DaysDate = lInvoice.due120DaysDate;
-            datePmtReceived = lInvoice.datePmtReceived;
+            // uint256 invoiceNumber = lInvoice.invoiceNumber;
+            // uint256 netTerms = lInvoice.netTerms;
+            // uint256 numberHours = lInvoice.numberHours;
+            // string memory amount = lInvoice.amount;
+            // uint256 timesheetEndDate = lInvoice.timesheetEndDate;
+            // uint256 invoiceSentDate = lInvoice.invoiceSentDate;
+            // uint256 due30DaysDate = lInvoice.due30DaysDate;
+            // uint256 due60DaysDate = lInvoice.due60DaysDate;
+            // uint256 due90DaysDate = lInvoice.due90DaysDate;
+            // uint256 due120DaysDate = lInvoice.due120DaysDate;
+            // uint256 datePmtReceived = lInvoice.datePmtReceived;
             return (
-                invoiceNumber,
-                netTerms,
-                numberHours,
-                amount,
-                timesheetEndDate,
-                invoiceSentDate,
-                due30DaysDate,
-                due60DaysDate,
-                due90DaysDate,
-                due120DaysDate,
-                datePmtReceived
+                lInvoice.invoiceNumber,
+                lInvoice.netTerms,
+                lInvoice.numberHours,
+                lInvoice.amount,
+                lInvoice.timesheetEndDate,
+                lInvoice.invoiceSentDate,
+                lInvoice.due30DaysDate,
+                lInvoice.due60DaysDate,
+                lInvoice.due90DaysDate,
+                lInvoice.due120DaysDate,
+                lInvoice.datePmtReceived
             );
+            // return (
+            //     invoiceNumber,
+            //     netTerms,
+            //     numberHours,
+            //     amount,
+            //     timesheetEndDate,
+            //     invoiceSentDate,
+            //     due30DaysDate,
+            //     due60DaysDate,
+            //     due90DaysDate,
+            //     due120DaysDate,
+            //     datePmtReceived
+            // );
         }
     }
 

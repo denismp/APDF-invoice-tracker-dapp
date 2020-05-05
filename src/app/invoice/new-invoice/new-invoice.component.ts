@@ -31,8 +31,15 @@ export class NewInvoiceComponent implements OnInit {
     this.model = new Invoice();
   }
 
-  onSubmit() {
+  onSubmit(form: any) {
     this.submitted = true;
+    this.model.invoiceNumber = form.controls['invoiceNumber'].value;
+    this.model.netTerms = form.controls['netTerms'].value;
+    this.model.numberHours = form.controls['numberHours'].value;
+    this.model.amount = form.controls['amount'].value;
+    this.model.timesheetEndDate = form.controls['timesheetEndDate'].value;
+    this.model.invoiceSentDate = form.controls['invoiceSentDate'].value;
+    //TODO calc the rest of the values.
   }
 
   // TODO: Remove this when we're done

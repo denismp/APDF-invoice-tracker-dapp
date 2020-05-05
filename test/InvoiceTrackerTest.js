@@ -19,12 +19,13 @@ contract("InvoiceTracker", async accounts => {
     });
   });
 
-  it('javascript test add an invoice', async () => {
-    const count = await addInvoice(1);
-    assert.equal(count, 1);
-  });
+  // it('javascript test add an invoice', async () => {
+  //   const count = await addInvoice(1);
+  //   assert.equal(count, 1);
+  // });
 
   it('javascript test get invoice numbers', async () => {
+    console.log("GET INVOICE NUMBERS");
     let count = await addInvoice(1);
     assert.equal(count, 1);
     count = await addInvoice(2);
@@ -39,14 +40,35 @@ contract("InvoiceTracker", async accounts => {
     assert.equal(count, 1);
     //const result = await debug(invoiceTracker.getInvoice("test", 1));
     const result = await invoiceTracker.getInvoice("test", 1);
+    console.log("GET INVOICE");
     console.log("invoice number=" + result.invoiceNumber);
     console.log("invoice netTerms=" + result.netTerms);
+    console.log("invoice amount=" + result.amount);
+    console.log("invoice invoicePmtDate=" + result.datePmtReceived);
+    console.log("invoice timesheetEndDate=" + result.timesheetEndDate);
     assert.equal(result.invoiceNumber, 1);
     assert.equal(result.netTerms, 30);
   });
 
+  it('javascript test update invoice', async () => {
+    let count = await addInvoice(1);
+    assert.equal(count, 1);
+    //const result = await debug(invoiceTracker.getInvoice("test", 1));
+    const now = Math.floor((new Date()).getTime() / 1000) + 100;
+    console.log("UPDATE INVOICE");
+    let result = await invoiceTracker.updateInvoice("test", 1, now);
+    truffleAssert.prettyPrintEmittedEvents(result);
+    result = await invoiceTracker.getInvoice("test", 1);
+    console.log("updated invoice number=" + result.invoiceNumber);
+    console.log("update invoice netTerms=" + result.netTerms);
+    console.log("updated invoice invoicePmtDate=" + result.datePmtReceived);
+    console.log("updated now=" + now);
+    assert.equal(result.datePmtReceived, now);
+  });
+
   async function addInvoice(_invoiceNumber) {
     const now = Math.floor((new Date()).getTime() / 1000);
+    console.log("ADD INVOICE");
     console.log("Adding invoice number=" + _invoiceNumber);
     const result = await invoiceTracker.addInvoice(
       "test",
