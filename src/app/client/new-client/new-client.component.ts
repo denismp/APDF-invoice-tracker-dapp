@@ -9,8 +9,6 @@ import { from } from 'rxjs';
 })
 export class NewClientComponent implements OnInit {
 
-  powers = ['Really Smart', 'Super Flexible',
-    'Super Hot', 'Weather Changer'];
   submitted = false;
   //model = new Client('0xdd18cbfab0297cdea52b16f7ed06625dc5ff6b12', 'test');
   model = new Client('', '');
