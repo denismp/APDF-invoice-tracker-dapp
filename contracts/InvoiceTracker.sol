@@ -335,17 +335,6 @@ contract InvoiceTracker is Owned {
             Invoice memory lInvoice = clientNameInvoiceMap[_clientName][uint256(
                 _index
             )];
-            // uint256 invoiceNumber = lInvoice.invoiceNumber;
-            // uint256 netTerms = lInvoice.netTerms;
-            // uint256 numberHours = lInvoice.numberHours;
-            // string memory amount = lInvoice.amount;
-            // uint256 timesheetEndDate = lInvoice.timesheetEndDate;
-            // uint256 invoiceSentDate = lInvoice.invoiceSentDate;
-            // uint256 due30DaysDate = lInvoice.due30DaysDate;
-            // uint256 due60DaysDate = lInvoice.due60DaysDate;
-            // uint256 due90DaysDate = lInvoice.due90DaysDate;
-            // uint256 due120DaysDate = lInvoice.due120DaysDate;
-            // uint256 datePmtReceived = lInvoice.datePmtReceived;
             return (
                 lInvoice.invoiceNumber,
                 lInvoice.netTerms,
