@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Invoice } from './invoice';
+import { NgbDatepicker, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-new-invoice',
@@ -7,6 +8,9 @@ import { Invoice } from './invoice';
   styleUrls: ['./new-invoice.component.css']
 })
 export class NewInvoiceComponent implements OnInit {
+  //@ViewChild('dp') dp: NgbDatepicker;
+  dateModel: NgbDateStruct;
+  //date: { year: number, month: number, day: number };
   submitted = false;
   //model = new Client('0xdd18cbfab0297cdea52b16f7ed06625dc5ff6b12', 'test');
   // public invoiceNumber: number,
@@ -21,7 +25,7 @@ export class NewInvoiceComponent implements OnInit {
   // public due120DaysDate: number,
   // public datePmtReceived: number
   model = new Invoice();
-  constructor() { }
+  constructor(public formatter: NgbDateParserFormatter) { }
 
   ngOnInit(): void {
   }
@@ -37,8 +41,10 @@ export class NewInvoiceComponent implements OnInit {
     this.model.netTerms = form.controls['netTerms'].value;
     this.model.numberHours = form.controls['numberHours'].value;
     this.model.amount = form.controls['amount'].value;
-    this.model.timesheetEndDate = form.controls['timesheetEndDate'].value;
-    this.model.invoiceSentDate = form.controls['invoiceSentDate'].value;
+    //TODO convert timesheetend to the number of seconds since 1970
+    console.log('date=' + form.controls.timesheetend.value.year + '-' + form.controls.timesheetend.value.month + '-' + form.controls.timesheetend.value.day);
+    // this.model.timesheetEndDate = form.controls['timesheetEndDate'].value;
+    // this.model.invoiceSentDate = form.controls['invoiceSentDate'].value;
     //TODO calc the rest of the values.
   }
 
@@ -63,5 +69,9 @@ export class NewInvoiceComponent implements OnInit {
     }
     return rVal;
   }
+
+  // navigateTimeSheetEndDate(event) {
+  //   this.date = event.next;
+  // }
 
 }
