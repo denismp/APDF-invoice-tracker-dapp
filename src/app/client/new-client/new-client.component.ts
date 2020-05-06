@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from './client';
 import { from } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-new-client',
@@ -23,7 +24,8 @@ export class NewClientComponent implements OnInit {
     this.model = new Client('', '');
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
+    console.log(form);
     this.submitted = true;
   }
 

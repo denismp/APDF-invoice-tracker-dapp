@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Invoice } from './invoice';
 import { NgbDatepicker, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-new-invoice',
@@ -35,7 +36,8 @@ export class NewInvoiceComponent implements OnInit {
     this.model = new Invoice();
   }
 
-  onSubmit(form: any) {
+  onSubmit(form: NgForm) {
+    console.log(form);
     this.submitted = true;
     this.model.invoiceNumber = form.controls['invoiceNumber'].value;
     this.model.netTerms = form.controls['netTerms'].value;
