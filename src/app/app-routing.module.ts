@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewClientComponent } from './client/new-client/new-client.component';
 import { NewInvoiceComponent } from './invoice/new-invoice/new-invoice.component';
 import { InvoiceListComponent } from './reports/invoice-list/invoice-list.component';
+import { UpdateInvoiceComponent } from './invoice/update-invoice/update-invoice.component';
 
 
 const routes: Routes = [
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'new-client', pathMatch: 'full'},
   { path: 'new-client', component: NewClientComponent },
   { path: 'new-invoice', component: NewInvoiceComponent },
+  { path: 'update-invoice', component: UpdateInvoiceComponent },
   { path: 'invoice-list', component: InvoiceListComponent },
 ]
 

@@ -20,6 +20,15 @@
   </li>
   <li [ngbNavItem]="3"
     routerLinkActive="active"
+    ngbTooltip="Update invoice"
+  >
+    <a ngbNavLink routerLink="/update-invoice">Update Invoice</a>
+    <ng-template ngbNavContent>
+      <!-- <app-new-invoice></app-new-invoice> -->
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="4"
+    routerLinkActive="active"
     ngbTooltip="Generate invoice report"
   >
     <a ngbNavLink routerLink="/invoice-list">Invoice Report</a>
