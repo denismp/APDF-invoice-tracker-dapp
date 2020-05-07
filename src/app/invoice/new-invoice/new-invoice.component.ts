@@ -39,11 +39,22 @@ export class NewInvoiceComponent implements OnInit {
   onSubmit(form: NgForm) {
     console.log(form);
     this.submitted = true;
+    this.model.clientName = form.controls['clientName'].value;
     this.model.invoiceNumber = form.controls['invoiceNumber'].value;
     this.model.netTerms = form.controls['netTerms'].value;
     this.model.numberHours = form.controls['numberHours'].value;
     this.model.amount = form.controls['amount'].value;
     //TODO convert timesheetend to the number of seconds since 1970
+    let _date = new Date();
+    _date.setDate(form.controls.timesheetend.value.day);
+    _date.setMonth(form.controls.timesheetend.value.month - 1);
+    _date.setFullYear(form.controls.timesheetend.value.year);
+    this.model.rTimesheetEndDate = _date;
+    this.model.timesheetEndDate= _date.getTime();
+    this.model.sTimesheetEndDate= _date.toDateString();
+    console.log("rdate=" + this.model.rTimesheetEndDate);
+    console.log("sdate=" + this.model.sTimesheetEndDate);
+    console.log("time=" + this.model.timesheetEndDate);
     console.log('date=' + form.controls.timesheetend.value.year + '-' + form.controls.timesheetend.value.month + '-' + form.controls.timesheetend.value.day);
     // this.model.timesheetEndDate = form.controls['timesheetEndDate'].value;
     // this.model.invoiceSentDate = form.controls['invoiceSentDate'].value;
@@ -60,13 +71,12 @@ export class NewInvoiceComponent implements OnInit {
     let rVal: string = "";
     if (form !== undefined) {
       if (form.controls['invoiceNumber'] !== undefined) {
-        console.log('Invoice Number:' + form.controls['invoiceNumber'].value);
+        //console.log('Invoice Number:' + form.controls['invoiceNumber'].value);
         rVal =
+          'Client Name: ' + form.controls['clientName'].value +
           'Invoice Number: ' + form.controls['invoiceNumber'].value +
           ', Net Terms: ' + form.controls['netTerms'].value;
-      }
-      if (form.controls['netTerms'] !== undefined) {
-        console.log('Net Terms:' + form.controls['netTerms'].value);
+        console.log(rVal);
       }
     }
     return rVal;

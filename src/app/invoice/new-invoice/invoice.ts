@@ -1,15 +1,20 @@
 export class Invoice {
+    public clientName: string;
     public invoiceNumber: number;
     public netTerms: number;
     public numberHours: number;
     public amount: string;
     public timesheetEndDate: number;
+    public rTimesheetEndDate: Date;
+    public sTimesheetEndDate: string;
     public invoiceSentDate: number;
     public due30DaysDate: number;
     public due60DaysDate: number;
     public due90DaysDate: number;
     public due120DaysDate: number;
     public datePmtReceived: number;
+    public rDatePmtReceived: Date;
+    public sDatePmtReceived: string;
   constructor() {  }
 
 }
