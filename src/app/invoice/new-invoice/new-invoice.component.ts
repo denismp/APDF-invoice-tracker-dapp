@@ -10,22 +10,26 @@ import { NgForm } from '@angular/forms';
 })
 export class NewInvoiceComponent implements OnInit {
   //@ViewChild('dp') dp: NgbDatepicker;
-  dateModel: NgbDateStruct;
+  timesheetEnddateModel: NgbDateStruct;
+  invoicesentDateModel: NgbDateStruct;
   //date: { year: number, month: number, day: number };
   submitted = false;
-  //model = new Client('0xdd18cbfab0297cdea52b16f7ed06625dc5ff6b12', 'test');
-  // public invoiceNumber: number,
-  // public netTerms: number,
-  // public numberHours: number,
-  // public amount: string,
-  // public timesheetEndDate: number,
-  // public invoiceSentDate: number,
-  // public due30DaysDate: number,
-  // public due60DaysDate: number,
-  // public due90DaysDate: number,
-  // public due120DaysDate: number,
-  // public datePmtReceived: number
   model = new Invoice();
+  clientName: string;
+  invoiceNumber: string;
+  netTerms: string;
+  numberHours: string;
+  amount: string;
+  timesheetEndDate: string;
+  invoiceSentDate: string;
+  due30DaysDate: string;
+  due60DaysDate: string;
+  due90DaysDate: string;
+  due120DaysDate: string;
+  datePmtReceived: string;
+  sDatePmtReceived: string;
+
+
   constructor(public formatter: NgbDateParserFormatter) { }
 
   ngOnInit(): void {
@@ -50,16 +54,68 @@ export class NewInvoiceComponent implements OnInit {
     _date.setMonth(form.controls.timesheetend.value.month - 1);
     _date.setFullYear(form.controls.timesheetend.value.year);
     this.model.rTimesheetEndDate = _date;
-    this.model.timesheetEndDate= _date.getTime();
+    this.model.timesheetEndDate= Math.round(_date.getTime() / 1000); // convert milliseconds to seconds for solidity time stamp.
     this.model.sTimesheetEndDate= _date.toDateString();
     console.log("rdate=" + this.model.rTimesheetEndDate);
     console.log("sdate=" + this.model.sTimesheetEndDate);
     console.log("time=" + this.model.timesheetEndDate);
     console.log('date=' + form.controls.timesheetend.value.year + '-' + form.controls.timesheetend.value.month + '-' + form.controls.timesheetend.value.day);
-    // this.model.timesheetEndDate = form.controls['timesheetEndDate'].value;
-    // this.model.invoiceSentDate = form.controls['invoiceSentDate'].value;
-    //TODO calc the rest of the values.
+
+    _date = new Date();
+    _date.setDate(form.controls.invoicesentdate.value.day);
+    _date.setMonth(form.controls.invoicesentdate.value.month - 1);
+    _date.setFullYear(form.controls.invoicesentdate.value.year);
+    console.log('date=' + form.controls.invoicesentdate.value.year + '-' + form.controls.invoicesentdate.value.month + '-' + form.controls.invoicesentdate.value.day);
+    console.log("Invoice sent date=" + _date.toDateString());
+    this.model.invoiceSentDate = Math.round(_date.getTime() / 1000); // convert millseconds to seconds for solidity time stamp.
+
+    // calc the rest of the values.
+    // User the invoice sent date to calculate the other dates
+    let _invoiceSentTime = _date.getTime();
+    let _30days = this.convertMillisecondsToSeconds(_invoiceSentTime, 30);
+    let _60days = this.convertMillisecondsToSeconds(_invoiceSentTime, 60);
+    let _90days = this.convertMillisecondsToSeconds(_invoiceSentTime, 90);
+    let _120days = this.convertMillisecondsToSeconds(_invoiceSentTime, 120);
+    this.model.due30DaysDate = _30days;
+    this.model.due60DaysDate = _60days;
+    this.model.due90DaysDate = _90days;
+    this.model.due120DaysDate = _120days;
+    console.log(this.model);
+
+    this.clientName = this.model.clientName;
+    this.invoiceNumber = this.model.invoiceNumber.toString();
+    this.invoiceSentDate = new Date(this.model.invoiceSentDate * 1000).toDateString();
+    this.netTerms = this.model.netTerms.toString();
+    this.numberHours = this.model.numberHours.toString();
+    console.log('numberHours=' + this.numberHours);
+    this.amount = this.model.amount;
+
+    this.timesheetEndDate = this.model.sTimesheetEndDate;
+    this.due30DaysDate = this.getDateString(_invoiceSentTime, 30);
+    console.log('due30DaysDate='+this.due30DaysDate);
+    this.due60DaysDate = this.getDateString(_invoiceSentTime, 60);
+    console.log('due60DaysDate='+this.due60DaysDate);
+    this.due90DaysDate = this.getDateString(_invoiceSentTime, 90);
+    console.log('due90DaysDate='+this.due90DaysDate);
+    this.due120DaysDate = this.getDateString(_invoiceSentTime, 120);
+    console.log('due120DaysDate='+this.due120DaysDate);
+    // TODO: This is where we interface with the solidity contract to create the new invoice.
   }
+
+  private convertMillisecondsToSeconds(_milliseconds: number, _numDays: number) {
+    const _numSecondsInDay = 86400;
+    let _daysInSeconds = new Date(_milliseconds + (_numSecondsInDay * _numDays)).getTime() / 1000;
+    _daysInSeconds = Math.round(_daysInSeconds);
+    //console.log('_daysInSeconds=' + _daysInSeconds);
+    return _daysInSeconds;
+  }
+
+  private getDateString(_startInMilliseconds: number,_numDays: number) {
+    const _numSecondsInDay = 86400;
+    let rVal: string = new Date(_startInMilliseconds + (_numSecondsInDay * _numDays * 1000)).toDateString();
+    return rVal;
+  }
+
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }

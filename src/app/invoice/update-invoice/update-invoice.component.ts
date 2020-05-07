@@ -14,6 +14,7 @@ export class UpdateInvoiceComponent implements OnInit {
   //date: { year: number, month: number, day: number };
   submitted = false;
   model = new Invoice();
+  sdatePmt: string;
   constructor(public formatter: NgbDateParserFormatter) { }
 
   ngOnInit(): void {
@@ -37,10 +38,13 @@ export class UpdateInvoiceComponent implements OnInit {
     this.model.rDatePmtReceived = _date;
     this.model.datePmtReceived = _date.getTime();
     this.model.sDatePmtReceived = _date.toDateString();
+    this.sdatePmt = _date.toDateString();
     console.log("rdate=" + this.model.rDatePmtReceived);
     console.log("sdate=" + this.model.sDatePmtReceived);
     console.log("time=" + this.model.datePmtReceived);
     console.log('date=' + form.controls.datepmtreceived.value.year + '-' + form.controls.datepmtreceived.value.month + '-' + form.controls.datepmtreceived.value.day);
+    console.log(this.model);
+    // TODO: Here we need to call the updateInvoice() on the solidity contract.
   }
 
   // TODO: Remove this when we're done

@@ -58,14 +58,23 @@
       <ngb-datepicker #dp [(ngModel)]="dateModel" placeholder="yyyy-mm-dd" (navigate)="navigateTimeSheetEndDate($event)"></ngb-datepicker> -->
       <div class="input-group">
         <label for="timesheetend">Time sheet ending date</label>
-        <input class="form-control" placeholder="yyyy-mm-dd" name="timesheetend" [(ngModel)]="dateModel" ngbDatepicker #d="ngbDatepicker">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="timesheetend" [(ngModel)]="timesheetEnddateModel" ngbDatepicker #timesheetend="ngbDatepicker">
 
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">📅</button>
+          <button class="btn btn-outline-secondary calendar" (click)="timesheetend.toggle()" type="button">📅</button>
         </div>
 
       </div>
 
+      <div class="input-group">
+        <label for="invoicesentdate">Invoice sent date</label>
+        <input class="form-control" placeholder="yyyy-mm-dd" name="invoicesentdate" [(ngModel)]="invoicesentDateModel" ngbDatepicker #invoicesentdate="ngbDatepicker">
+
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="invoicesentdate.toggle()" type="button">📅</button>
+        </div>
+
+      </div>
       <!-- <div class="form-group">
           <label for="alterEgo">Account Address</label>
           <input type="text" class="form-control" id="address" [(ngModel)]="model.address" name="accountAddress">
@@ -88,15 +97,64 @@
     </form>
   </div>
 
+  <!-- this.clientName = this.model.clientName;
+  this.invoiceNumber = this.model.invoiceNumber.toString();
+  this.invoiceSentDate = _date.toDateString();
+  this.netTerms = this.model.netTerms.toString();
+  this.numberHours = this.model.numberHours.toString();
+  this.amount = this.model.amount;
+
+  this.timesheetEndDate = this.model.sTimesheetEndDate;
+  this.due30DaysDate = new Date(_30days * 1000).toDateString();
+  this.due60DaysDate = new Date(_60days * 1000).toDateString();
+  this.due90DaysDate = new Date(_90days * 1000).toDateString();
+  this.due120DaysDate = new Date(_120days * 1000).toDateString(); -->
+
   <div [hidden]="!submitted">
     <h2>You submitted the following New Invoice:</h2>
     <div class="row">
-      <div class="col-xs-3">Name: </div>
+      <div class="col-xs-3">Client Name: </div>
+      <div class="col-xs-9">{{ model.clientName }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Invoice Number: </div>
       <div class="col-xs-9">{{ model.invoiceNumber }}</div>
     </div>
     <div class="row">
-      <div class="col-xs-3">Account Address: </div>
+      <div class="col-xs-3">Net Terms: </div>
       <div class="col-xs-9">{{ model.netTerms }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Amount: </div>
+      <div class="col-xs-9">{{ model.amount }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Number Of Hours: </div>
+      <div class="col-xs-9">{{ model.numberHours }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Timesheet End Date: </div>
+      <div class="col-xs-9">{{ timesheetEndDate }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Timesheet Sent Date: </div>
+      <div class="col-xs-9">{{ invoiceSentDate }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">30 Days Due Date: </div>
+      <div class="col-xs-9">{{ due30DaysDate }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">60 Days Due Date: </div>
+      <div class="col-xs-9">{{ due60DaysDate }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">90 Days Due Date: </div>
+      <div class="col-xs-9">{{ due90DaysDate }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">120 Days Due Date: </div>
+      <div class="col-xs-9">{{ due120DaysDate }}</div>
     </div>
     <br>
     <!-- <button class="btn btn-primary" (click)="submitted=false">New</button> -->
