@@ -26,6 +26,7 @@ export class NewClientComponent implements OnInit {
   onSubmit(form: NgForm) {
     console.log(form);
     this.submitted = true;
+    // TODO: This is where we connect to the solidity contract to create client.
   }
 
   // TODO: Remove this when we're done
