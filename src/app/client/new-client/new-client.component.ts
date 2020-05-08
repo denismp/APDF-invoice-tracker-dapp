@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from './client';
-import { from } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -32,20 +31,17 @@ export class NewClientComponent implements OnInit {
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
 
-
   // Reveal in html:
-  //   Name via form.controls = {{showFormControls(clientForm)}}
+  // Name via form.controls = {{showFormControls(clientForm)}}
   showFormControls(form: any) {
     let rVal: string = "";
     if (form !== undefined) {
       if (form.controls['name'] !== undefined) {
-        console.log('Name:' + form.controls['name'].value);
+        // console.log('Name:' + form.controls['name'].value);
         rVal =
           'Name: ' + form.controls['name'].value +
           ', Account Address: ' + form.controls['accountAddress'].value;
-      }
-      if (form.controls['accountAddress'] !== undefined) {
-        console.log('Address' + form.controls['accountAddress'].value);
+        console.log(rVal);
       }
     }
     return rVal;
