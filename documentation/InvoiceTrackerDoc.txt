@@ -1,0 +1,193 @@
+
+======= contracts/InvoiceTracker.sol:InvoiceTracker =======
+Developer Documentation
+{
+  "author": "Denis M. Putnam",
+  "details": "Use at your own risk.",
+  "methods":
+  {
+    "addClient(address,string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Add's a client to the clientMap and the clientNameAddressMap",
+      "params":
+      {
+        "_clientID": "address of the wallet of the client.",
+        "_name": "string with the client's name.  This needs to be unique"
+      }
+    },
+    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Add's an invoice to be tracked.",
+      "params":
+      {
+        "_amount": "amount in dollars.",
+        "_clientName": "name of the client",
+        "_datePmtReceived": "pmt date",
+        "_due120DaysDate": "120 day invoice due date",
+        "_due30DaysDate": "30 day invoice due date",
+        "_due60DaysDate": "60 day invoice due date",
+        "_due90DaysDate": "90 day invoice due date",
+        "_invoiceNumber": "invoice number",
+        "_invoiceSentDate": "date that invoice was sent to the client.",
+        "_netTerms": "net terms for 30, 60, 90, or 120 days.",
+        "_numberHours": "number of hours for the timesheet.",
+        "_timesheetEndDate": "timesheet end date"
+      }
+    },
+    "changeOwner(address)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "params":
+      {
+        "newOwner": "new address payable owner."
+      }
+    },
+    "constructor":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details"
+    },
+    "getCurrentOwner()":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "returns":
+      {
+        "_0": "address current owner."
+      }
+    },
+    "getInvoice(string,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details",
+      "params":
+      {
+        "_clientName": "name of the client",
+        "_invoiceNumber": "invoice number being requested."
+      }
+    },
+    "getInvoiceCount(string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details.",
+      "params":
+      {
+        "_clientName": "name of the client"
+      }
+    },
+    "getInvoiceNumbers(string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "returned string is a comma separated string of invoice numbers.  The comma is also the end of the string if no other values appear.",
+      "params":
+      {
+        "_clientName": "name of the client"
+      }
+    },
+    "updateInvoice(string,uint256,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details",
+      "params":
+      {
+        "_clientName": "name of the client",
+        "_invoiceNumber": "invoice number being requested.",
+        "_invoicePmtDate": "payment date"
+      }
+    }
+  },
+  "title": "Invoice Tracking contract"
+}
+User Documentation
+{
+  "methods":
+  {
+    "addClient(address,string)":
+    {
+      "notice": "Add a client to this contract."
+    },
+    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256,uint256)":
+    {
+      "notice": "Add an invoice to track"
+    },
+    "changeOwner(address)":
+    {
+      "notice": "Change the current owner to the new owner."
+    },
+    "constructor": "The constructor for this contract",
+    "getCurrentOwner()":
+    {
+      "notice": "Get the current owner."
+    },
+    "getInvoice(string,uint256)":
+    {
+      "notice": "Get an invoice"
+    },
+    "getInvoiceCount(string)":
+    {
+      "notice": "Get the count of invoices associated with the given client name"
+    },
+    "getInvoiceNumbers(string)":
+    {
+      "notice": "Get the list of invoice numbers as a string for the given client name."
+    },
+    "updateInvoice(string,uint256,uint256)":
+    {
+      "notice": "Update an invoice with the payment date"
+    }
+  },
+  "notice": "This contract tracks invoices for payment"
+}
+
+======= contracts/Owned.sol:Owned =======
+Developer Documentation
+{
+  "author": "Denis M. Putnam",
+  "details": "Use at your own risk.",
+  "methods":
+  {
+    "changeOwner(address)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "params":
+      {
+        "newOwner": "new address payable owner."
+      }
+    },
+    "constructor":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Sets the initial owner of the the contract."
+    },
+    "getCurrentOwner()":
+    {
+      "author": "Denis M. Putnam",
+      "details": "No other details.",
+      "returns":
+      {
+        "_0": "address current owner."
+      }
+    }
+  },
+  "title": "Owned contract"
+}
+User Documentation
+{
+  "methods":
+  {
+    "changeOwner(address)":
+    {
+      "notice": "Change the current owner to the new owner."
+    },
+    "constructor": "Constructor called when the contract is deployed.",
+    "getCurrentOwner()":
+    {
+      "notice": "Get the current owner."
+    }
+  },
+  "notice": "This contract establishes the owner and allows for an owner change."
+}
