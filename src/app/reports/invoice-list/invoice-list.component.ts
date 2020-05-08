@@ -30,7 +30,7 @@ export class InvoiceListComponent implements OnInit {
       this.submitted = true;
       this.model.clientName = form.controls['clientName'].value;
       console.log(this.model);
-      // TODO: Here we need to call the updateInvoice() on the solidity contract.
+      // TODO: Here we need to call the solidity contract to get the list of invoice numbers and then retrieve the invoices one at a time.
     }
 
     // TODO: Remove this when we're done
