@@ -1,8 +1,43 @@
-<p>invoice-list works!</p>
+<!-- <p>invoice-list works!</p>
 <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
   Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
   Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
   egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
   tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
   magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-  neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+  neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p> -->
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Request Invoices Report Form</h1>
+    <form (ngSubmit)="onSubmit(invoiceForm)" #invoiceForm="ngForm">
+      <div class="form-group">
+        <label for="clientName">Client Name</label>
+        <input type="text" class="form-control" id="clientName" required [(ngModel)]="model.clientName"
+          name="clientName" #clientName="ngModel">
+        <div [hidden]="clientName.valid || clientName.pristine" class="alert alert-danger">
+          Client Name is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!invoiceForm.form.valid">Submit</button>
+
+      <!-- NOT SHOWN IN DOCS -->
+      <div>
+        <hr>
+        Form values via form.controls = {{showFormControls(invoiceForm)}}
+      </div>
+      <!-- - -->
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>You requested invoices for the following client:</h2>
+    <div class="row">
+      <div class="col-xs-3">Client Name: </div>
+      <div class="col-xs-9">{{ model.clientName }}</div>
+    </div>
+    <br>
+    <!-- <button class="btn btn-primary" (click)="submitted=false">New</button> -->
+    <button class="btn btn-primary" (click)="newInvoice()">New</button>
+  </div>
+</div>
