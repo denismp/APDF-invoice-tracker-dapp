@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 import { NewClientComponent } from './client/new-client/new-client.component';
 import { NewInvoiceComponent } from './invoice/new-invoice/new-invoice.component';
 import { InvoiceListComponent } from './reports/invoice-list/invoice-list.component';
@@ -24,7 +25,8 @@ import { UpdateInvoiceComponent } from './invoice/update-invoice/update-invoice.
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

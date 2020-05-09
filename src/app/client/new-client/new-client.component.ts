@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from './client';
 import { NgForm } from '@angular/forms';
+import { ClientServiceService } from 'src/app/services/client-service.service';
+import { ethers } from 'ethers';
+import { subscribeOn } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-client',
@@ -12,10 +15,18 @@ export class NewClientComponent implements OnInit {
   submitted = false;
   //model = new Client('0xdd18cbfab0297cdea52b16f7ed06625dc5ff6b12', 'test');
   model = new Client('', '');
+  // invoiceTracker: ethers.Contract;
 
-  constructor() { }
+  constructor(private clientService: ClientServiceService) { }
 
   ngOnInit(): void {
+    // this.clientService.getInvoiceTracker().subscribe(
+    //   (invoiceTrackerContract: ethers.Contract) =>
+    //   {
+    //     this.invoiceTracker = invoiceTrackerContract
+    //   }, (error: any) => {
+    //     console.log(error);
+    //   });
   }
 
   newClient() {
@@ -27,6 +38,14 @@ export class NewClientComponent implements OnInit {
     console.log(form);
     this.submitted = true;
     // TODO: This is where we connect to the solidity contract to create client.
+    this.clientService.createClient(form.controls['accountAddress'].value, form.controls['name'].value).subscribe(
+      (model: Client) =>
+      {
+        this.model = model;
+        console.log(model);
+      }, error => {
+        console.log(error);
+      });
   }
 
   // TODO: Remove this when we're done

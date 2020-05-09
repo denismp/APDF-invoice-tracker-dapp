@@ -164,3 +164,51 @@ User Documentation
 1. Make sure you run "npm install --save-dev solidity-coverage"
 2. Run "truffle run coverage"
 
+## Debugging
+1. To debug the javascript test code and the the angular application add the following to the launch.json file:
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Tests",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "/Users/denisputnam/.nvm/versions/node/v12.16.1/lib/node_modules/truffle/build/cli.bundled.js",
+      "args": [
+        "test"
+      ],
+      "cwd": "${workspaceRoot}",
+      "outFiles": [
+        "${workspaceRoot}/test/**/*"
+      ],
+    }
+  ]
+}
+2. To debug the javascript test code, do the Run Tests configuration.
+3. To test the angular application, run the Launch Chrome configuration.
+4. To debug the solidity contract, add the "debug()" wrapped around one of the await calls in the javascript tests
+    and then in truffle run "test --debug".  This will cause truffle to stop at the debug() call and then you can 
+    use the command line to step or display debug information. 
+    For example: const result = await debug(invoiceTracker.getInvoiceNumbers("test"));
+    will cause truffle to stop at the statement.
+
+## Notes
+  Below is the command line history of what I did for etherjs to connect to ropsten via metamask.
+  505  npm install web3 -- I am not using this at the moment in lieu of metamask.  Hence the uninstall.
+  506  npm uninstall web3
+  515  npm install --save ethers
+  516  npm install crypto-js
+
