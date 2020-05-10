@@ -14,37 +14,30 @@ export class NewClientComponent implements OnInit {
 
   submitted = false;
   //model = new Client('0xdd18cbfab0297cdea52b16f7ed06625dc5ff6b12', 'test');
-  model = new Client('', '');
+  model = new Client('', '', '');
   // invoiceTracker: ethers.Contract;
 
   constructor(private clientService: ClientServiceService) { }
 
   ngOnInit(): void {
-    // this.clientService.getInvoiceTracker().subscribe(
-    //   (invoiceTrackerContract: ethers.Contract) =>
-    //   {
-    //     this.invoiceTracker = invoiceTrackerContract
-    //   }, (error: any) => {
-    //     console.log(error);
-    //   });
   }
 
   newClient() {
     this.submitted = false;
-    this.model = new Client('', '');
+    this.model = new Client('', '', '');
   }
 
   onSubmit(form: NgForm) {
     console.log(form);
     this.submitted = true;
     // TODO: This is where we connect to the solidity contract to create client.
-    this.clientService.createClient(form.controls['accountAddress'].value, form.controls['name'].value).subscribe(
+    this.clientService.createClient(form.controls['accountAddress'].value, form.controls['name'].value, form.controls['privatekey'].value).subscribe(
       (model: Client) =>
       {
         this.model = model;
-        console.log(model);
+        console.log('MODEL='+model);
       }, error => {
-        console.log(error);
+        console.log("error"+error);
       });
   }
 

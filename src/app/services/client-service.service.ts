@@ -26,9 +26,9 @@ export class ClientServiceService {
 
   //mweb3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545')); // keeping this for future reference.
   // Attempting to use the example from MI4-exercise7 to use metamask
-  provider = new ethers.providers.EtherscanProvider('ropsten')
-  contractAddress = "0x28fcf7997e56f1fadd4fa39fd834e5b96cb13b2b";
-  contractABI = [
+  private provider = new ethers.providers.EtherscanProvider('ropsten')
+  private contractAddress = "0xe6482f6554074c666593b5f38fe5357828a1fbd7";
+  private contractABI = [
     {
       "inputs": [
         {
@@ -405,7 +405,9 @@ export class ClientServiceService {
       "type": "function"
     }
   ];
-  contract = new ethers.Contract(this.contractAddress, this.contractABI, this.provider);
+  private wallet: ethers.Wallet;
+  private contract: ethers.Contract;
+  //contract = new ethers.Contract(this.contractAddress, this.contractABI, this.provider);
 
   //constructor(private http: HttpClient) { }
   constructor() { }
@@ -414,7 +416,13 @@ export class ClientServiceService {
   //   return this.contract.new();
   // }
 
-  createClient(clientID: string, clientName: string): Observable<any> {
+  private initContract(privateKey: string) {
+    this.wallet = new ethers.Wallet(privateKey, this.provider);
+    this.contract = new ethers.Contract(this.contractAddress, this.contractABI, this.wallet);
+  }
+
+  createClient(clientID: string, clientName: string, privateKey: string): Observable<any> {
+    this.initContract(privateKey);
     return from(this.contract.addClient(clientID, clientName));
   }
 }
