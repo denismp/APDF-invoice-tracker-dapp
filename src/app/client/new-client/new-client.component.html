@@ -26,7 +26,7 @@
 
       <div class="form-group">
         <label for="privatekey">Private Key</label>
-        <input type="text" class="form-control" id="privatekey" required [(ngModel)]="model.privateKey" name="privatekey"
+        <input type="password" class="form-control" id="privatekey" required [(ngModel)]="model.privateKey" name="privatekey"
           #privatekey="ngModel">
         <div [hidden]="privatekey.valid || privatekey.pristine" class="alert alert-danger">
           Account Address is required
