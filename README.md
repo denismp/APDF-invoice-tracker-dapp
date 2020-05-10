@@ -212,3 +212,5 @@ User Documentation
   515  npm install --save ethers
   516  npm install crypto-js
 
+  https://app.diagrams.net/?libs=general;uml#G1xdswWXjxtiKqe4_1-VtyloQFIJgOwUne
+
