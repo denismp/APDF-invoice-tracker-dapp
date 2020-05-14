@@ -118,11 +118,11 @@ export class NewInvoiceComponent implements OnInit {
       this.model.due90DaysDate,
       this.model.due120DaysDate
     ).subscribe(
-        //this.model = model;
-        res => console.log('SUCCESS: ', res),
-        error =>  console.log("error" + error),
-        () => console.log('Request completed')
-      );
+      //this.model = model;
+      res => console.log('SUCCESS: ', res),
+      error => console.log("error" + error),
+      () => console.log('Request completed')
+    );
   }
 
   private convertMillisecondsToSeconds(_milliseconds: number, _numDays: number) {

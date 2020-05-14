@@ -35,11 +35,11 @@ export class NewClientComponent implements OnInit {
       form.controls['accountAddress'].value,
       form.controls['name'].value,
       form.controls['privatekey'].value
-      ).subscribe(
-        res => console.log('SUCCESS: ',  res),
-        error => console.log("error" + error),
-        () => console.log('Request completed')
-      );
+    ).subscribe(
+      res => console.log('SUCCESS: ', res),
+      error => console.log("error" + error),
+      () => console.log('Request completed')
+    );
     // this.clientService.createClient(form.controls['accountAddress'].value, form.controls['name'].value, form.controls['privatekey'].value).subscribe(
     //   (model: Client) => {
     //     //this.model = model;
