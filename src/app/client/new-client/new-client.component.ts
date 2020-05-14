@@ -32,12 +32,11 @@ export class NewClientComponent implements OnInit {
     this.submitted = true;
     // TODO: This is where we connect to the solidity contract to create client.
     this.clientService.createClient(form.controls['accountAddress'].value, form.controls['name'].value, form.controls['privatekey'].value).subscribe(
-      (model: Client) =>
-      {
+      (model: Client) => {
         this.model = model;
-        console.log('MODEL='+model);
+        console.log('MODEL=' + model);
       }, error => {
-        console.log("error"+error);
+        console.log("error" + error);
       });
   }
 

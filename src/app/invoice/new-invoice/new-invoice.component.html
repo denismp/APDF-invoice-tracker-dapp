@@ -10,6 +10,15 @@
     <h1>New Invoice Form</h1>
     <form (ngSubmit)="onSubmit(invoiceForm)" #invoiceForm="ngForm">
       <div class="form-group">
+        <label for="privatekey">Private Key</label>
+        <input type="password" class="form-control" id="privatekey" required [(ngModel)]="privateKey" name="privatekey"
+          #privatekey="ngModel">
+        <div [hidden]="privatekey.valid || privatekey.pristine" class="alert alert-danger">
+          Account Address is required
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="clientName">Client Name</label>
         <input type="text" class="form-control" id="clientName" required [(ngModel)]="model.clientName"
           name="clientName" #clientName="ngModel">

@@ -155,7 +155,6 @@ contract InvoiceTracker is Owned {
     /// @param _due60DaysDate 60 day invoice due date
     /// @param _due90DaysDate 90 day invoice due date
     /// @param _due120DaysDate 120 day invoice due date
-    /// @param _datePmtReceived pmt date
     /// @dev Add's an invoice to be tracked.
     function addInvoice(
         string memory _clientName,
@@ -168,8 +167,7 @@ contract InvoiceTracker is Owned {
         uint256 _due30DaysDate,
         uint256 _due60DaysDate,
         uint256 _due90DaysDate,
-        uint256 _due120DaysDate,
-        uint256 _datePmtReceived
+        uint256 _due120DaysDate
     ) public onlyOwner() noDupInvoice(_clientName, _invoiceSentDate) {
         Invoice memory newInvoice;
         newInvoice.invoiceNumber = _invoiceNumber;
@@ -182,7 +180,6 @@ contract InvoiceTracker is Owned {
         newInvoice.due60DaysDate = _due60DaysDate;
         newInvoice.due90DaysDate = _due90DaysDate;
         newInvoice.due120DaysDate = _due120DaysDate;
-        newInvoice.datePmtReceived = _datePmtReceived;
         clientNameInvoiceMap[_clientName].push(newInvoice);
 
         incremmentInvoiceCount(_clientName);

@@ -81,7 +81,6 @@ contract("InvoiceTracker", async accounts => {
       now,
       now,
       now,
-      now,
       now
     );
     truffleAssert.prettyPrintEmittedEvents(result);
