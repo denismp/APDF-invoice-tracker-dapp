@@ -103,6 +103,7 @@ export class NewInvoiceComponent implements OnInit {
     this.due120DaysDate = this.getDateString(_invoiceSentTime, 120);
     console.log('due120DaysDate=' + this.due120DaysDate);
     // TODO: This is where we interface with the solidity contract to create the new invoice.
+
     this.invoiceService.addInvoice(
       form.controls['privatekey'].value,
       this.model.clientName,
@@ -115,15 +116,13 @@ export class NewInvoiceComponent implements OnInit {
       this.model.due30DaysDate,
       this.model.due60DaysDate,
       this.model.due90DaysDate,
-      this.model.due120DaysDate,
-      this.model.datePmtReceived
+      this.model.due120DaysDate
     ).subscribe(
-      (model: Invoice) => {
-        this.model = model;
-        console.log('MODEL=' + model);
-      }, error => {
-        console.log("error" + error);
-      })
+        //this.model = model;
+        res => console.log('SUCCESS: ', res),
+        error =>  console.log("error" + error),
+        () => console.log('Request completed')
+      );
   }
 
   private convertMillisecondsToSeconds(_milliseconds: number, _numDays: number) {

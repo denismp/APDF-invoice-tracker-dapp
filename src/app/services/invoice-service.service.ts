@@ -9,26 +9,9 @@ export class InvoiceServiceService {
   //mweb3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545')); // keeping this for future reference.
   // Attempting to use the example from MI4-exercise7 to use metamask
   private provider = new ethers.providers.EtherscanProvider('ropsten')
-  private contractAddress = "0xe6482f6554074c666593b5f38fe5357828a1fbd7";
+  //private contractAddress = "0xe6482f6554074c666593b5f38fe5357828a1fbd7";
+  private contractAddress = "0x637ec349b9a3ab3b0df279a270510102c868d9b3";
   private contractABI = [
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_clientID",
-          "type": "address"
-        },
-        {
-          "internalType": "string",
-          "name": "_name",
-          "type": "string"
-        }
-      ],
-      "name": "addClient",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
     {
       "inputs": [],
       "stateMutability": "payable",
@@ -52,74 +35,6 @@ export class InvoiceServiceService {
       ],
       "name": "addClientEvent",
       "type": "event"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "_clientName",
-          "type": "string"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_invoiceNumber",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_netTerms",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_numberHours",
-          "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "_amount",
-          "type": "string"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_timesheetEndDate",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_invoiceSentDate",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_due30DaysDate",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_due60DaysDate",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_due90DaysDate",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_due120DaysDate",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_datePmtReceived",
-          "type": "uint256"
-        }
-      ],
-      "name": "addInvoice",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
     },
     {
       "anonymous": false,
@@ -201,42 +116,6 @@ export class InvoiceServiceService {
       "type": "event"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address payable",
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "changeOwner",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "_clientName",
-          "type": "string"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_invoiceNumber",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_invoicePmtDate",
-          "type": "uint256"
-        }
-      ],
-      "name": "updateInvoice",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "anonymous": false,
       "inputs": [
         {
@@ -260,6 +139,100 @@ export class InvoiceServiceService {
       ],
       "name": "updateInvoiceEvent",
       "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_clientID",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        }
+      ],
+      "name": "addClient",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_clientName",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_invoiceNumber",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_netTerms",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_numberHours",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_amount",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_timesheetEndDate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_invoiceSentDate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_due30DaysDate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_due60DaysDate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_due90DaysDate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_due120DaysDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "addInvoice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "changeOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "inputs": [],
@@ -385,6 +358,29 @@ export class InvoiceServiceService {
       ],
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_clientName",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_invoiceNumber",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_invoicePmtDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateInvoice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ];
   private wallet: ethers.Wallet;
@@ -412,11 +408,21 @@ export class InvoiceServiceService {
     due30DaysDate: number,
     due60DaysDate: number,
     due90DaysDate: number,
-    due120DaysDate: number,
-    datePmtReceived: number
+    due120DaysDate: number
   ): Observable<any> {
     this.initContract(privateKey);
-    return from(this.contract.addClient(
+    console.log('clientName=' + clientName);
+    console.log('invoiceNumber=' + invoiceNumber);
+    console.log('netTerms=' + netTerms);
+    console.log('numberHours=' + numberHours);
+    console.log('amount=' + amount);
+    console.log('timesheetEndDate=' + timesheetEndDate);
+    console.log('invoiceSentDate=' + invoiceSentDate);
+    console.log('due30DaysDate=' + due30DaysDate);
+    console.log('due60DaysDate=' + due60DaysDate);
+    console.log('due90DaysDate=' + due90DaysDate);
+    console.log('due120DaysDate=' + due120DaysDate);
+    return from(this.contract.addInvoice(
       clientName,
       invoiceNumber,
       netTerms,
@@ -427,8 +433,7 @@ export class InvoiceServiceService {
       due30DaysDate,
       due60DaysDate,
       due90DaysDate,
-      due120DaysDate,
-      datePmtReceived
+      due120DaysDate
     ));
   }
 }
