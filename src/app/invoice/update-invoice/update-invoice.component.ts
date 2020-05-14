@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Invoice } from '../new-invoice/invoice';
 import { NgForm } from '@angular/forms';
+import { InvoiceServiceService } from 'src/app/services/invoice-service.service';
 
 @Component({
   selector: 'app-update-invoice',
@@ -11,11 +12,12 @@ import { NgForm } from '@angular/forms';
 export class UpdateInvoiceComponent implements OnInit {
   //@ViewChild('dp') dp: NgbDatepicker;
   dateModel: NgbDateStruct;
+  privateKey: string;
   //date: { year: number, month: number, day: number };
   submitted = false;
   model = new Invoice();
   sdatePmt: string;
-  constructor(public formatter: NgbDateParserFormatter) { }
+  constructor(public formatter: NgbDateParserFormatter, private invoiceService: InvoiceServiceService) { }
 
   ngOnInit(): void {
   }
@@ -36,7 +38,7 @@ export class UpdateInvoiceComponent implements OnInit {
     _date.setMonth(form.controls.datepmtreceived.value.month - 1);
     _date.setFullYear(form.controls.datepmtreceived.value.year);
     this.model.rDatePmtReceived = _date;
-    this.model.datePmtReceived = _date.getTime();
+    this.model.datePmtReceived = Math.round(_date.getTime() / 1000);
     this.model.sDatePmtReceived = _date.toDateString();
     this.sdatePmt = _date.toDateString();
     console.log("rdate=" + this.model.rDatePmtReceived);
@@ -45,6 +47,17 @@ export class UpdateInvoiceComponent implements OnInit {
     console.log('date=' + form.controls.datepmtreceived.value.year + '-' + form.controls.datepmtreceived.value.month + '-' + form.controls.datepmtreceived.value.day);
     console.log(this.model);
     // TODO: Here we need to call the updateInvoice() on the solidity contract.
+    this.invoiceService.updateInvoice(
+      form.controls['privatekey'].value,
+      this.model.clientName,
+      this.model.invoiceNumber,
+      this.model.datePmtReceived
+    ).subscribe(
+      //this.model = model;
+      res => console.log('SUCCESS: ', res),
+      error => console.log("error" + error),
+      () => console.log('Request completed')
+    );
   }
 
   // TODO: Remove this when we're done

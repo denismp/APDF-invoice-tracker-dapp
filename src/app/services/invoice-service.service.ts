@@ -436,4 +436,21 @@ export class InvoiceServiceService {
       due120DaysDate
     ));
   }
+
+  updateInvoice(
+    privateKey: string,
+    clientName: string,
+    invoiceNumber: number,
+    datePmtReceived: number
+  ): Observable<any> {
+    this.initContract(privateKey);
+    console.log('clientName=' + clientName);
+    console.log('invoiceNumber=' + invoiceNumber);
+    console.log('datePmtReceived=' + datePmtReceived);
+    return from(this.contract.updateInvoice(
+      clientName,
+      invoiceNumber,
+      datePmtReceived
+    ));
+  }
 }
