@@ -63,6 +63,24 @@ migrations/ directories and their contents.  This is too set up local truffle te
 3. Open a terminal window and run "truffle development" to get access to the truffle console.    
 4. run "npm install truffle-assertions" for the truffleAssert calls in testing.
 
+# Run truffle
+truffle development
+
+# Run remixd
+remixd -s /Users/denisputnam/git/APDF-invoice-tracker-dapp --remix-ide http://remix.ethereum.org
+
+http://remix.ethereum.org/#optimize=false&evmVersion=null&version=soljson-v0.6.6+commit.6c089d02.js
+
+# Ganache
+## Install client
+https://github.com/trufflesuite/ganache-cli
+
+npm install -g ganache-cli
+
+## Run ganache-cli
+ganache-cli
+
+
 ## Generate documentation
 1. run "solc --userdoc --devdoc contracts/InvoiceTracker.sol" as an example.
 
@@ -214,3 +232,4 @@ User Documentation
 
   https://app.diagrams.net/?libs=general;uml#G1xdswWXjxtiKqe4_1-VtyloQFIJgOwUne
 
+7EB2255581AED1C929A291B65BC3A37FB70BA8C6783FFFABE18D8C6EC5DCFFC1

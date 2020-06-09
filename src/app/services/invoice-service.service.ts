@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ethers } from 'ethers';
 import { from, Observable } from 'rxjs';
+import { Invoice } from '../invoice/new-invoice/invoice';
 
 @Injectable({
   providedIn: 'root'
@@ -389,6 +390,9 @@ export class InvoiceServiceService {
   constructor() { }
 
   private initContract(privateKey: string) {
+    if(privateKey.substr(0,2) !== '0x') {
+      privateKey = '0x' + privateKey;
+    }
     this.wallet = new ethers.Wallet(privateKey, this.provider);
     this.contract = new ethers.Contract(
       this.contractAddress,
@@ -396,7 +400,7 @@ export class InvoiceServiceService {
       this.wallet);
   }
 
-  addInvoice(
+  public addInvoice(
     privateKey: string,
     clientName: string,
     invoiceNumber: number,
@@ -437,7 +441,7 @@ export class InvoiceServiceService {
     ));
   }
 
-  updateInvoice(
+  public updateInvoice(
     privateKey: string,
     clientName: string,
     invoiceNumber: number,
@@ -451,6 +455,31 @@ export class InvoiceServiceService {
       clientName,
       invoiceNumber,
       datePmtReceived
+    ));
+  }
+
+  public getInvoiceNumbers(
+    privateKey: string,
+    clientName: string
+  ): Observable<any> {
+    this.initContract(privateKey);
+    console.log('clientName=' + clientName);
+    return from(this.contract.getInvoiceNumbers(
+      clientName
+    ));
+  }
+  // getInvoice(string memory _clientName, uint256 _invoiceNumber
+  public getInvoice(
+    privateKey: string,
+    clientName: string,
+    invoiceNumber: number
+  ): Observable<any> {
+    this.initContract(privateKey);
+    console.log('clientName=' + clientName);
+    console.log('invoiceNumber=' + invoiceNumber);
+    return from(this.contract.getInvoice(
+      clientName,
+      invoiceNumber
     ));
   }
 }

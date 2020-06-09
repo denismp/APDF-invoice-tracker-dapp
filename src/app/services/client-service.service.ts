@@ -413,6 +413,7 @@ export class ClientServiceService {
   // }
 
   private initContract(privateKey: string) {
+    privateKey = '0x' + privateKey;
     this.wallet = new ethers.Wallet(privateKey, this.provider);
     this.contract = new ethers.Contract(this.contractAddress, this.contractABI, this.wallet);
   }
