@@ -48,13 +48,13 @@
             <td>{{invoice.netTerms}}</td>
             <td>{{invoice.numberHours}}</td>
             <td>{{invoice.amount}}</td>
-            <td>{{invoice.timesheetEndDate}}</td>
-            <td>{{invoice.invoiceSentDate}}</td>
-            <td>{{invoice.due30DaysDate}}</td>
-            <td>{{invoice.due60DaysDate}}</td>
-            <td>{{invoice.due90DaysDate}}</td>
-            <td>{{invoice.due120DaysDate}}</td>
-            <td>{{invoice.datePmtReceived}}</td>
+            <td>{{getStdDateString(invoice.timesheetEndDate)}}</td>
+            <td>{{getStdDateString(invoice.invoiceSentDate)}}</td>
+            <td>{{getStdDateString(invoice.due30DaysDate)}}</td>
+            <td>{{getStdDateString(invoice.due60DaysDate)}}</td>
+            <td>{{getStdDateString(invoice.due90DaysDate)}}</td>
+            <td>{{getStdDateString(invoice.due120DaysDate)}}</td>
+            <td>{{getStdDateString(invoice.datePmtReceived)}}</td>
           </tr>
         </tbody>
       </table>

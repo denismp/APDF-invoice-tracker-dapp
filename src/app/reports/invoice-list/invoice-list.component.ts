@@ -92,6 +92,11 @@ export class InvoiceListComponent implements OnInit {
     return rVal;
   }
 
+  public getStdDateString(_numSeconds: number): string {
+    let rVal: string = new Date(_numSeconds * 1000).toDateString();
+    return rVal;
+  }
+
   // navigateTimeSheetEndDate(event) {
   //   this.date = event.next;
   // }
