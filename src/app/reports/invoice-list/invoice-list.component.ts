@@ -40,16 +40,6 @@ export class InvoiceListComponent implements OnInit {
     this.isFetching = true;
     this.invoiceService.getInvoiceNumbers(this.model.clientName)
       .then(res => {
-        //this.model = model;
-        /**
-         * The do something like this:
-         * for (let i = 0; i < count; i++) {
-              const deliveryHash = await this.deliveryManagerContract.methods.getDeliveryHash(i).call();
-              const delivery = await this.deliveryManagerContract.methods.getDelivery(deliveryHash).call();
-              const decodedDelivery = this.decodeDelivery(delivery, deliveryHash);
-              deliveries.push(decodedDelivery);
-            }
-         */
         this.isFetching = false;
         if (res !== undefined && res !== "") {
           console.log('SUCCESS: ', res);
@@ -59,15 +49,15 @@ export class InvoiceListComponent implements OnInit {
           // extract the numbers into an array.
           const nList: string[] = _invNums.split(",");
           for (let i = 0; i < nList.length - 1; i++) {
-            console.log('nList[' + i + ']=' + nList[i]);
+            //console.log('nList[' + i + ']=' + nList[i]);
             let _invNum: number = parseInt(nList[i]);
             this.invoiceService.getInvoice(clientName, _invNum)
               .then(invoice => {
-                //console.log(JSON.stringify(invRes));
-                console.log('Invoice[' + i + ']datePmtReceived=' + invoice.datePmtReceived);
-                console.log('Invoice[' + i + ']due120DaysDate=' + invoice.due120DaysDate);
-                console.log('Invoice[' + i + ']due30DaysDate=' + invoice.due30DaysDate);
-                console.log('Invoice[' + i + ']due60DaysDate=' + invoice.due60DaysDate);
+                console.log(invoice);
+                // console.log('Invoice[' + i + ']datePmtReceived=' + invoice.datePmtReceived);
+                // console.log('Invoice[' + i + ']due120DaysDate=' + invoice.due120DaysDate);
+                // console.log('Invoice[' + i + ']due30DaysDate=' + invoice.due30DaysDate);
+                // console.log('Invoice[' + i + ']due60DaysDate=' + invoice.due60DaysDate);
                 this.loadedInvoices.push(invoice);
               })
               .catch(err => {
