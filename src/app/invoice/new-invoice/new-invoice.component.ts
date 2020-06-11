@@ -74,11 +74,14 @@ export class NewInvoiceComponent implements OnInit {
 
     // calc the rest of the values.
     // User the invoice sent date to calculate the other dates
+
+    //now.setDate(now.getDate() + 30);
     let _invoiceSentTime = _date.getTime();
-    let _30days = this.convertMillisecondsToSeconds(_invoiceSentTime, 30);
-    let _60days = this.convertMillisecondsToSeconds(_invoiceSentTime, 60);
-    let _90days = this.convertMillisecondsToSeconds(_invoiceSentTime, 90);
-    let _120days = this.convertMillisecondsToSeconds(_invoiceSentTime, 120);
+    const ldate: Date = new Date(_date);
+    let _30days = Math.round(ldate.setDate(ldate.getDate() + 30)/1000);
+    let _60days = Math.round(ldate.setDate(ldate.getDate() + 60)/1000);
+    let _90days = Math.round(ldate.setDate(ldate.getDate() + 90)/1000);
+    let _120days = Math.round(ldate.setDate(ldate.getDate() + 120)/1000);
     this.model.due30DaysDate = _30days;
     this.model.due60DaysDate = _60days;
     this.model.due90DaysDate = _90days;
@@ -121,14 +124,6 @@ export class NewInvoiceComponent implements OnInit {
     }).catch(err => {
       console.log(err);
     });
-  }
-
-  private convertMillisecondsToSeconds(_milliseconds: number, _numDays: number) {
-    const _numSecondsInDay = 86400;
-    let _daysInSeconds = new Date(_milliseconds + (_numSecondsInDay * _numDays)).getTime() / 1000;
-    _daysInSeconds = Math.round(_daysInSeconds);
-    //console.log('_daysInSeconds=' + _daysInSeconds);
-    return _daysInSeconds;
   }
 
   private getDateString(_startInMilliseconds: number, _numDays: number) {
