@@ -94,7 +94,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
   public getStdDateString(_numSeconds: string): string {
-    console.log('getStdDateString(): _numSeconds=',_numSeconds);
+    //console.log('getStdDateString(): _numSeconds=',_numSeconds);
     if (parseInt(_numSeconds) === 0) {
       return "";
     }
