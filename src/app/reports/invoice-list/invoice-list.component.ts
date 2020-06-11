@@ -29,6 +29,7 @@ export class InvoiceListComponent implements OnInit {
   public newInvoice() {
     this.submitted = false;
     this.model = new Invoice();
+    this.loadedInvoices = [];
   }
   //datePmtReceived
   public onSubmit(form: NgForm) {
@@ -92,8 +93,12 @@ export class InvoiceListComponent implements OnInit {
     return rVal;
   }
 
-  public getStdDateString(_numSeconds: number): string {
-    let rVal: string = new Date(_numSeconds * 1000).toDateString();
+  public getStdDateString(_numSeconds: string): string {
+    console.log('getStdDateString(): _numSeconds=',_numSeconds);
+    if (parseInt(_numSeconds) === 0) {
+      return "";
+    }
+    let rVal: string = new Date(parseInt(_numSeconds) * 1000).toDateString();
     return rVal;
   }
 
