@@ -271,7 +271,8 @@ contract InvoiceTracker is Owned {
             i < int256(clientNameInvoiceCountMap[_clientName]);
             i++
         ) {
-            if (_invoiceNumber == clientNameInvoiceCountMap[_clientName]) {
+            //clientNameInvoiceMap
+            if (_invoiceNumber == clientNameInvoiceMap[_clientName][uint256(i)].invoiceNumber) {
                 return i;
             }
         }
