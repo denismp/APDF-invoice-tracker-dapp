@@ -12,12 +12,14 @@ import { InvoiceServiceService } from 'src/app/services/invoice-service.service'
 export class InvoiceListComponent implements OnInit {
   //@ViewChild('dp') dp: NgbDatepicker;
   public dateModel: NgbDateStruct;
-  public privateKey: string;
+  //public privateKey: string;
   //date: { year: number, month: number, day: number };
   public submitted = false;
   public model = new Invoice();
   public sdatePmt: string;
   public invoiceNumbers: string;
+  public loadedInvoices: Invoice[] = [];
+  public isFetching: boolean = false;
 
   constructor(public formatter: NgbDateParserFormatter, private invoiceService: InvoiceServiceService) { }
 
@@ -35,6 +37,7 @@ export class InvoiceListComponent implements OnInit {
     this.model.clientName = form.controls['clientName'].value;
     console.log(this.model);
     // Here we need to call the solidity contract to get the list of invoice numbers and then retrieve the invoices one at a time.
+    this.isFetching = true;
     this.invoiceService.getInvoiceNumbers(this.model.clientName)
       .then(res => {
         //this.model = model;
@@ -47,6 +50,7 @@ export class InvoiceListComponent implements OnInit {
               deliveries.push(decodedDelivery);
             }
          */
+        this.isFetching = false;
         if (res !== undefined && res !== "") {
           console.log('SUCCESS: ', res);
           let _invNums: string = res;
@@ -60,11 +64,11 @@ export class InvoiceListComponent implements OnInit {
             this.invoiceService.getInvoice(clientName, _invNum)
               .then(invoice => {
                 //console.log(JSON.stringify(invRes));
-                console.log('Invoice[' + i + ']clientName=' + invoice.clientName);
                 console.log('Invoice[' + i + ']datePmtReceived=' + invoice.datePmtReceived);
                 console.log('Invoice[' + i + ']due120DaysDate=' + invoice.due120DaysDate);
                 console.log('Invoice[' + i + ']due30DaysDate=' + invoice.due30DaysDate);
                 console.log('Invoice[' + i + ']due60DaysDate=' + invoice.due60DaysDate);
+                this.loadedInvoices.push(invoice);
               })
               .catch(err => {
                 console.log(err);
@@ -75,6 +79,7 @@ export class InvoiceListComponent implements OnInit {
         }
       })
       .catch(err => {
+        this.isFetching = false;
         console.log(err);
       });
   }
