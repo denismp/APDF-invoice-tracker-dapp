@@ -43,7 +43,7 @@ export class NewInvoiceComponent implements OnInit {
     this.model = new Invoice();
   }
 
-  onSubmit(form: NgForm) {
+  public onSubmit(form: NgForm) {
     console.log(form);
     this.submitted = true;
     this.model.clientName = form.controls['clientName'].value;
@@ -102,10 +102,9 @@ export class NewInvoiceComponent implements OnInit {
     console.log('due90DaysDate=' + this.due90DaysDate);
     this.due120DaysDate = this.getDateString(_invoiceSentTime, 120);
     console.log('due120DaysDate=' + this.due120DaysDate);
-    // TODO: This is where we interface with the solidity contract to create the new invoice.
 
+    // This is where we interface with the solidity contract to create the new invoice.
     this.invoiceService.addInvoice(
-      form.controls['privatekey'].value,
       this.model.clientName,
       this.model.invoiceNumber,
       this.model.netTerms,
@@ -117,12 +116,11 @@ export class NewInvoiceComponent implements OnInit {
       this.model.due60DaysDate,
       this.model.due90DaysDate,
       this.model.due120DaysDate
-    ).subscribe(
-      //this.model = model;
-      res => console.log('SUCCESS: ', res),
-      error => console.log("error" + error),
-      () => console.log('Request completed')
-    );
+    ).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   private convertMillisecondsToSeconds(_milliseconds: number, _numDays: number) {
@@ -139,14 +137,12 @@ export class NewInvoiceComponent implements OnInit {
     return rVal;
   }
 
-
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
-
+  public get diagnostic() { return JSON.stringify(this.model); }
 
   // Reveal in html:
   //   Name via form.controls = {{showFormControls(clientForm)}}
-  showFormControls(form: any) {
+  public showFormControls(form: any) {
     let rVal: string = "";
     if (form !== undefined) {
       if (form.controls['invoiceNumber'] !== undefined) {
@@ -155,7 +151,7 @@ export class NewInvoiceComponent implements OnInit {
           'Client Name: ' + form.controls['clientName'].value +
           'Invoice Number: ' + form.controls['invoiceNumber'].value +
           ', Net Terms: ' + form.controls['netTerms'].value;
-        console.log(rVal);
+        //console.log(rVal);
       }
     }
     return rVal;
@@ -164,5 +160,4 @@ export class NewInvoiceComponent implements OnInit {
   // navigateTimeSheetEndDate(event) {
   //   this.date = event.next;
   // }
-
 }

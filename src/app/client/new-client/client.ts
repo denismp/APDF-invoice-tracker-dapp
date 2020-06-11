@@ -1,9 +1,9 @@
 export class Client {
-
-  constructor(
-    public address: string,
-    public name: string,
-    public privateKey: string
-  ) {  }
+  public address: string;
+  public name: string;
+  constructor() {
+    this.address = '';
+    this.name = '';
+  }
 
 }

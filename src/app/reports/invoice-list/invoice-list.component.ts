@@ -34,33 +34,10 @@ export class InvoiceListComponent implements OnInit {
     this.submitted = true;
     this.model.clientName = form.controls['clientName'].value;
     console.log(this.model);
-    // TODO: Here we need to call the solidity contract to get the list of invoice numbers and then retrieve the invoices one at a time.
-    this.invoiceService.getInvoiceNumbers(
-      form.controls['privatekey'].value,
-      this.model.clientName
-    ).subscribe(
-      //this.model = model;
-      (res: string) => {
-        console.log('SUCCESS: ', res);
-        //this.invoiceNumbers = res;
-        const privateKey: string = form.controls['privatekey'].value;
-        const clientName: string = this.model.clientName;
-        //console.log('SUCCESS: ', res);
-        this.invoiceNumbers = res;
-        // extract the numbers into an array.
-        const nList: string[] = res.split(",");
-        for (let i = 0; i < nList.length-1; i++) {
-          console.log('nList[' + i + ']=' + nList[i]);
-          let _invNum: number = parseInt(nList[i]);
-          const invoice = this.invoiceService.getInvoice(privateKey, clientName, _invNum).subscribe((invRes: Invoice) => {
-            //console.log(JSON.stringify(invRes));
-            console.log('Invoice['+i+']clientName='+invRes.clientName);
-            console.log('Invoice['+i+']datePmtReceived='+invRes.datePmtReceived);
-            console.log('Invoice['+i+']due120DaysDate='+invRes.due120DaysDate);
-            console.log('Invoice['+i+']due30DaysDate='+invRes.due30DaysDate);
-            console.log('Invoice['+i+']due60DaysDate='+invRes.due60DaysDate);
-          });
-        }
+    // Here we need to call the solidity contract to get the list of invoice numbers and then retrieve the invoices one at a time.
+    this.invoiceService.getInvoiceNumbers(this.model.clientName)
+      .then(res => {
+        //this.model = model;
         /**
          * The do something like this:
          * for (let i = 0; i < count; i++) {
@@ -70,11 +47,36 @@ export class InvoiceListComponent implements OnInit {
               deliveries.push(decodedDelivery);
             }
          */
-
-      },
-      error => console.log("error" + error),
-      () => console.log('Request completed')
-    );
+        if (res !== undefined && res !== "") {
+          console.log('SUCCESS: ', res);
+          let _invNums: string = res;
+          //this.invoiceNumbers = res;
+          const clientName: string = this.model.clientName;
+          // extract the numbers into an array.
+          const nList: string[] = _invNums.split(",");
+          for (let i = 0; i < nList.length - 1; i++) {
+            console.log('nList[' + i + ']=' + nList[i]);
+            let _invNum: number = parseInt(nList[i]);
+            this.invoiceService.getInvoice(clientName, _invNum)
+              .then(invoice => {
+                //console.log(JSON.stringify(invRes));
+                console.log('Invoice[' + i + ']clientName=' + invoice.clientName);
+                console.log('Invoice[' + i + ']datePmtReceived=' + invoice.datePmtReceived);
+                console.log('Invoice[' + i + ']due120DaysDate=' + invoice.due120DaysDate);
+                console.log('Invoice[' + i + ']due30DaysDate=' + invoice.due30DaysDate);
+                console.log('Invoice[' + i + ']due60DaysDate=' + invoice.due60DaysDate);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        } else {
+          console.log('InvoiceListComponent.onSubmit(): getInvoiceNumbers() returned no data');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   // TODO: Remove this when we're done
@@ -89,12 +91,11 @@ export class InvoiceListComponent implements OnInit {
         //console.log('Invoice Number:' + form.controls['invoiceNumber'].value);
         rVal =
           'Client Name: ' + form.controls['clientName'].value;
-        console.log(rVal);
+        //console.log(rVal);
       }
     }
     return rVal;
   }
-
 
   // navigateTimeSheetEndDate(event) {
   //   this.date = event.next;

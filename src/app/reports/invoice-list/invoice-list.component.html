@@ -11,14 +11,14 @@
     <h1>Request Invoices Report Form</h1>
     <form (ngSubmit)="onSubmit(invoiceForm)" #invoiceForm="ngForm">
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="privatekey">Private Key</label>
         <input type="password" class="form-control" id="privatekey" required [(ngModel)]="privateKey" name="privatekey"
           #privatekey="ngModel">
         <div [hidden]="privatekey.valid || privatekey.pristine" class="alert alert-danger">
-          Account Address is required
+          Private key is required
         </div>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label for="clientName">Client Name</label>
@@ -42,10 +42,10 @@
 
   <div [hidden]="!submitted">
     <h2>You requested invoices for the following client:</h2>
-    <!-- TODO: This is where the invoice list will be displayed -->
+    <!-- TODO: This is where the invoice list will be displayed this is an *ngFor-->
     <div class="row">
       <div class="col-xs-3">Client Name: </div>
-      <div class="col-xs-9">{{ model.clientName }}</div>
+      <div class="col-xs-9">{{ model?.clientName }}</div>
     </div>
     <br>
     <!-- <button class="btn btn-primary" (click)="submitted=false">New</button> -->
