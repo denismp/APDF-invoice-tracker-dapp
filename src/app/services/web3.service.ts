@@ -12,20 +12,33 @@ export class Web3Service {
 
   private contractABI = this.INVOICE_TRACKER_ARTIFACTS;
   public contract: any;
-  // public owner: string = '0xc2A0f1646c32d526931752E6388F50F5fC123b31';
 
   constructor() { this.initContract() }
 
   private initContract() {
     Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
-    this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); // keeping this for future reference.
+    this.web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545')); // this allows for the allEvents to work.
+    //this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); // keeping this for future reference.
     this.contract = new this.web3.eth.Contract(
       this.contractABI.abi,
       this.contractAddress
     );
+    this.initEventSubscriptions();
     // this.web3.eth.getBalance(this.owner, (err, wei) => {
     //   let balance = this.web3.utils.fromWei(wei, 'ether');
     //   console.log('balance=',balance);
     // });
+  }
+
+  private initEventSubscriptions(): void {
+    this.contract.events.allEvents({ fromBlock: 'latest' }, async (error, event) => {
+      console.log('event=',event);
+      console.log('error=',error);
+      // if (event.returnValues._deliveryHash) {
+      //   const deliveryHash = event.returnValues._deliveryHash;
+      //   const delivery = await this.getDelivery(deliveryHash);
+      //   this.deliveryStream.next(delivery);
+      // }
+    });
   }
 }
