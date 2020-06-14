@@ -31,6 +31,10 @@ contract InvoiceTracker is Owned {
 
     /// @notice map the name of the client to the Client struct
     mapping(string => Client) private clientMap;
+
+    /// @notice array of client names.
+    string[] private clientNameArray;
+
     /// @notice map the name of the client to the client address
     mapping(string => address) private clientNameAddressMap;
     /// @notice map the name of the client to invoices. this isa one to many mapping.
@@ -84,6 +88,9 @@ contract InvoiceTracker is Owned {
         clientMap[_name].clientID = _clientID;
         clientMap[_name].name = _name;
         clientMap[_name].flag = true;
+
+        clientNameArray.push(_name);
+
         clientNameAddressMap[_name] = _clientID;
         clientNameInvoiceCountMap[_name] = 0;
         emit addClientEvent(_clientID, _name);
@@ -95,7 +102,7 @@ contract InvoiceTracker is Owned {
     /// @dev Get the client for the given name.
     /// @return name
     /// @return clientID
-    function getClient(string memory _name)
+    function getClientByName(string memory _name)
         public
         view
         returns (string memory name, address clientID)
@@ -103,6 +110,26 @@ contract InvoiceTracker is Owned {
         string memory lname = clientMap[_name].name;
         address lclientID = clientMap[_name].clientID;
         return (lname, lclientID);
+    }
+
+    /// @author Denis M. Putnam
+    /// @notice get the client by index number.
+    /// @param _index index of client name
+    /// @dev no further info
+    /// @return name
+    /// @return clientID
+    function getClientByIndex(uint256 _index)
+        public
+        view
+        returns (string memory name, address clientID)
+    {
+        string memory lclientName = clientNameArray[_index];
+        string memory lname = clientMap[lclientName].name;
+        address lclientID = clientMap[lclientName].clientID;
+        return (lname, lclientID);
+    }
+    function getClientCount() view public returns (uint256 count) {
+        return clientNameArray.length;
     }
 
     /// @author Denis M. Putnam
