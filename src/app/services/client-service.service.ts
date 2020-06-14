@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 //import { from } from 'rxjs';
 import { Web3Service } from './web3.service';
+import { Client } from '../reports/client-list/client';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,26 @@ export class ClientServiceService {
     try {
       let owner: string = await this.web3Service.contract.methods.getCurrentOwner().call();
       //let owner: string = "0x81E0ABF825FA3DF39E2EF2B063504C344B9702D3A".toUpperCase();
-      return await this.web3Service.contract.methods.addClient(clientID, clientName).send({from: owner, gas:3000000});
+      return await this.web3Service.contract.methods.addClient(clientID, clientName).send({ from: owner, gas: 3000000 });
     } catch (err) {
       console.log('ClientServiceService.createClient(): failed:', err);
       return err;
+    }
+  }
+
+  public async getClientCount(): Promise<number> {
+    try {
+      return await this.web3Service.contract.methods.getClientCount().call();
+    } catch (err) {
+      console.log('ClientServiceService.getClientCount(): failed:', err);
+    }
+  }
+
+  public async getClient(index: number): Promise<Client> {
+    try {
+      return await this.web3Service.contract.methods.getClientByIndex(index).call();
+    } catch (err) {
+      console.log('ClientServiceService.getClientByIndex(): failed:', err);
     }
   }
 }

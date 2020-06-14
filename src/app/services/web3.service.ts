@@ -8,7 +8,8 @@ import Web3 from 'web3';
 export class Web3Service {
   private INVOICE_TRACKER_ARTIFACTS = require('../../../build/contracts/InvoiceTracker.json');
   private web3: Web3;
-  private contractAddress = "0xeE736518D1f6F1F7f31F1FcdF30d3A3778747d39";
+  //private contractAddress = "0xeE736518D1f6F1F7f31F1FcdF30d3A3778747d39";
+  private contractAddress = "0x996f1718e0DB756A92DD6FdBd9cD9F7bdcbe067f";
 
   private contractABI = this.INVOICE_TRACKER_ARTIFACTS;
   public contract: any;

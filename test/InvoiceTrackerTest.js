@@ -66,6 +66,14 @@ contract("InvoiceTracker", async accounts => {
     assert.equal(result.datePmtReceived, now);
   });
 
+  it('javascript test get client', async () => {
+    console.log("GET CLIENT");
+    let result = await invoiceTracker.getClientByIndex(0);
+    console.log('result=',result);
+    //truffleAssert.prettyPrintEmittedEvents(result);
+    assert.equal(result.name, 'test');
+  });
+
   async function addInvoice(_invoiceNumber) {
     const now = Math.floor((new Date()).getTime() / 1000);
     console.log("ADD INVOICE");
