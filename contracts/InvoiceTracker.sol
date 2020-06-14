@@ -2,7 +2,6 @@ pragma solidity 0.6.6;
 
 import "./Owned.sol";
 
-
 /// @title Invoice Tracking contract
 /// @author Denis M. Putnam
 /// @notice This contract tracks invoices for payment
@@ -88,6 +87,22 @@ contract InvoiceTracker is Owned {
         clientNameAddressMap[_name] = _clientID;
         clientNameInvoiceCountMap[_name] = 0;
         emit addClientEvent(_clientID, _name);
+    }
+
+    /// @author Denis M. Putnam
+    /// @notice Get the requested client
+    /// @param _name client's name
+    /// @dev Get the client for the given name.
+    /// @return name
+    /// @return clientID
+    function getClient(string memory _name)
+        public
+        view
+        returns (string memory name, address clientID)
+    {
+        string memory lname = clientMap[_name].name;
+        address lclientID = clientMap[_name].clientID;
+        return (lname, lclientID);
     }
 
     /// @author Denis M. Putnam
@@ -215,7 +230,10 @@ contract InvoiceTracker is Owned {
         // );
     }
 
-    function incremmentInvoiceCount(string memory _clientName) private returns(uint256){
+    function incremmentInvoiceCount(string memory _clientName)
+        private
+        returns (uint256)
+    {
         return clientNameInvoiceCountMap[_clientName] += 1;
     }
 
@@ -223,6 +241,7 @@ contract InvoiceTracker is Owned {
     /// @notice Get the count of invoices associated with the given client name
     /// @param _clientName name of the client
     /// @dev no other details.
+    /// @return count of invoices associated with the given client
     function getInvoiceCount(string memory _clientName)
         public
         view
@@ -236,6 +255,7 @@ contract InvoiceTracker is Owned {
     /// @notice Get the list of invoice numbers as a string for the given client name.
     /// @param _clientName name of the client
     /// @dev returned string is a comma separated string of invoice numbers.  The comma is also the end of the string if no other values appear.
+    /// @return a comma seperated list of invoice numbers associated with the client.
     function getInvoiceNumbers(string memory _clientName)
         public
         view
@@ -272,7 +292,10 @@ contract InvoiceTracker is Owned {
             i++
         ) {
             //clientNameInvoiceMap
-            if (_invoiceNumber == clientNameInvoiceMap[_clientName][uint256(i)].invoiceNumber) {
+            if (
+                _invoiceNumber ==
+                clientNameInvoiceMap[_clientName][uint256(i)].invoiceNumber
+            ) {
                 return i;
             }
         }
@@ -310,6 +333,17 @@ contract InvoiceTracker is Owned {
     /// @param _clientName name of the client
     /// @param _invoiceNumber invoice number being requested.
     /// @dev no other details
+    /// @return invoiceNumber
+    /// @return netTerms
+    /// @return numberHours
+    /// @return amount
+    /// @return timesheetEndDate
+    /// @return invoiceSentDate
+    /// @return due30DaysDate
+    /// @return due60DaysDate
+    /// @return due90DaysDate
+    /// @return due120DaysDate
+    /// @return datePmtReceived
     function getInvoice(string memory _clientName, uint256 _invoiceNumber)
         public
         view
@@ -366,6 +400,7 @@ contract InvoiceTracker is Owned {
     /// @notice Convert a uint256 to a string.
     /// @param _i contains the uint256 value to be converted to a string.
     /// @dev This code was taken from https://github.com/provable-things/ethereum-api/blob/master/oraclizeAPI_0.5.sol
+    /// @return _uintAsString
     function uint2str(uint256 _i)
         internal
         pure

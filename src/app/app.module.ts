@@ -11,6 +11,7 @@ import { InvoiceListComponent } from './reports/invoice-list/invoice-list.compon
 import { FormsModule } from '@angular/forms';
 import { DatepickerPopupComponent } from './date/datepicker-popup/datepicker-popup.component';
 import { UpdateInvoiceComponent } from './invoice/update-invoice/update-invoice.component';
+import { ClientListComponent } from './reports/client-list/client-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UpdateInvoiceComponent } from './invoice/update-invoice/update-invoice.
     NewInvoiceComponent,
     InvoiceListComponent,
     DatepickerPopupComponent,
-    UpdateInvoiceComponent
+    UpdateInvoiceComponent,
+    ClientListComponent
   ],
   imports: [
     BrowserModule,
