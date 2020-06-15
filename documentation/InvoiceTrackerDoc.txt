@@ -1,4 +1,3 @@
-
 ======= contracts/InvoiceTracker.sol:InvoiceTracker =======
 Developer Documentation
 {
@@ -16,7 +15,7 @@ Developer Documentation
         "_name": "string with the client's name.  This needs to be unique"
       }
     },
-    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256,uint256)":
+    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256)":
     {
       "author": "Denis M. Putnam",
       "details": "Add's an invoice to be tracked.",
@@ -24,7 +23,6 @@ Developer Documentation
       {
         "_amount": "amount in dollars.",
         "_clientName": "name of the client",
-        "_datePmtReceived": "pmt date",
         "_due120DaysDate": "120 day invoice due date",
         "_due30DaysDate": "30 day invoice due date",
         "_due60DaysDate": "60 day invoice due date",
@@ -50,6 +48,34 @@ Developer Documentation
       "author": "Denis M. Putnam",
       "details": "no other details"
     },
+    "getClientByIndex(uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no further info",
+      "params":
+      {
+        "_index": "index of client name"
+      },
+      "returns":
+      {
+        "clientID": "clientID",
+        "name": "name"
+      }
+    },
+    "getClientByName(string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Get the client for the given name.",
+      "params":
+      {
+        "_name": "client's name"
+      },
+      "returns":
+      {
+        "clientID": "clientID",
+        "name": "name"
+      }
+    },
     "getCurrentOwner()":
     {
       "author": "Denis M. Putnam",
@@ -67,6 +93,20 @@ Developer Documentation
       {
         "_clientName": "name of the client",
         "_invoiceNumber": "invoice number being requested."
+      },
+      "returns":
+      {
+        "amount": "amount",
+        "datePmtReceived": "datePmtReceived",
+        "due120DaysDate": "due120DaysDate",
+        "due30DaysDate": "due30DaysDate",
+        "due60DaysDate": "due60DaysDate",
+        "due90DaysDate": "due90DaysDate",
+        "invoiceNumber": "invoiceNumber",
+        "invoiceSentDate": "invoiceSentDate",
+        "netTerms": "netTerms",
+        "numberHours": "numberHours",
+        "timesheetEndDate": "timesheetEndDate"
       }
     },
     "getInvoiceCount(string)":
@@ -76,6 +116,10 @@ Developer Documentation
       "params":
       {
         "_clientName": "name of the client"
+      },
+      "returns":
+      {
+        "count": "of invoices associated with the given client"
       }
     },
     "getInvoiceNumbers(string)":
@@ -85,6 +129,30 @@ Developer Documentation
       "params":
       {
         "_clientName": "name of the client"
+      },
+      "returns":
+      {
+        "_0": "a comma seperated list of invoice numbers associated with the client."
+      }
+    },
+    "isNoClient(string,address)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details.",
+      "params":
+      {
+        "_clientID": "clients wallet address.",
+        "_clientName": "name of the client."
+      }
+    },
+    "isNoDuplicateInvoice(string,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details.",
+      "params":
+      {
+        "_clientName": "name of the client.",
+        "_invoiceNumber": "invoice number."
       }
     },
     "updateInvoice(string,uint256,uint256)":
@@ -109,7 +177,7 @@ User Documentation
     {
       "notice": "Add a client to this contract."
     },
-    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256,uint256)":
+    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256)":
     {
       "notice": "Add an invoice to track"
     },
@@ -118,6 +186,14 @@ User Documentation
       "notice": "Change the current owner to the new owner."
     },
     "constructor": "The constructor for this contract",
+    "getClientByIndex(uint256)":
+    {
+      "notice": "get the client by index number."
+    },
+    "getClientByName(string)":
+    {
+      "notice": "Get the requested client"
+    },
     "getCurrentOwner()":
     {
       "notice": "Get the current owner."
@@ -133,6 +209,14 @@ User Documentation
     "getInvoiceNumbers(string)":
     {
       "notice": "Get the list of invoice numbers as a string for the given client name."
+    },
+    "isNoClient(string,address)":
+    {
+      "notice": "Check for no client."
+    },
+    "isNoDuplicateInvoice(string,uint256)":
+    {
+      "notice": "Check for no duplicate invoice."
     },
     "updateInvoice(string,uint256,uint256)":
     {
