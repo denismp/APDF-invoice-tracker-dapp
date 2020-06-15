@@ -68,10 +68,13 @@ export class InvoiceServiceService {
     }
   }
 
-  public async getInvoiceNumbers(clientName: string): Promise<string> {
+  public async getInvoiceNumbers(clientName: string): Promise<number[]> {
     try {
       console.log('InvoiceService.getInvoiceNumbers(): clientName=' + clientName);
-      return await this.web3Service.contract.methods.getInvoiceNumbers(clientName).call();
+      const x =  await this.web3Service.contract.methods.getInvoiceNumbers(clientName).call();
+      console.log('InvoiceService.getInvoiceNumbers(): DEBUG x=' + x);
+      return x;
+      //return await this.web3Service.contract.methods.getInvoiceNumbers(clientName).call();
     } catch (err) {
       console.log('InvoiceService.getInvoiceNumbers(): failed:', err)
     }

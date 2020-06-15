@@ -1,4 +1,4 @@
-pragma solidity 0.6.6;
+pragma solidity 0.6.10;
 
 /// @title Owned contract
 /// @author Denis M. Putnam

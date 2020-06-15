@@ -42,16 +42,16 @@ export class InvoiceListComponent implements OnInit {
     this.invoiceService.getInvoiceNumbers(this.model.clientName)
       .then(res => {
         this.isFetching = false;
-        if (res !== undefined && res !== "") {
+        if (res !== undefined) {
           console.log('SUCCESS: ', res);
-          let _invNums: string = res;
+          let _invNums: number[] = res;
           //this.invoiceNumbers = res;
           const clientName: string = this.model.clientName;
           // extract the numbers into an array.
-          const nList: string[] = _invNums.split(",");
-          for (let i = 0; i < nList.length - 1; i++) {
+          //const nList: string[] = _invNums.split(",");
+          for (let i = 0; i < _invNums.length; i++) {
             //console.log('nList[' + i + ']=' + nList[i]);
-            let _invNum: number = parseInt(nList[i]);
+            let _invNum: number = _invNums[i];
             this.invoiceService.getInvoice(clientName, _invNum)
               .then(invoice => {
                 console.log(invoice);

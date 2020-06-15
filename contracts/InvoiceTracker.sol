@@ -1,4 +1,4 @@
-pragma solidity 0.6.6;
+pragma solidity 0.6.10;
 
 import "./Owned.sol";
 
@@ -39,6 +39,7 @@ contract InvoiceTracker is Owned {
     mapping(string => address) private clientNameAddressMap;
     /// @notice map the name of the client to invoices. this isa one to many mapping.
     mapping(string => Invoice[]) private clientNameInvoiceMap;
+    mapping(string => uint256[]) private clientNameInvoiceNumMap;
     /// @notice map the name of the client to an invoice count
     mapping(string => uint256) private clientNameInvoiceCountMap;
 
@@ -210,7 +211,7 @@ contract InvoiceTracker is Owned {
         uint256 _due60DaysDate,
         uint256 _due90DaysDate,
         uint256 _due120DaysDate
-    ) public onlyOwner() noDupInvoice(_clientName, _invoiceSentDate) {
+    ) public onlyOwner() noDupInvoice(_clientName, _invoiceNumber) {
         Invoice memory newInvoice;
         newInvoice.invoiceNumber = _invoiceNumber;
         newInvoice.netTerms = _netTerms;
@@ -223,6 +224,7 @@ contract InvoiceTracker is Owned {
         newInvoice.due90DaysDate = _due90DaysDate;
         newInvoice.due120DaysDate = _due120DaysDate;
         clientNameInvoiceMap[_clientName].push(newInvoice);
+        clientNameInvoiceNumMap[_clientName].push(_invoiceNumber);
 
         incremmentInvoiceCount(_clientName);
 
@@ -287,18 +289,18 @@ contract InvoiceTracker is Owned {
         public
         view
         onlyOwner()
-        returns (string memory)
+        returns (uint256[] memory)
     {
-        string memory rVal = "";
-        for (uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
-            string memory tstring = uint2str(
-                clientNameInvoiceMap[_clientName][i].invoiceNumber
-            );
-            // string tstring = string(lbytes32);
-            //rVal = string(abi.encodePacked(rVal, tstring, ","));
-            rVal = string(abi.encodePacked(rVal, tstring, ","));
-        }
-        return rVal;
+        // string memory rVal = "";
+        // for (uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
+        //     string memory tstring = uint2str(
+        //         clientNameInvoiceMap[_clientName][i].invoiceNumber
+        //     );
+        //     // string tstring = string(lbytes32);
+        //     //rVal = string(abi.encodePacked(rVal, tstring, ","));
+        //     rVal = string(abi.encodePacked(rVal, tstring, ","));
+        // }
+        return clientNameInvoiceNumMap[_clientName];
     }
 
     modifier isInvoiceNumber(uint256 _invoiceNumber) {
