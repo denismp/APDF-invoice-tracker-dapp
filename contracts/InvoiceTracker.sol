@@ -7,7 +7,7 @@ import "./Owned.sol";
 /// @notice This contract tracks invoices for payment
 /// @dev Use at your own risk.
 contract InvoiceTracker is Owned {
-    /// @notice Invoice struct
+    /// @dev Invoice struct
     struct Invoice {
         uint256 invoiceNumber;
         uint256 netTerms; // 30, 60 90, 120 days net
@@ -22,25 +22,26 @@ contract InvoiceTracker is Owned {
         uint256 datePmtReceived;
     }
 
-    /// @notice Client struct
+    /// @dev Client struct
     struct Client {
         address clientID;
         string name;
         bool flag;
     }
 
-    /// @notice map the name of the client to the Client struct
+    /// @dev map the name of the client to the Client struct
     mapping(string => Client) private clientMap;
 
-    /// @notice array of client names.
+    /// @dev array of client names.
     string[] private clientNameArray;
 
-    /// @notice map the name of the client to the client address
+    /// @dev map the name of the client to the client address
     mapping(string => address) private clientNameAddressMap;
-    /// @notice map the name of the client to invoices. this isa one to many mapping.
+    /// @dev map the name of the client to invoices. this isa one to many mapping.
     mapping(string => Invoice[]) private clientNameInvoiceMap;
+    /// @dev map the client name to the invoice numbers.
     mapping(string => uint256[]) private clientNameInvoiceNumMap;
-    /// @notice map the name of the client to an invoice count
+    /// @dev map the name of the client to an invoice count
     mapping(string => uint256) private clientNameInvoiceCountMap;
 
     /// @author Denis M. Putnam
@@ -49,6 +50,8 @@ contract InvoiceTracker is Owned {
     constructor() public payable Owned() {}
 
     event addClientEvent(address _clientID, string _name);
+    event duplicateInvoiceEvent(string _clientName, uint256 _invoiceNumber);
+    event duplicateClientEvent(string _clientID);
 
     /// @author Denis M. Putnam
     /// @notice Check for no client.
@@ -56,11 +59,12 @@ contract InvoiceTracker is Owned {
     /// @param _clientID clients wallet address.
     /// @dev no other details.
     function isNoClient(string memory _clientName, address _clientID)
-        private
-        view
+        public
+        payable
         returns (bool)
     {
         if (clientNameAddressMap[_clientName] == _clientID) {
+            emit duplicateClientEvent(_clientName);
             return false;
         }
         return true;
@@ -129,7 +133,8 @@ contract InvoiceTracker is Owned {
         address lclientID = clientMap[lclientName].clientID;
         return (lname, lclientID);
     }
-    function getClientCount() view public returns (uint256 count) {
+
+    function getClientCount() public view returns (uint256 count) {
         return clientNameArray.length;
     }
 
@@ -141,7 +146,7 @@ contract InvoiceTracker is Owned {
     function isNoDuplicateInvoice(
         string memory _clientName,
         uint256 _invoiceNumber
-    ) private view returns (bool) {
+    ) public payable returns (bool) {
         for (uint256 i = 0; i < clientNameInvoiceCountMap[_clientName]; i++) {
             // if (_invoiceNumber == clientInvoiceMap[_clientName][i]) {
             //     return false;
@@ -150,6 +155,7 @@ contract InvoiceTracker is Owned {
                 _invoiceNumber ==
                 clientNameInvoiceMap[_clientName][i].invoiceNumber
             ) {
+                emit duplicateInvoiceEvent(_clientName, _invoiceNumber);
                 return false;
             }
         }
@@ -425,31 +431,31 @@ contract InvoiceTracker is Owned {
         }
     }
 
-    /// @author Denis M. Putnam
-    /// @notice Convert a uint256 to a string.
-    /// @param _i contains the uint256 value to be converted to a string.
-    /// @dev This code was taken from https://github.com/provable-things/ethereum-api/blob/master/oraclizeAPI_0.5.sol
-    /// @return _uintAsString
-    function uint2str(uint256 _i)
-        internal
-        pure
-        returns (string memory _uintAsString)
-    {
-        if (_i == 0) {
-            return "0";
-        }
-        uint256 j = _i;
-        uint256 len;
-        while (j != 0) {
-            len++;
-            j /= 10;
-        }
-        bytes memory bstr = new bytes(len);
-        uint256 k = len - 1;
-        while (_i != 0) {
-            bstr[k--] = bytes1(uint8(48 + (_i % 10)));
-            _i /= 10;
-        }
-        return string(bstr);
-    }
+    // /// @author Denis M. Putnam
+    // /// @notice Convert a uint256 to a string.
+    // /// @param _i contains the uint256 value to be converted to a string.
+    // /// @dev This code was taken from https://github.com/provable-things/ethereum-api/blob/master/oraclizeAPI_0.5.sol
+    // /// @return _uintAsString
+    // function uint2str(uint256 _i)
+    //     internal
+    //     pure
+    //     returns (string memory _uintAsString)
+    // {
+    //     if (_i == 0) {
+    //         return "0";
+    //     }
+    //     uint256 j = _i;
+    //     uint256 len;
+    //     while (j != 0) {
+    //         len++;
+    //         j /= 10;
+    //     }
+    //     bytes memory bstr = new bytes(len);
+    //     uint256 k = len - 1;
+    //     while (_i != 0) {
+    //         bstr[k--] = bytes1(uint8(48 + (_i % 10)));
+    //         _i /= 10;
+    //     }
+    //     return string(bstr);
+    // }
 }
