@@ -225,11 +225,10 @@ User Documentation
 
 ## Notes
   Below is the command line history of what I did for etherjs to connect to ropsten via metamask.
-  505  npm install web3 -- I am not using this at the moment in lieu of metamask.  Hence the uninstall.
-  506  npm uninstall web3
-  515  npm install --save ethers
-  516  npm install crypto-js
+  505  npm install web3 
 
   https://app.diagrams.net/?libs=general;uml#G1xdswWXjxtiKqe4_1-VtyloQFIJgOwUne
 
-7EB2255581AED1C929A291B65BC3A37FB70BA8C6783FFFABE18D8C6EC5DCFFC1
+# Useful commands
+  truffle migrate --reset --network development
+  truffle migrate --reset --network ropsten
