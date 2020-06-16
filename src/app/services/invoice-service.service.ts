@@ -53,7 +53,7 @@ export class InvoiceServiceService {
       ).send({ from: owner, gas:3000000 });
     } catch (err) {
       console.log('InvoiceService.addInvoice(): failed:', err);
-      alert("Duplicate invoice");
+      alert("InvoiceService.addInvoice(): failed:" + err);
     }
   }
 
@@ -66,6 +66,7 @@ export class InvoiceServiceService {
       return await this.web3Service.contract.methods.updateInvoice(clientName, invoiceNumber, datePmtReceived).send({ from: owner, gas:3000000 });
     } catch (err) {
       console.log('InvoiceService.updateInvoice(): failed:', err)
+      alert("InvoiceService.updateInvoice(): failed:" + err);
     }
   }
 
@@ -78,6 +79,7 @@ export class InvoiceServiceService {
       //return await this.web3Service.contract.methods.getInvoiceNumbers(clientName).call();
     } catch (err) {
       console.log('InvoiceService.getInvoiceNumbers(): failed:', err)
+      alert("InvoiceService.getInvoiceNumbers(): failed:" + err);
     }
   }
 
@@ -89,6 +91,7 @@ export class InvoiceServiceService {
       return await this.web3Service.contract.methods.getInvoice(clientName, invoiceNumber).call();
     } catch (err) {
       console.log('InvoiceService.getInvoice(): failed:', err);
+      alert("InvoiceService.getInvoice(): failed:" + err);
     }
   }
 }

@@ -19,6 +19,7 @@ export class ClientServiceService {
       return await this.web3Service.contract.methods.addClient(clientID, clientName).send({ from: owner, gas: 3000000 });
     } catch (err) {
       console.log('ClientServiceService.createClient(): failed:', err);
+      alert('ClientServiceService.createClient(): failed:' + err);
       return err;
     }
   }
@@ -28,6 +29,7 @@ export class ClientServiceService {
       return await this.web3Service.contract.methods.getClientCount().call();
     } catch (err) {
       console.log('ClientServiceService.getClientCount(): failed:', err);
+      alert('ClientServiceService.getClientCount(): failed:' + err);
     }
   }
 
@@ -36,6 +38,7 @@ export class ClientServiceService {
       return await this.web3Service.contract.methods.getClientByIndex(index).call();
     } catch (err) {
       console.log('ClientServiceService.getClientByIndex(): failed:', err);
+      alert('ClientServiceService.getClientIndex(): failed:' + err);
     }
   }
 }

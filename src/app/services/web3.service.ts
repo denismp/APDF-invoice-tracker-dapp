@@ -34,7 +34,8 @@ export class Web3Service {
     if (typeof window.ethereum !== 'undefined') {
       // Use Mist/MetaMask's provider
       window.ethereum.enable().then(async () => {
-        let contractAddress = "0x4fa7c2933A553b9346a44ebd9DF6962747a606d4"; //ropsten
+        let contractAddress = "0xe68eAE9eF813f30903cfc381962aa5EED64E9EC9"; //ropsten
+        alert('Connecting to MetaMask');
         this.web3 = new Web3(window.ethereum);
         this.contract = new this.web3.eth.Contract(
           this.contractABI.abi,
@@ -71,7 +72,7 @@ export class Web3Service {
       //     onTimeout: false
       //   }
       // };
-      let contractAddress = "0xA91a6719EcD6d930dEB70aa8EE81A722D0B25547";
+      let contractAddress = "0x6a5Dd5c1A6cA05B91f1bdc35b14f1ef3E994f68c";
       //let contractAddress = "0x4fa7c2933A553b9346a44ebd9DF6962747a606d4"; //ropsten
       // Hack to provide backwards compatibility for Truffle, which uses web3js 0.20.x
       //Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
