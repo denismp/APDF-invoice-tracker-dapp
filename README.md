@@ -416,3 +416,54 @@ User Documentation
 # Useful commands
   truffle migrate --reset --network development
   truffle migrate --reset --network ropsten
+
+# For IPFS
+1. Run 'ng build --prod --aot'
+
+2. ipfs init  // only once
+3. in a separate window run ipfs daemon
+4. ipfs swarm peers // only once
+5. pfs add -r dist/<your dapp>
+6. ipfs add --recursive "full path to dist" // /Users/denisputnam/git/APDF-invoice-tracker-dapp/dist
+7. ipfs name publish QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT // hash is the dist one.  This just an example
+8. Published to QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT : /ipfs/QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT
+9. https://gateway.ipfs.io/ipfs/QmQ9YtMFE5X1qrhDBtbiv91MQgw6rBz1uqg8eJWJantLBD
+
+## index.html
+Make sure that the <script> tag is in your index.html file.
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>APDFInvoiceTrackerDapp</title>
+  <script>
+    document.write('<base href="' + window.location.pathname + '"/>');
+  </script>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+
+</html>
+
+## Example
+/Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs add -r dist/APDF-invoice-tracker-dapp
+added QmaFCeTRkmJcppfNBS1tF4iEbYGDT2LZTXcokPA24JcHPx APDF-invoice-tracker-dapp/3rdpartylicenses.txt
+added QmQDLVoPGDjKBYdtccruufTVXm8b4s2SEbzjNwT6w73EBv APDF-invoice-tracker-dapp/favicon.ico
+added QmabJGg8qZptQqwrRvqhbDzaUDJCCQ2NovDW6yf3t3AmAR APDF-invoice-tracker-dapp/index.html
+added QmSfYFELCZUfdYHDDNBh2g2A9CZBAahX9YnBnyXiEjdorh APDF-invoice-tracker-dapp/main-es2015.891a437ab0b8694c4f52.js
+added QmX4BBeXR2r8G9YfHSuGmFKUFPvik2AHa2G3jHfjFEmW4Y APDF-invoice-tracker-dapp/main-es5.891a437ab0b8694c4f52.js
+added QmbXJrob58PnsadzXYprSzXLbnogRhBJK131TCTiB5TKy8 APDF-invoice-tracker-dapp/polyfills-es2015.2c569cdf6ffecbea6ca5.js
+added QmQVjnkrruA1Z64kU4ysQ9us6A18JRiYjRQJZ2AVmwH2NQ APDF-invoice-tracker-dapp/polyfills-es5.394aa1f38aed2f431916.js
+added Qmb3UHBRdMTRGA4AXa6XMbBxzkZFAihsEnd6qDvFtJ1qvN APDF-invoice-tracker-dapp/runtime-es2015.1eba213af0b233498d9d.js
+added Qmb3UHBRdMTRGA4AXa6XMbBxzkZFAihsEnd6qDvFtJ1qvN APDF-invoice-tracker-dapp/runtime-es5.1eba213af0b233498d9d.js
+added QmSCx4YXkUUqxHVoZDQN3RaPfFVFfge8m5DBHVzVLKKPh2 APDF-invoice-tracker-dapp/styles.33924162034a120ae456.css
+added QmQ9YtMFE5X1qrhDBtbiv91MQgw6rBz1uqg8eJWJantLBD APDF-invoice-tracker-dapp
+ 4.30 MiB / 4.30 MiB [==========================================================================================================================================] 100.00%(base) Deniss-IMAC.fios-router.home:denisputnam
+/Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs name publish QmQ9YtMFE5X1qrhDBtbiv91MQgw6rBz1uqg8eJWJantLBD
+Published to QmRHwsSYncB7m2nYYFM2c2YGr2jefvDDdmjEgEzTb8RgXF: /ipfs/QmQ9YtMFE5X1qrhDBtbiv91MQgw6rBz1uqg8eJWJantLBD
