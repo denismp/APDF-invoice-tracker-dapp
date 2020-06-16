@@ -52,7 +52,8 @@ export class InvoiceServiceService {
         due120DaysDate
       ).send({ from: owner, gas:3000000 });
     } catch (err) {
-      console.log('InvoiceService.addInvoice(): failed:', err)
+      console.log('InvoiceService.addInvoice(): failed:', err);
+      alert("Duplicate invoice");
     }
   }
 

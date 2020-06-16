@@ -156,7 +156,6 @@ contract InvoiceTracker is Owned {
                 _invoiceNumber ==
                 clientNameInvoiceMap[_clientName][i].invoiceNumber
             ) {
-                emit duplicateInvoiceEvent(_clientName, _invoiceNumber);
                 return false;
             }
         }
@@ -164,8 +163,12 @@ contract InvoiceTracker is Owned {
     }
 
     modifier noDupInvoice(string memory _clientName, uint256 _invoiceNumber) {
+        bool flag = isNoDuplicateInvoice(_clientName, _invoiceNumber);
+        if(flag == false) {
+            emit duplicateInvoiceEvent(_clientName, _invoiceNumber);
+        }
         require(
-            isNoDuplicateInvoice(_clientName, _invoiceNumber),
+            flag,
             "Duplicate invoice"
         );
         _;
