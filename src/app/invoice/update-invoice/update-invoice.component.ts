@@ -11,23 +11,24 @@ import { InvoiceServiceService } from 'src/app/services/invoice-service.service'
 })
 export class UpdateInvoiceComponent implements OnInit {
   //@ViewChild('dp') dp: NgbDatepicker;
-  dateModel: NgbDateStruct;
-  privateKey: string;
+  public dateModel: NgbDateStruct;
+  public privateKey: string;
   //date: { year: number, month: number, day: number };
-  submitted = false;
-  model = new Invoice();
-  sdatePmt: string;
+  public submitted = false;
+  public model = new Invoice();
+  public sdatePmt: string;
+
   constructor(public formatter: NgbDateParserFormatter, private invoiceService: InvoiceServiceService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
-  newInvoice() {
+  public newInvoice() {
     this.submitted = false;
     this.model = new Invoice();
   }
   //datePmtReceived
-  onSubmit(form: NgForm) {
+  public onSubmit(form: NgForm) {
     console.log(form);
     this.submitted = true;
     this.model.clientName = form.controls['clientName'].value;
@@ -47,25 +48,21 @@ export class UpdateInvoiceComponent implements OnInit {
     console.log('date=' + form.controls.datepmtreceived.value.year + '-' + form.controls.datepmtreceived.value.month + '-' + form.controls.datepmtreceived.value.day);
     console.log(this.model);
     // TODO: Here we need to call the updateInvoice() on the solidity contract.
-    this.invoiceService.updateInvoice(
-      form.controls['privatekey'].value,
-      this.model.clientName,
-      this.model.invoiceNumber,
-      this.model.datePmtReceived
-    ).subscribe(
-      //this.model = model;
-      res => console.log('SUCCESS: ', res),
-      error => console.log("error" + error),
-      () => console.log('Request completed')
-    );
+    this.invoiceService.updateInvoice( this.model.clientName, this.model.invoiceNumber, this.model.datePmtReceived)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+  public get diagnostic() { return JSON.stringify(this.model); }
 
   // Reveal in html:
   //   Name via form.controls = {{showFormControls(clientForm)}}
-  showFormControls(form: any) {
+  public showFormControls(form: any) {
     let rVal: string = "";
     if (form !== undefined) {
       if (form.controls['invoiceNumber'] !== undefined) {
@@ -74,12 +71,11 @@ export class UpdateInvoiceComponent implements OnInit {
           'Client Name: ' + form.controls['clientName'].value +
           ', Invoice Number: ' + form.controls['invoiceNumber'].value;
           //'Payment Date: '  + form.controls['datepmtreceived'].value;
-        console.log(rVal);
+        //console.log(rVal);
       }
     }
     return rVal;
   }
-
 
   // navigateTimeSheetEndDate(event) {
   //   this.date = event.next;

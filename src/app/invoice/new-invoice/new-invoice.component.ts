@@ -43,7 +43,7 @@ export class NewInvoiceComponent implements OnInit {
     this.model = new Invoice();
   }
 
-  onSubmit(form: NgForm) {
+  public onSubmit(form: NgForm) {
     console.log(form);
     this.submitted = true;
     this.model.clientName = form.controls['clientName'].value;
@@ -74,11 +74,14 @@ export class NewInvoiceComponent implements OnInit {
 
     // calc the rest of the values.
     // User the invoice sent date to calculate the other dates
+
+    //now.setDate(now.getDate() + 30);
     let _invoiceSentTime = _date.getTime();
-    let _30days = this.convertMillisecondsToSeconds(_invoiceSentTime, 30);
-    let _60days = this.convertMillisecondsToSeconds(_invoiceSentTime, 60);
-    let _90days = this.convertMillisecondsToSeconds(_invoiceSentTime, 90);
-    let _120days = this.convertMillisecondsToSeconds(_invoiceSentTime, 120);
+    const ldate: Date = new Date(_date);
+    let _30days = Math.round(ldate.setDate(ldate.getDate() + 30)/1000);
+    let _60days = Math.round(ldate.setDate(ldate.getDate() + 60)/1000);
+    let _90days = Math.round(ldate.setDate(ldate.getDate() + 90)/1000);
+    let _120days = Math.round(ldate.setDate(ldate.getDate() + 120)/1000);
     this.model.due30DaysDate = _30days;
     this.model.due60DaysDate = _60days;
     this.model.due90DaysDate = _90days;
@@ -102,10 +105,9 @@ export class NewInvoiceComponent implements OnInit {
     console.log('due90DaysDate=' + this.due90DaysDate);
     this.due120DaysDate = this.getDateString(_invoiceSentTime, 120);
     console.log('due120DaysDate=' + this.due120DaysDate);
-    // TODO: This is where we interface with the solidity contract to create the new invoice.
 
+    // This is where we interface with the solidity contract to create the new invoice.
     this.invoiceService.addInvoice(
-      form.controls['privatekey'].value,
       this.model.clientName,
       this.model.invoiceNumber,
       this.model.netTerms,
@@ -117,20 +119,11 @@ export class NewInvoiceComponent implements OnInit {
       this.model.due60DaysDate,
       this.model.due90DaysDate,
       this.model.due120DaysDate
-    ).subscribe(
-      //this.model = model;
-      res => console.log('SUCCESS: ', res),
-      error => console.log("error" + error),
-      () => console.log('Request completed')
-    );
-  }
-
-  private convertMillisecondsToSeconds(_milliseconds: number, _numDays: number) {
-    const _numSecondsInDay = 86400;
-    let _daysInSeconds = new Date(_milliseconds + (_numSecondsInDay * _numDays)).getTime() / 1000;
-    _daysInSeconds = Math.round(_daysInSeconds);
-    //console.log('_daysInSeconds=' + _daysInSeconds);
-    return _daysInSeconds;
+    ).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   private getDateString(_startInMilliseconds: number, _numDays: number) {
@@ -139,14 +132,12 @@ export class NewInvoiceComponent implements OnInit {
     return rVal;
   }
 
-
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
-
+  public get diagnostic() { return JSON.stringify(this.model); }
 
   // Reveal in html:
   //   Name via form.controls = {{showFormControls(clientForm)}}
-  showFormControls(form: any) {
+  public showFormControls(form: any) {
     let rVal: string = "";
     if (form !== undefined) {
       if (form.controls['invoiceNumber'] !== undefined) {
@@ -155,7 +146,7 @@ export class NewInvoiceComponent implements OnInit {
           'Client Name: ' + form.controls['clientName'].value +
           'Invoice Number: ' + form.controls['invoiceNumber'].value +
           ', Net Terms: ' + form.controls['netTerms'].value;
-        console.log(rVal);
+        //console.log(rVal);
       }
     }
     return rVal;
@@ -164,5 +155,4 @@ export class NewInvoiceComponent implements OnInit {
   // navigateTimeSheetEndDate(event) {
   //   this.date = event.next;
   // }
-
 }

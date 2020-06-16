@@ -32,7 +32,7 @@ contract("InvoiceTracker", async accounts => {
     assert.equal(count, 2);
     //const result = await debug(invoiceTracker.getInvoiceNumbers("test"));
     const result = await invoiceTracker.getInvoiceNumbers("test");
-    console.log("invoice numbers=" + result);
+    console.log("GET INVOICE NUMBERS: invoice numbers=" + result);
   });
 
   it('javascript test get invoice', async () => {
@@ -64,6 +64,14 @@ contract("InvoiceTracker", async accounts => {
     console.log("updated invoice invoicePmtDate=" + result.datePmtReceived);
     console.log("updated now=" + now);
     assert.equal(result.datePmtReceived, now);
+  });
+
+  it('javascript test get client', async () => {
+    console.log("GET CLIENT");
+    let result = await invoiceTracker.getClientByIndex(0);
+    console.log('result=',result);
+    //truffleAssert.prettyPrintEmittedEvents(result);
+    assert.equal(result.name, 'test');
   });
 
   async function addInvoice(_invoiceNumber) {

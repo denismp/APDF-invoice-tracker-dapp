@@ -91,6 +91,35 @@ Developer Documentation
   "details": "Use at your own risk.",
   "methods":
   {
+    "addClient(address,string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Add's a client to the clientMap and the clientNameAddressMap",
+      "params":
+      {
+        "_clientID": "address of the wallet of the client.",
+        "_name": "string with the client's name.  This needs to be unique"
+      }
+    },
+    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Add's an invoice to be tracked.",
+      "params":
+      {
+        "_amount": "amount in dollars.",
+        "_clientName": "name of the client",
+        "_due120DaysDate": "120 day invoice due date",
+        "_due30DaysDate": "30 day invoice due date",
+        "_due60DaysDate": "60 day invoice due date",
+        "_due90DaysDate": "90 day invoice due date",
+        "_invoiceNumber": "invoice number",
+        "_invoiceSentDate": "date that invoice was sent to the client.",
+        "_netTerms": "net terms for 30, 60, 90, or 120 days.",
+        "_numberHours": "number of hours for the timesheet.",
+        "_timesheetEndDate": "timesheet end date"
+      }
+    },
     "changeOwner(address)":
     {
       "author": "Denis M. Putnam",
@@ -98,6 +127,39 @@ Developer Documentation
       "params":
       {
         "newOwner": "new address payable owner."
+      }
+    },
+    "constructor":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details"
+    },
+    "getClientByIndex(uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no further info",
+      "params":
+      {
+        "_index": "index of client name"
+      },
+      "returns":
+      {
+        "clientID": "clientID",
+        "name": "name"
+      }
+    },
+    "getClientByName(string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "Get the client for the given name.",
+      "params":
+      {
+        "_name": "client's name"
+      },
+      "returns":
+      {
+        "clientID": "clientID",
+        "name": "name"
       }
     },
     "getCurrentOwner()":
@@ -108,6 +170,87 @@ Developer Documentation
       {
         "_0": "address current owner."
       }
+    },
+    "getInvoice(string,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details",
+      "params":
+      {
+        "_clientName": "name of the client",
+        "_invoiceNumber": "invoice number being requested."
+      },
+      "returns":
+      {
+        "amount": "amount",
+        "datePmtReceived": "datePmtReceived",
+        "due120DaysDate": "due120DaysDate",
+        "due30DaysDate": "due30DaysDate",
+        "due60DaysDate": "due60DaysDate",
+        "due90DaysDate": "due90DaysDate",
+        "invoiceNumber": "invoiceNumber",
+        "invoiceSentDate": "invoiceSentDate",
+        "netTerms": "netTerms",
+        "numberHours": "numberHours",
+        "timesheetEndDate": "timesheetEndDate"
+      }
+    },
+    "getInvoiceCount(string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details.",
+      "params":
+      {
+        "_clientName": "name of the client"
+      },
+      "returns":
+      {
+        "count": "of invoices associated with the given client"
+      }
+    },
+    "getInvoiceNumbers(string)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "returned string is a comma separated string of invoice numbers.  The comma is also the end of the string if no other values appear.",
+      "params":
+      {
+        "_clientName": "name of the client"
+      },
+      "returns":
+      {
+        "_0": "a comma seperated list of invoice numbers associated with the client."
+      }
+    },
+    "isNoClient(string,address)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details.",
+      "params":
+      {
+        "_clientID": "clients wallet address.",
+        "_clientName": "name of the client."
+      }
+    },
+    "isNoDuplicateInvoice(string,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details.",
+      "params":
+      {
+        "_clientName": "name of the client.",
+        "_invoiceNumber": "invoice number."
+      }
+    },
+    "updateInvoice(string,uint256,uint256)":
+    {
+      "author": "Denis M. Putnam",
+      "details": "no other details",
+      "params":
+      {
+        "_clientName": "name of the client",
+        "_invoiceNumber": "invoice number being requested.",
+        "_invoicePmtDate": "payment date"
+      }
     }
   },
   "title": "Invoice Tracking contract"
@@ -116,13 +259,54 @@ User Documentation
 {
   "methods":
   {
+    "addClient(address,string)":
+    {
+      "notice": "Add a client to this contract."
+    },
+    "addInvoice(string,uint256,uint256,uint256,string,uint256,uint256,uint256,uint256,uint256,uint256)":
+    {
+      "notice": "Add an invoice to track"
+    },
     "changeOwner(address)":
     {
       "notice": "Change the current owner to the new owner."
     },
+    "constructor": "The constructor for this contract",
+    "getClientByIndex(uint256)":
+    {
+      "notice": "get the client by index number."
+    },
+    "getClientByName(string)":
+    {
+      "notice": "Get the requested client"
+    },
     "getCurrentOwner()":
     {
       "notice": "Get the current owner."
+    },
+    "getInvoice(string,uint256)":
+    {
+      "notice": "Get an invoice"
+    },
+    "getInvoiceCount(string)":
+    {
+      "notice": "Get the count of invoices associated with the given client name"
+    },
+    "getInvoiceNumbers(string)":
+    {
+      "notice": "Get the list of invoice numbers as a string for the given client name."
+    },
+    "isNoClient(string,address)":
+    {
+      "notice": "Check for no client."
+    },
+    "isNoDuplicateInvoice(string,uint256)":
+    {
+      "notice": "Check for no duplicate invoice."
+    },
+    "updateInvoice(string,uint256,uint256)":
+    {
+      "notice": "Update an invoice with the payment date"
     }
   },
   "notice": "This contract tracks invoices for payment"
@@ -225,11 +409,10 @@ User Documentation
 
 ## Notes
   Below is the command line history of what I did for etherjs to connect to ropsten via metamask.
-  505  npm install web3 -- I am not using this at the moment in lieu of metamask.  Hence the uninstall.
-  506  npm uninstall web3
-  515  npm install --save ethers
-  516  npm install crypto-js
+  505  npm install web3 
 
   https://app.diagrams.net/?libs=general;uml#G1xdswWXjxtiKqe4_1-VtyloQFIJgOwUne
 
-7EB2255581AED1C929A291B65BC3A37FB70BA8C6783FFFABE18D8C6EC5DCFFC1
+# Useful commands
+  truffle migrate --reset --network development
+  truffle migrate --reset --network ropsten

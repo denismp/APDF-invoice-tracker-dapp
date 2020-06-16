@@ -1,7 +1,24 @@
+<!-- <p>invoice-list works!</p>
+<p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
+  Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
+  Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
+  egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
+  tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
+  magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
+  neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p> -->
 <div class="container">
   <div [hidden]="submitted">
     <h1>Request Invoices Report Form</h1>
     <form (ngSubmit)="onSubmit(invoiceForm)" #invoiceForm="ngForm">
+
+      <!-- <div class="form-group">
+        <label for="privatekey">Private Key</label>
+        <input type="password" class="form-control" id="privatekey" required [(ngModel)]="privateKey" name="privatekey"
+          #privatekey="ngModel">
+        <div [hidden]="privatekey.valid || privatekey.pristine" class="alert alert-danger">
+          Private key is required
+        </div>
+      </div> -->
 
       <div class="form-group">
         <label for="clientName">Client Name</label>
@@ -24,40 +41,18 @@
   </div>
 
   <div [hidden]="!submitted">
-    <h2>Your requested invoices for the client: {{model.clientName}}</h2>
+    <h2>You requested invoices for the following client:</h2>
     <!-- TODO: This is where the invoice list will be displayed this is an *ngFor-->
     <div class="row">
-      <p *ngIf="loadedInvoices.length < 1 && !isFetching">No invoices available!</p>
-      <table class="table table-bordered">
-        <thead>
-          <th>Inv#</th>
-          <th>Net Terms</th>
-          <th>Num Hours</th>
-          <th>Amount</th>
-          <th>End Date</th>
-          <th>Sent Date</th>
-          <th>Due 30</th>
-          <th>Due 60</th>
-          <th>Due 90</th>
-          <th>Due 120</th>
-          <th>Pmt Received</th>
-        </thead>
-        <tbody *ngIf="loadedInvoices.length >= 1 && !isFetching">
-          <tr *ngFor="let invoice of loadedInvoices">
-            <td>{{invoice.invoiceNumber}}</td>
-            <td>{{invoice.netTerms}}</td>
-            <td>{{invoice.numberHours}}</td>
-            <td>{{invoice.amount}}</td>
-            <td>{{getStdDateString(invoice.timesheetEndDate)}}</td>
-            <td>{{getStdDateString(invoice.invoiceSentDate)}}</td>
-            <td>{{getStdDateString(invoice.due30DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.due60DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.due90DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.due120DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.datePmtReceived)}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="col-xs-12 col-md-6 col-md-offset-3">
+        <p *ngIf="loadedInvoices.length < 1 && !isFetching">No posts available!</p>
+        <ul class="list-group" *ngIf="loadedInvoices.length >= 1 && !isFetching">
+          <li class="list-group-item" *ngFor="let invoice of loadedInvoices">
+            <h3>{{ invoice.invoiceNumber }}</h3>
+            <p>{{ invoice.netTerms }}</p>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="row">
       <div class="col-xs-3">Client Name: </div>

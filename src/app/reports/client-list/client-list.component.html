@@ -1,0 +1,23 @@
+<!-- <p>client-list works!</p> -->
+<div class="container">
+  <div>
+    <h2>Your clients</h2>
+    <!-- TODO: This is where the invoice list will be displayed this is an *ngFor-->
+    <div class="row">
+      <p *ngIf="loadedClients.length < 1 && !isFetching">No clients available!</p>
+      <table class="table table-bordered">
+        <thead>
+          <th>Client Name</th>
+          <th>Client ID</th>
+        </thead>
+        <tbody *ngIf="loadedClients.length >= 1 && !isFetching">
+          <tr *ngFor="let client of loadedClients">
+            <td>{{client.name}}</td>
+            <td>{{client.clientID}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-primary" (click)="loadClients()">Refresh</button>
+  </div>
+</div>

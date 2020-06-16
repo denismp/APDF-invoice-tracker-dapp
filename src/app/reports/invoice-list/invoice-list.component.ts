@@ -12,12 +12,14 @@ import { InvoiceServiceService } from 'src/app/services/invoice-service.service'
 export class InvoiceListComponent implements OnInit {
   //@ViewChild('dp') dp: NgbDatepicker;
   public dateModel: NgbDateStruct;
-  public privateKey: string;
+  //public privateKey: string;
   //date: { year: number, month: number, day: number };
   public submitted = false;
   public model = new Invoice();
   public sdatePmt: string;
   public invoiceNumbers: string;
+  public loadedInvoices: Invoice[] = [];
+  public isFetching: boolean = false;
 
   constructor(public formatter: NgbDateParserFormatter, private invoiceService: InvoiceServiceService) { }
 
@@ -27,6 +29,7 @@ export class InvoiceListComponent implements OnInit {
   public newInvoice() {
     this.submitted = false;
     this.model = new Invoice();
+    this.loadedInvoices = [];
   }
   //datePmtReceived
   public onSubmit(form: NgForm) {
@@ -34,47 +37,42 @@ export class InvoiceListComponent implements OnInit {
     this.submitted = true;
     this.model.clientName = form.controls['clientName'].value;
     console.log(this.model);
-    // TODO: Here we need to call the solidity contract to get the list of invoice numbers and then retrieve the invoices one at a time.
-    this.invoiceService.getInvoiceNumbers(
-      form.controls['privatekey'].value,
-      this.model.clientName
-    ).subscribe(
-      //this.model = model;
-      (res: string) => {
-        console.log('SUCCESS: ', res);
-        //this.invoiceNumbers = res;
-        const privateKey: string = form.controls['privatekey'].value;
-        const clientName: string = this.model.clientName;
-        //console.log('SUCCESS: ', res);
-        this.invoiceNumbers = res;
-        // extract the numbers into an array.
-        const nList: string[] = res.split(",");
-        for (let i = 0; i < nList.length-1; i++) {
-          console.log('nList[' + i + ']=' + nList[i]);
-          let _invNum: number = parseInt(nList[i]);
-          const invoice = this.invoiceService.getInvoice(privateKey, clientName, _invNum).subscribe((invRes: Invoice) => {
-            //console.log(JSON.stringify(invRes));
-            console.log('Invoice['+i+']clientName='+invRes.clientName);
-            console.log('Invoice['+i+']datePmtReceived='+invRes.datePmtReceived);
-            console.log('Invoice['+i+']due120DaysDate='+invRes.due120DaysDate);
-            console.log('Invoice['+i+']due30DaysDate='+invRes.due30DaysDate);
-            console.log('Invoice['+i+']due60DaysDate='+invRes.due60DaysDate);
-          });
+    // Here we need to call the solidity contract to get the list of invoice numbers and then retrieve the invoices one at a time.
+    this.isFetching = true;
+    this.invoiceService.getInvoiceNumbers(this.model.clientName)
+      .then(res => {
+        this.isFetching = false;
+        if (res !== undefined) {
+          console.log('SUCCESS: ', res);
+          let _invNums: number[] = res;
+          //this.invoiceNumbers = res;
+          const clientName: string = this.model.clientName;
+          // extract the numbers into an array.
+          //const nList: string[] = _invNums.split(",");
+          for (let i = 0; i < _invNums.length; i++) {
+            //console.log('nList[' + i + ']=' + nList[i]);
+            let _invNum: number = _invNums[i];
+            this.invoiceService.getInvoice(clientName, _invNum)
+              .then(invoice => {
+                console.log(invoice);
+                // console.log('Invoice[' + i + ']datePmtReceived=' + invoice.datePmtReceived);
+                // console.log('Invoice[' + i + ']due120DaysDate=' + invoice.due120DaysDate);
+                // console.log('Invoice[' + i + ']due30DaysDate=' + invoice.due30DaysDate);
+                // console.log('Invoice[' + i + ']due60DaysDate=' + invoice.due60DaysDate);
+                this.loadedInvoices.push(invoice);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        } else {
+          console.log('InvoiceListComponent.onSubmit(): getInvoiceNumbers() returned no data');
         }
-        /**
-         * The do something like this:
-         * for (let i = 0; i < count; i++) {
-              const deliveryHash = await this.deliveryManagerContract.methods.getDeliveryHash(i).call();
-              const delivery = await this.deliveryManagerContract.methods.getDelivery(deliveryHash).call();
-              const decodedDelivery = this.decodeDelivery(delivery, deliveryHash);
-              deliveries.push(decodedDelivery);
-            }
-         */
-
-      },
-      error => console.log("error" + error),
-      () => console.log('Request completed')
-    );
+      })
+      .catch(err => {
+        this.isFetching = false;
+        console.log(err);
+      });
   }
 
   // TODO: Remove this when we're done
@@ -89,12 +87,20 @@ export class InvoiceListComponent implements OnInit {
         //console.log('Invoice Number:' + form.controls['invoiceNumber'].value);
         rVal =
           'Client Name: ' + form.controls['clientName'].value;
-        console.log(rVal);
+        //console.log(rVal);
       }
     }
     return rVal;
   }
 
+  public getStdDateString(_numSeconds: string): string {
+    //console.log('getStdDateString(): _numSeconds=',_numSeconds);
+    if (parseInt(_numSeconds) === 0) {
+      return "";
+    }
+    let rVal: string = new Date(parseInt(_numSeconds) * 1000).toDateString();
+    return rVal;
+  }
 
   // navigateTimeSheetEndDate(event) {
   //   this.date = event.next;
