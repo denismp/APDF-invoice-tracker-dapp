@@ -44,17 +44,17 @@
         </thead>
         <tbody *ngIf="loadedInvoices.length >= 1 && !isFetching">
           <tr *ngFor="let invoice of loadedInvoices">
-            <td>{{invoice.invoiceNumber}}</td>
-            <td>{{invoice.netTerms}}</td>
-            <td>{{invoice.numberHours}}</td>
-            <td>{{invoice.amount}}</td>
-            <td>{{getStdDateString(invoice.timesheetEndDate)}}</td>
-            <td>{{getStdDateString(invoice.invoiceSentDate)}}</td>
-            <td>{{getStdDateString(invoice.due30DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.due60DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.due90DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.due120DaysDate)}}</td>
-            <td>{{getStdDateString(invoice.datePmtReceived)}}</td>
+            <td>{{invoice?.invoiceNumber}}</td>
+            <td>{{invoice?.netTerms}}</td>
+            <td>{{invoice?.numberHours}}</td>
+            <td>{{invoice?.amount}}</td>
+            <td>{{getStdDateString(invoice?.timesheetEndDate)}}</td>
+            <td>{{getStdDateString(invoice?.invoiceSentDate)}}</td>
+            <td>{{getStdDateString(invoice?.due30DaysDate)}}</td>
+            <td>{{getStdDateString(invoice?.due60DaysDate)}}</td>
+            <td>{{getStdDateString(invoice?.due90DaysDate)}}</td>
+            <td>{{getStdDateString(invoice?.due120DaysDate)}}</td>
+            <td>{{getStdDateString(invoice?.datePmtReceived)}}</td>
           </tr>
         </tbody>
       </table>
