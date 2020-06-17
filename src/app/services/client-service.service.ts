@@ -26,7 +26,8 @@ export class ClientServiceService {
 
   public async getClientCount(): Promise<number> {
     try {
-      return await this.web3Service.contract.methods.getClientCount().call();
+      let owner: string = await this.web3Service.contract.methods.getCurrentOwner().call();
+      return await this.web3Service.contract.methods.getClientCount().call({ from: owner, gas: 3000000 });
     } catch (err) {
       console.log('ClientServiceService.getClientCount(): failed:', err);
       alert('ClientServiceService.getClientCount(): failed:' + err);
@@ -35,7 +36,8 @@ export class ClientServiceService {
 
   public async getClient(index: number): Promise<Client> {
     try {
-      return await this.web3Service.contract.methods.getClientByIndex(index).call();
+      let owner: string = await this.web3Service.contract.methods.getCurrentOwner().call();
+      return await this.web3Service.contract.methods.getClientByIndex(index).call({ from: owner, gas: 3000000 });
     } catch (err) {
       console.log('ClientServiceService.getClientByIndex(): failed:', err);
       alert('ClientServiceService.getClientIndex(): failed:' + err);
