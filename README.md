@@ -427,7 +427,7 @@ User Documentation
 6. ipfs add --recursive "full path to dist" // /Users/denisputnam/git/APDF-invoice-tracker-dapp/dist
 7. ipfs name publish QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT // hash is the dist one.  This just an example
 8. Published to QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT : /ipfs/QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT
-9. https://gateway.ipfs.io/ipfs/QmQ9YtMFE5X1qrhDBtbiv91MQgw6rBz1uqg8eJWJantLBD
+9. https://gateway.ipfs.io/ipfs/QmeTLd49YBcc4ADZKhmgjpnmV7Y5jXduXQ5EyHwi6THSdp
 
 ## index.html
 Make sure that the <script> tag is in your index.html file.
