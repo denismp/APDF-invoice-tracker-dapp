@@ -361,7 +361,6 @@ User Documentation
   },
   "notice": "This contract establishes the owner and allows for an owner change."
 }
-
 ## Solidity coverage
 1. Make sure you run "npm install --save-dev solidity-coverage"
 2. Run "truffle run coverage"
@@ -463,9 +462,9 @@ chunk {0} runtime-es5.1eba213af0b233498d9d.js (runtime) 1.45 kB [entry] [rendere
 chunk {1} main-es2015.1cac933d3a423ee12d7f.js (main) 1.85 MB [initial] [rendered]
 chunk {1} main-es5.1cac933d3a423ee12d7f.js (main) 1.94 MB [initial] [rendered]
 chunk {4} styles.33924162034a120ae456.css (styles) 141 kB [initial] [rendered]
-Date: 2020-06-17T18:05:31.339Z - Hash: eef5afa39b47d527386a - Time: 58666ms
+Date: 2020-06-17T19:08:29.131Z - Hash: eef5afa39b47d527386a - Time: 22415ms
 
-WARNING in budgets: Exceeded maximum budget for initial-es2015. Budget 2 MB was not met by 30.2 kB with a total of 2.03 MB.
+WARNING in budgets: Exceeded maximum budget for initial-es2015. Budget 2 MB was not met by 30 kB with a total of 2.03 MB.
 
 WARNING in budgets: Exceeded maximum budget for initial-es5. Budget 2 MB was not met by 216 kB with a total of 2.21 MB.
 (base) Deniss-IMAC.fios-router.home:denisputnam
@@ -484,4 +483,3 @@ added QmZhat32Gtjepq4NBun7sgfowtg62Tt4H357A8aG1n92hV APDF-invoice-tracker-dapp
  4.31 MiB / 4.31 MiB [============================================================================================================================] 100.00%(base) Deniss-IMAC.fios-router.home:denisputnam
 /Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs name publish QmZhat32Gtjepq4NBun7sgfowtg62Tt4H357A8aG1n92hV
 Published to QmRHwsSYncB7m2nYYFM2c2YGr2jefvDDdmjEgEzTb8RgXF: /ipfs/QmZhat32Gtjepq4NBun7sgfowtg62Tt4H357A8aG1n92hV
-(base) Deniss-IMAC.fios-router.home:denisputnam
