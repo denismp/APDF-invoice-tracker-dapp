@@ -426,7 +426,7 @@ User Documentation
 6. ipfs add --recursive "full path to dist" // /Users/denisputnam/git/APDF-invoice-tracker-dapp/dist
 7. ipfs name publish QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT // hash is the dist one.  This just an example
 8. Published to QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT : /ipfs/QmTRzgdod7Y5hN1HFYXtRH1BHbD3rNKaraaBMbkE1cReyT
-9. https://gateway.ipfs.io/ipfs/QmZhat32Gtjepq4NBun7sgfowtg62Tt4H357A8aG1n92hV
+9. https://gateway.ipfs.io/ipfs/Qmc5TLVyDawBKrxP6jYyy7Z4Ekn3K6mjrTCCPEzTtXovQv
 
 ## index.html
 Make sure that the <script> tag is in your index.html file.
@@ -455,31 +455,34 @@ Make sure that the <script> tag is in your index.html file.
 Generating ES5 bundles for differential loading...
 ES5 bundle generation complete.
 
-chunk {2} polyfills-es2015.2c569cdf6ffecbea6ca5.js (polyfills) 37 kB [initial] [rendered]
-chunk {3} polyfills-es5.394aa1f38aed2f431916.js (polyfills-es5) 130 kB [initial] [rendered]
 chunk {0} runtime-es2015.1eba213af0b233498d9d.js (runtime) 1.45 kB [entry] [rendered]
 chunk {0} runtime-es5.1eba213af0b233498d9d.js (runtime) 1.45 kB [entry] [rendered]
-chunk {1} main-es2015.1cac933d3a423ee12d7f.js (main) 1.85 MB [initial] [rendered]
-chunk {1} main-es5.1cac933d3a423ee12d7f.js (main) 1.94 MB [initial] [rendered]
+chunk {2} polyfills-es2015.2c569cdf6ffecbea6ca5.js (polyfills) 37 kB [initial] [rendered]
+chunk {3} polyfills-es5.394aa1f38aed2f431916.js (polyfills-es5) 130 kB [initial] [rendered]
+chunk {1} main-es2015.72716919e3d1d6372f85.js (main) 1.85 MB [initial] [rendered]
+chunk {1} main-es5.72716919e3d1d6372f85.js (main) 1.95 MB [initial] [rendered]
 chunk {4} styles.33924162034a120ae456.css (styles) 141 kB [initial] [rendered]
-Date: 2020-06-17T19:08:29.131Z - Hash: eef5afa39b47d527386a - Time: 22415ms
+Date: 2020-06-18T20:26:46.656Z - Hash: a95cf683532eb7aae77e - Time: 56253ms
 
-WARNING in budgets: Exceeded maximum budget for initial-es2015. Budget 2 MB was not met by 30 kB with a total of 2.03 MB.
+WARNING in budgets: Exceeded maximum budget for initial-es2015. Budget 2 MB was not met by 30.6 kB with a total of 2.03 MB.
+
 
 WARNING in budgets: Exceeded maximum budget for initial-es5. Budget 2 MB was not met by 216 kB with a total of 2.21 MB.
 (base) Deniss-IMAC.fios-router.home:denisputnam
 /Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs add -r dist/APDF-invoice-tracker-dapp/
 added QmaFCeTRkmJcppfNBS1tF4iEbYGDT2LZTXcokPA24JcHPx APDF-invoice-tracker-dapp/3rdpartylicenses.txt
 added QmQDLVoPGDjKBYdtccruufTVXm8b4s2SEbzjNwT6w73EBv APDF-invoice-tracker-dapp/favicon.ico
-added QmUGcd8sujgVSHhQCf1fcCNduuZ7tcQQyvqgxG1SoTcc9u APDF-invoice-tracker-dapp/index.html
-added QmcxxeJ91DqeVf7FCvcaxyoFWcfiTjKii846YWDcp4PDcV APDF-invoice-tracker-dapp/main-es2015.1cac933d3a423ee12d7f.js
-added QmPwmHPAFDL4zzDbYnmNZzrToUgvp4pds5GkJbUzjjtUay APDF-invoice-tracker-dapp/main-es5.1cac933d3a423ee12d7f.js
+added QmQ5GBF1xpqSXVheaaL92CFppjuG33wKnaMDJB68KnM4SC APDF-invoice-tracker-dapp/index.html
+added QmaKKXVBdb4pRjK7jGNPze5JxJ8H47Ppzg4LnvfEqih64X APDF-invoice-tracker-dapp/main-es2015.72716919e3d1d6372f85.js
+added QmVcne2yMs1UoDdou3exybVt4o23bdixMHgyhJ4CbzMxBd APDF-invoice-tracker-dapp/main-es5.72716919e3d1d6372f85.js
 added QmbXJrob58PnsadzXYprSzXLbnogRhBJK131TCTiB5TKy8 APDF-invoice-tracker-dapp/polyfills-es2015.2c569cdf6ffecbea6ca5.js
 added QmQVjnkrruA1Z64kU4ysQ9us6A18JRiYjRQJZ2AVmwH2NQ APDF-invoice-tracker-dapp/polyfills-es5.394aa1f38aed2f431916.js
 added Qmb3UHBRdMTRGA4AXa6XMbBxzkZFAihsEnd6qDvFtJ1qvN APDF-invoice-tracker-dapp/runtime-es2015.1eba213af0b233498d9d.js
 added Qmb3UHBRdMTRGA4AXa6XMbBxzkZFAihsEnd6qDvFtJ1qvN APDF-invoice-tracker-dapp/runtime-es5.1eba213af0b233498d9d.js
 added QmSCx4YXkUUqxHVoZDQN3RaPfFVFfge8m5DBHVzVLKKPh2 APDF-invoice-tracker-dapp/styles.33924162034a120ae456.css
-added QmZhat32Gtjepq4NBun7sgfowtg62Tt4H357A8aG1n92hV APDF-invoice-tracker-dapp
- 4.31 MiB / 4.31 MiB [============================================================================================================================] 100.00%(base) Deniss-IMAC.fios-router.home:denisputnam
-/Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs name publish QmZhat32Gtjepq4NBun7sgfowtg62Tt4H357A8aG1n92hV
-Published to QmRHwsSYncB7m2nYYFM2c2YGr2jefvDDdmjEgEzTb8RgXF: /ipfs/QmZhat32Gtjepq4NBun7sgfowtg62Tt4H357A8aG1n92hV
+
+added Qmc5TLVyDawBKrxP6jYyy7Z4Ekn3K6mjrTCCPEzTtXovQv APDF-invoice-tracker-dapp
+ 4.31 MiB / 4.31 MiB [========================================================================================================================] 100.00%(base) Deniss-IMAC.fios-router.home:denisputnam
+/Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs name publish Qmc5TLVyDawBKrxP6jYyy7Z4Ekn3K6mjrTCCPEzTtXovQv
+Published to QmRHwsSYncB7m2nYYFM2c2YGr2jefvDDdmjEgEzTb8RgXF: /ipfs/Qmc5TLVyDawBKrxP6jYyy7Z4Ekn3K6mjrTCCPEzTtXovQv
+

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
+import { Observable, BehaviorSubject } from 'rxjs';
 //import { Web3WsProvider } from 'web3-providers-ws';
 
 declare let require: any;
@@ -18,8 +19,15 @@ export class Web3Service {
   private contractABI = this.INVOICE_TRACKER_ARTIFACTS;
   private myContractABI = [{ "inputs": [], "stateMutability": "payable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "address", "name": "_clientID", "type": "address" }, { "indexed": false, "internalType": "string", "name": "_name", "type": "string" }], "name": "addClientEvent", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "string", "name": "_clientName", "type": "string" }, { "indexed": false, "internalType": "uint256", "name": "_invoiceNumber", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_netTerms", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_numberHours", "type": "uint256" }, { "indexed": false, "internalType": "string", "name": "_amount", "type": "string" }, { "indexed": false, "internalType": "uint256", "name": "_timesheetEndDate", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_invoiceSentDate", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_due30DaysDate", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_due60DaysDate", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_due90DaysDate", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_due120DaysDate", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_datePmtReceived", "type": "uint256" }], "name": "addInvoiceEvent", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "string", "name": "_clientName", "type": "string" }, { "indexed": false, "internalType": "uint256", "name": "_invoiceNumber", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_datePmtReceived", "type": "uint256" }], "name": "updateInvoiceEvent", "type": "event" }, { "inputs": [{ "internalType": "address", "name": "_clientID", "type": "address" }, { "internalType": "string", "name": "_name", "type": "string" }], "name": "addClient", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_clientName", "type": "string" }, { "internalType": "uint256", "name": "_invoiceNumber", "type": "uint256" }, { "internalType": "uint256", "name": "_netTerms", "type": "uint256" }, { "internalType": "uint256", "name": "_numberHours", "type": "uint256" }, { "internalType": "string", "name": "_amount", "type": "string" }, { "internalType": "uint256", "name": "_timesheetEndDate", "type": "uint256" }, { "internalType": "uint256", "name": "_invoiceSentDate", "type": "uint256" }, { "internalType": "uint256", "name": "_due30DaysDate", "type": "uint256" }, { "internalType": "uint256", "name": "_due60DaysDate", "type": "uint256" }, { "internalType": "uint256", "name": "_due90DaysDate", "type": "uint256" }, { "internalType": "uint256", "name": "_due120DaysDate", "type": "uint256" }], "name": "addInvoice", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address payable", "name": "newOwner", "type": "address" }], "name": "changeOwner", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_index", "type": "uint256" }], "name": "getClientByIndex", "outputs": [{ "internalType": "string", "name": "name", "type": "string" }, { "internalType": "address", "name": "clientID", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_name", "type": "string" }], "name": "getClientByName", "outputs": [{ "internalType": "string", "name": "name", "type": "string" }, { "internalType": "address", "name": "clientID", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getClientCount", "outputs": [{ "internalType": "uint256", "name": "count", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getCurrentOwner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_clientName", "type": "string" }, { "internalType": "uint256", "name": "_invoiceNumber", "type": "uint256" }], "name": "getInvoice", "outputs": [{ "internalType": "uint256", "name": "invoiceNumber", "type": "uint256" }, { "internalType": "uint256", "name": "netTerms", "type": "uint256" }, { "internalType": "uint256", "name": "numberHours", "type": "uint256" }, { "internalType": "string", "name": "amount", "type": "string" }, { "internalType": "uint256", "name": "timesheetEndDate", "type": "uint256" }, { "internalType": "uint256", "name": "invoiceSentDate", "type": "uint256" }, { "internalType": "uint256", "name": "due30DaysDate", "type": "uint256" }, { "internalType": "uint256", "name": "due60DaysDate", "type": "uint256" }, { "internalType": "uint256", "name": "due90DaysDate", "type": "uint256" }, { "internalType": "uint256", "name": "due120DaysDate", "type": "uint256" }, { "internalType": "uint256", "name": "datePmtReceived", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_clientName", "type": "string" }], "name": "getInvoiceCount", "outputs": [{ "internalType": "uint256", "name": "count", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_clientName", "type": "string" }], "name": "getInvoiceNumbers", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_clientName", "type": "string" }, { "internalType": "uint256", "name": "_invoiceNumber", "type": "uint256" }, { "internalType": "uint256", "name": "_invoicePmtDate", "type": "uint256" }], "name": "updateInvoice", "outputs": [], "stateMutability": "nonpayable", "type": "function" }] as AbiItem[];
   public contract: any;
+  private isWeb3Ready: BehaviorSubject<boolean>;
+  public isWeb3Ready$: Observable<boolean>
+  public owner: string = '';
 
-  constructor() { this.initContract() }
+  constructor() {
+    this.isWeb3Ready = new BehaviorSubject(false);
+    this.isWeb3Ready$ = this.isWeb3Ready.asObservable();
+    this.initContract();
+  }
 
   private initContract() {
     Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
@@ -42,6 +50,7 @@ export class Web3Service {
           contractAddress
         );
         this.initEventSubscriptions();
+        this.isWeb3Ready.next(true);
       });
     } else {
       alert('No web3? You should consider trying MetaMask!');
@@ -91,6 +100,7 @@ export class Web3Service {
         contractAddress
       );
       this.initEventSubscriptions();
+      this.isWeb3Ready.next(true);
     }
   }
 
