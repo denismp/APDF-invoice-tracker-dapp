@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Web3Service } from './web3.service';
 import { Invoice } from '../invoice/new-invoice/invoice';
 
+declare let window: any;
 
 @Injectable({
   providedIn: 'root'

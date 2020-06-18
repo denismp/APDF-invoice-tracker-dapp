@@ -11,7 +11,7 @@ declare let window: any;
 })
 export class Web3Service {
   private INVOICE_TRACKER_ARTIFACTS = require('../../../build/contracts/InvoiceTracker.json');
-  private web3: Web3;
+  public web3: Web3;
   //private contractAddress = "0x97a5f686fFb2669165395A8186520F4AF9639a75";
   //private contractAddress = "0xae3F8D3Fe2b5ED359D35c45a5014489680E4AF86"; //ropsten
 

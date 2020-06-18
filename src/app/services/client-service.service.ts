@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 //import { from } from 'rxjs';
 import { Web3Service } from './web3.service';
 import { Client } from '../reports/client-list/client';
+declare let window: any;
 
 @Injectable({
   providedIn: 'root'
