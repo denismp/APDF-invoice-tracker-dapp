@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.48% </span>
+        <span class="strong">85.25% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>53/62</span>
+        <span class='fraction'>52/61</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>10/20</span>
+        <span class='fraction'>9/18</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.89% </span>
+        <span class="strong">88.24% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>16/18</span>
+        <span class='fraction'>15/17</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.36% </span>
+        <span class="strong">85.94% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>57/66</span>
+        <span class='fraction'>55/64</span>
       </div>
     </div>
   </div>
@@ -503,12 +503,7 @@
 458
 459
 460
-461
-462
-463
-464
-465
-466</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+461</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -584,11 +579,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19×</span>
-<span class="cline-any cline-yes">19×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -974,7 +964,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.6.6;
+pragma solidity ^0.6.6;
 &nbsp;
 import "./Owned.sol";
 &nbsp;
@@ -1051,11 +1041,6 @@ contract InvoiceTracker is Owned {
         _;
     }
 &nbsp;
-    modifier onlyOwner() {
-        <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.sender == getCurrentOwner());
-        _;
-    }
-&nbsp;
     /// @author Denis M. Putnam
     /// @notice Add a client to this contract.
     /// @param _clientID address of the wallet of the client.
@@ -1063,7 +1048,7 @@ contract InvoiceTracker is Owned {
     /// @dev Add's a client to the clientMap and the clientNameAddressMap
     function addClient(address _clientID, string memory _name)
         public
-        onlyOwner()
+        ownerOnly()
         noDupClient(_clientID, _name)
     {
         clientMap[_name].clientID = _clientID;
@@ -1196,7 +1181,7 @@ contract InvoiceTracker is Owned {
         uint256 _due60DaysDate,
         uint256 _due90DaysDate,
         uint256 _due120DaysDate
-    ) public onlyOwner() noDupInvoice(_clientName, _invoiceNumber) {
+    ) public ownerOnly() noDupInvoice(_clientName, _invoiceNumber) {
         Invoice memory newInvoice;
         newInvoice.invoiceNumber = _invoiceNumber;
         newInvoice.netTerms = _netTerms;
@@ -1259,7 +1244,7 @@ contract InvoiceTracker is Owned {
     function getInvoiceCount(string memory _clientName)
         public
         view
-        onlyOwner()
+        ownerOnly()
         returns (uint256 count)
     {
         count = clientNameInvoiceCountMap[_clientName];
@@ -1273,7 +1258,7 @@ contract InvoiceTracker is Owned {
     function getInvoiceNumbers(string memory _clientName)
         public
         view
-        onlyOwner()
+        ownerOnly()
         returns (uint256[] memory)
     {
         // string memory rVal = "";
@@ -1296,7 +1281,7 @@ contract InvoiceTracker is Owned {
     function findInvoiceIndex(string memory _clientName, uint256 _invoiceNumber)
         private
         view
-        onlyOwner()
+        ownerOnly()
         isInvoiceNumber(_invoiceNumber)
         returns (int256 index)
     {
@@ -1326,7 +1311,7 @@ contract InvoiceTracker is Owned {
         string memory _clientName,
         uint256 _invoiceNumber,
         uint256 _invoicePmtDate
-    ) public onlyOwner() {
+    ) public ownerOnly() {
         int256 _index = findInvoiceIndex(_clientName, _invoiceNumber);
         <span class="missing-if-branch" title="else path not taken" >E</span>if (_index != -1) {
             Invoice memory lInvoice = clientNameInvoiceMap[_clientName][uint256(
@@ -1361,7 +1346,7 @@ contract InvoiceTracker is Owned {
     function getInvoice(string memory _clientName, uint256 _invoiceNumber)
         public
         view
-        onlyOwner()
+        ownerOnly()
         returns (
             uint256 invoiceNumber,
             uint256 netTerms,
@@ -1444,7 +1429,7 @@ contract InvoiceTracker is Owned {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 16 2020 17:03:00 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 17 2020 15:07:49 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

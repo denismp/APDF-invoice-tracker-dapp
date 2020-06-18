@@ -361,7 +361,6 @@ User Documentation
   },
   "notice": "This contract establishes the owner and allows for an owner change."
 }
-
 ## Solidity coverage
 1. Make sure you run "npm install --save-dev solidity-coverage"
 2. Run "truffle run coverage"
@@ -467,6 +466,7 @@ Date: 2020-06-18T20:26:46.656Z - Hash: a95cf683532eb7aae77e - Time: 56253ms
 
 WARNING in budgets: Exceeded maximum budget for initial-es2015. Budget 2 MB was not met by 30.6 kB with a total of 2.03 MB.
 
+
 WARNING in budgets: Exceeded maximum budget for initial-es5. Budget 2 MB was not met by 216 kB with a total of 2.21 MB.
 (base) Deniss-IMAC.fios-router.home:denisputnam
 /Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs add -r dist/APDF-invoice-tracker-dapp/
@@ -480,7 +480,9 @@ added QmQVjnkrruA1Z64kU4ysQ9us6A18JRiYjRQJZ2AVmwH2NQ APDF-invoice-tracker-dapp/p
 added Qmb3UHBRdMTRGA4AXa6XMbBxzkZFAihsEnd6qDvFtJ1qvN APDF-invoice-tracker-dapp/runtime-es2015.1eba213af0b233498d9d.js
 added Qmb3UHBRdMTRGA4AXa6XMbBxzkZFAihsEnd6qDvFtJ1qvN APDF-invoice-tracker-dapp/runtime-es5.1eba213af0b233498d9d.js
 added QmSCx4YXkUUqxHVoZDQN3RaPfFVFfge8m5DBHVzVLKKPh2 APDF-invoice-tracker-dapp/styles.33924162034a120ae456.css
+
 added Qmc5TLVyDawBKrxP6jYyy7Z4Ekn3K6mjrTCCPEzTtXovQv APDF-invoice-tracker-dapp
  4.31 MiB / 4.31 MiB [========================================================================================================================] 100.00%(base) Deniss-IMAC.fios-router.home:denisputnam
 /Users/denisputnam/git/APDF-invoice-tracker-dapp>ipfs name publish Qmc5TLVyDawBKrxP6jYyy7Z4Ekn3K6mjrTCCPEzTtXovQv
 Published to QmRHwsSYncB7m2nYYFM2c2YGr2jefvDDdmjEgEzTb8RgXF: /ipfs/Qmc5TLVyDawBKrxP6jYyy7Z4Ekn3K6mjrTCCPEzTtXovQv
+

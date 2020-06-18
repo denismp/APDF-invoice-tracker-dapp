@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.6.6;
+pragma solidity ^0.6.6;
 
 import "./Owned.sol";
 
@@ -76,11 +76,6 @@ contract InvoiceTracker is Owned {
         _;
     }
 
-    modifier onlyOwner() {
-        require(msg.sender == getCurrentOwner());
-        _;
-    }
-
     /// @author Denis M. Putnam
     /// @notice Add a client to this contract.
     /// @param _clientID address of the wallet of the client.
@@ -88,7 +83,7 @@ contract InvoiceTracker is Owned {
     /// @dev Add's a client to the clientMap and the clientNameAddressMap
     function addClient(address _clientID, string memory _name)
         public
-        onlyOwner()
+        ownerOnly()
         noDupClient(_clientID, _name)
     {
         clientMap[_name].clientID = _clientID;
@@ -221,7 +216,7 @@ contract InvoiceTracker is Owned {
         uint256 _due60DaysDate,
         uint256 _due90DaysDate,
         uint256 _due120DaysDate
-    ) public onlyOwner() noDupInvoice(_clientName, _invoiceNumber) {
+    ) public ownerOnly() noDupInvoice(_clientName, _invoiceNumber) {
         Invoice memory newInvoice;
         newInvoice.invoiceNumber = _invoiceNumber;
         newInvoice.netTerms = _netTerms;
@@ -284,7 +279,7 @@ contract InvoiceTracker is Owned {
     function getInvoiceCount(string memory _clientName)
         public
         view
-        onlyOwner()
+        ownerOnly()
         returns (uint256 count)
     {
         count = clientNameInvoiceCountMap[_clientName];
@@ -298,7 +293,7 @@ contract InvoiceTracker is Owned {
     function getInvoiceNumbers(string memory _clientName)
         public
         view
-        onlyOwner()
+        ownerOnly()
         returns (uint256[] memory)
     {
         // string memory rVal = "";
@@ -321,7 +316,7 @@ contract InvoiceTracker is Owned {
     function findInvoiceIndex(string memory _clientName, uint256 _invoiceNumber)
         private
         view
-        onlyOwner()
+        ownerOnly()
         isInvoiceNumber(_invoiceNumber)
         returns (int256 index)
     {
@@ -351,7 +346,7 @@ contract InvoiceTracker is Owned {
         string memory _clientName,
         uint256 _invoiceNumber,
         uint256 _invoicePmtDate
-    ) public onlyOwner() {
+    ) public ownerOnly() {
         int256 _index = findInvoiceIndex(_clientName, _invoiceNumber);
         if (_index != -1) {
             Invoice memory lInvoice = clientNameInvoiceMap[_clientName][uint256(
@@ -386,7 +381,7 @@ contract InvoiceTracker is Owned {
     function getInvoice(string memory _clientName, uint256 _invoiceNumber)
         public
         view
-        onlyOwner()
+        ownerOnly()
         returns (
             uint256 invoiceNumber,
             uint256 netTerms,
