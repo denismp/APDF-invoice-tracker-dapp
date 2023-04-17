@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^9.1.4",
     "@angular/router": "^9.1.4",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
-    "@openzeppelin/contracts": "^3.0.2",
+    "@openzeppelin/contracts": "^4.8.3",
     "@truffle/hdwallet-provider": "^1.0.35",
     "@types/jquery": "^3.3.38",
     "bignumber": "^1.1.0",
